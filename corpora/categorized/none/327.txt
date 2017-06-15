@@ -1,0 +1,1 @@
+This last option has the advantage of distributing traffic without creating any traffic conflict, eliminating all cross-traffic and interferences between pedestrians and vehicles.

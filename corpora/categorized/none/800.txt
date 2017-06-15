@@ -1,0 +1,1 @@
+Traffic    1.1 - previous DATY (all types of vehicles) and by road segment    Year / Segments Segment 1 Segment 2 Segment 3  Segment 4  Segment 5 1999 (TMJA) 52 000  25 000  32 000  50 000  44 000  2002 (TMJA) 36 271  Segment 1 = Tombo-Moussodougou; Segment 2 = Moussodougou-Madina; Segment 3 = Madina-Kenien; Segment 4 = Kenien-T1; Segment 5 = T1-Gbessia.
