@@ -3,8 +3,8 @@ __author__ = 'sebas'
 import io
 import nltk
 from nltk.tokenize import TreebankWordTokenizer
-from pdf.pdfreader import Pdfreader
-from util.fileutil import create_folder
+from pdf.pdf_reader import Pdfreader
+from util.file_util import create_folder
 
 sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 word_tokenizer = TreebankWordTokenizer()
