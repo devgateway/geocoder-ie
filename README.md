@@ -7,6 +7,9 @@ you need to have running standford ner server
 java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 1234
 
 then run the geocode script passing a iati identifier as argument
+
+
+
 python geocode.py  46002-P-GN-DB0-005
 
 
@@ -14,7 +17,6 @@ you will obtain a result like
 
 
 | Guinea                                | COUNTRY AND NAME OF PROJECT : Guinea: Tombo-Gbessia Road Improvement       Project  2.               |
-| Conakry (Guinea                       | Box 581 Conakry (Guinea): Tel.                                                                       |
 | Tombo-Gbessia Road                    | PROJECT DESCRIPTION  : The Project has the following components:  A - Works comprising:  a.1) the im |
 | Kenien-Bonfi                          | PROJECT DESCRIPTION  : The Project has the following components:  A - Works comprising:  a.1) the im |
 | Madina                                | PROJECT OBJECTIVE  2.1 a) Improve traffic fluidity and reduce transport costs and travel time on the |
