@@ -21,9 +21,13 @@ def find_country(country):
 
 
 
-print(find_country('guinea'))
+def test():
+    print(find_country('guinea'))
+    cursor=find('Cordoba')
+    for row in cursor:
+        print(row)
 
-cursor=find('Cordoba')
-for row in cursor:
-    print(row)
 
+
+if __name__ == "__main__":
+    test()

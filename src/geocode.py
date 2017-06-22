@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from prettytable import PrettyTable
 from extraction.locations_extractor import extract_from_file
 from iati.iati_downloader import activity_data_download
 
@@ -34,8 +35,12 @@ def find_in_text(word, text):
         yield (word, m.start(), m.end())
 
 
+
+
 def auto_geocode(identifier):
     # downlaod activity data
+    table = PrettyTable(['Location', 'Sentence'])
+    table.align= "l"
     activity_files = activity_data_download(identifier)
     for doc in activity_files[1]:
         results = extract_from_file(activity_files[0], doc)
@@ -44,12 +49,22 @@ def auto_geocode(identifier):
                 extract = ''
                 context = find_in_text(r[0].lower(), r[1].lower())
                 for value in context:
-                    extract = extract + '...' + r[1][value[1] - 50 if value[1] - 50 > 0 else 0:value[2] + 50]
-                print('%s\t\t\t\t [ %s ]' % (r[0].encode('utf-8'), extract.encode('utf-8')))
+                    extract = extract + '...' + r[1][value[1] - 100 if value[1] - 50 > 0 else 0:value[2] + 50]
+                print('%s\t\t\t\t\t\t\t\t [ %s ]' % (r[0].encode('utf-8'), extract.encode('utf-8')))
+
+                table.add_row([r[0], extract])
             except ValueError:
                 print 'Error'
+        print (table)
 
-                # for id in activity_samples:
+            # for id in activity_samples:
 
 
-auto_geocode('46002-P-GN-DB0-005')
+if __name__ == "__main__":
+    import sys
+    print (sys.argv)
+    if len(sys.argv) > 1:
+        auto_geocode(sys.argv[1])
+    else:
+        print('Please provide a IATI activity identifier')
+

@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import nltk
-from nltk.tokenize import TreebankWordTokenizer
 from sner import Ner
-
 from pdf.pdf_reader import Pdfreader
 from classifier import get_trained_classifier, bag_of_words, get_tokenizer
 
 tagger = Ner(host='localhost', port=1234)
+
+print ('Loading tokenizers/punkt/english.pickle')
 sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+print ('Sentence Tokenizer ready')
+
 word_tokenizer = get_tokenizer()
 
 
@@ -52,14 +54,13 @@ def gap_length(word1, word2, text):
     return gap, edited_text, inter_text
 
 
-
-def extract_from_file(activity_file,document_file, doc_reader=Pdfreader):
+def extract_from_file(activity_file, document_file, doc_reader=Pdfreader):
     classifier = get_trained_classifier()
     reader = doc_reader(document_file)
     reader.read()
     tagged_locations = []
     for p in reader.get_pages_text():
-        sentences = sentence_tokenizer.tokenize(p)
+        sentences = sentence_tokenizer.tokenize(p.encode("ascii", "ignore"))
         for sentence in sentences:
             sentence = sentence.replace('\n', '')
             tokenized_text = word_tokenizer.tokenize(sentence)
@@ -73,3 +74,6 @@ def extract_from_file(activity_file,document_file, doc_reader=Pdfreader):
                         tagged_locations.append((loc, sentence))
 
     return tagged_locations
+
+
+
