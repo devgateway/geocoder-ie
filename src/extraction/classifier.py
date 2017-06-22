@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from nltk import FreqDist, ConditionalFreqDist, LaplaceProbDist, ELEProbDist
+from nltk import FreqDist, ConditionalFreqDist, LaplaceProbDist, ELEProbDist, regexp_tokenize
 from nltk.classify.util import accuracy
 from nltk.classify.naivebayes import NaiveBayesClassifier
 from nltk.collocations import BigramCollocationFinder
@@ -8,20 +8,31 @@ from nltk.corpus import stopwords
 from nltk.corpus.reader import PlaintextCorpusReader, CategorizedPlaintextCorpusReader
 from nltk.metrics.association import BigramAssocMeasures
 import collections
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize, RegexpTokenizer, TreebankWordTokenizer
+from nltk.stem.lancaster import LancasterStemmer
 
 __author__ = 'sebas'
 
 english_stops = set(stopwords.words('english'))
 corpora_path = os.path.join(os.path.dirname(__file__),'../../corpora/categorized/')
-corpus = CategorizedPlaintextCorpusReader(corpora_path, r'(?!\.).*\.txt', cat_pattern=r'(none|geography)/.*', encoding='ISO-8859-1')
 
+
+
+#word_tokenizer = TreebankWordTokenizer()
+
+def get_tokenizer():
+    return RegexpTokenizer(r'[A-z]+')
+
+
+st = LancasterStemmer()
+corpus = CategorizedPlaintextCorpusReader(corpora_path, r'(?!\.).*\.txt', cat_pattern=r'(none|geography)/.*', encoding='ISO-8859-1',word_tokenizer=get_tokenizer())
 documents = [(list(corpus.words(fileid)), category) for category in corpus.categories() for fileid in
              corpus.fileids(category)]
 
+
 def bag_of_words(words):
     return dict(
-        [('contains(%s)' % word.lower(), True) for word in words if word not in english_stops and len(word) > 3])
+        [('contains(%s)' % st.stem(word.lower()), True) for word in words if word not in english_stops and len(word) > 3])
 
 
 def bag_of_words_in_set(words, goodwords):
@@ -88,7 +99,11 @@ def get_trained_classifier():
 
 def test():
     nb_classifier = get_trained_classifier();
-    print(nb_classifier.classify(bag_of_words(word_tokenize("""districts inhabitants highways and """.lower()))))
-    print(nb_classifier.classify(bag_of_words(word_tokenize("""covers 32 districts""".lower()))))
-    print(nb_classifier.classify(bag_of_words(word_tokenize("""Country Argentina with 32 districts """.lower()))))
-    print(nb_classifier.classify(bag_of_words(word_tokenize("""The capital city of argentina is Buenos Aires""".lower()))))
+    print(nb_classifier.classify(bag_of_words(get_tokenizer().tokenize("""districts inhabitants highways and """))))
+    print(nb_classifier.classify(bag_of_words(get_tokenizer().tokenize("""Sector was agriculture"""))))
+    print(nb_classifier.classify(bag_of_words(get_tokenizer().tokenize("""Country Argentina with 32 districts """))))
+    print(nb_classifier.classify(bag_of_words(get_tokenizer().tokenize("""The capital city of argentina is Buenos Aires"""))))
+
+
+
+test()

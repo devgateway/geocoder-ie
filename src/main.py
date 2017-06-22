@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 import os
 from extraction.locations_extractor import extract_from_file
-from iati.activity_reader import ActivityReader
 from iati.iati_downloader import activity_data_download
+
 
 __author__ = 'sebas'
 
@@ -22,13 +23,16 @@ samples = [
 activity_samples = ["46002-P-GN-DB0-005", "46002-P-ZW-E00-003", "46002-P-ZA-B00-001"]
 
 
+#os.system( 'java -mx400m -cp ../stanford-ner-2016-10-31/stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier ../stanford-ner-2016-10-31/classifiers/english.all.3class.distsim.crf.ser.gz -port 1234 ')
+
 def auto_geocode(identifier):
     # downlaod activity data
     activity_files = activity_data_download(identifier)
     for doc in activity_files[1]:
         results = extract_from_file(activity_files[0], doc)
         for r in results:
-            print(r[0])
+            print(r[0].encode('utf-8'))
 
-for id in activity_samples:
-    auto_geocode(id)
+#for id in activity_samples:
+
+auto_geocode('46002-P-GN-DB0-005')
