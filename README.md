@@ -15,14 +15,7 @@ python geocode.py  46002-P-GN-DB0-005
 
 you will obtain a result like
 
- Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md] [PlDb] |
-| Github | [plugins/github/README.md] [PlGh] |
-| Google Drive | [plugins/googledrive/README.md] [PlGd] |
-| OneDrive | [plugins/onedrive/README.md] [PlOd] |
-| Medium | [plugins/medium/README.md] [PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md] [PlGa] |
+
 
  Place | Text |
 | ------ | ------ |
