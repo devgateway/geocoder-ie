@@ -49,7 +49,7 @@ def auto_geocode(identifier):
                 extract = ''
                 context = find_in_text(r[0].lower(), r[1].lower())
                 for value in context:
-                    extract = extract + '...' + r[1][value[1] - 100 if value[1] - 50 > 0 else 0:value[2] + 50]
+                    extract = extract + '...' + r[1][value[1] - 50 if value[1] - 50 > 0 else 0:value[2] + 50]
                 print('%s\t\t\t\t\t\t\t\t [ %s ]' % (r[0].encode('utf-8'), extract.encode('utf-8')))
 
                 table.add_row([r[0], extract])
