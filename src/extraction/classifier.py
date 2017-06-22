@@ -105,5 +105,3 @@ def test():
     print(nb_classifier.classify(bag_of_words(get_tokenizer().tokenize("""The capital city of argentina is Buenos Aires"""))))
 
 
-
-test()
