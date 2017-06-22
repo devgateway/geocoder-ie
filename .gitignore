@@ -2,3 +2,8 @@
 /.project
 /corpora/projects
 ./stanford-ner-2016-10-31
+./.idea
+./.metadata
+.metadata
+.idea
+stanford-ner-2016-10-31
