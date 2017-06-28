@@ -59,8 +59,8 @@ def extract_from_file(activity_file, document_file, doc_reader=Pdfreader):
     reader = doc_reader(document_file)
     reader.read()
     tagged_locations = []
-    for p in reader.get_pages_text()[1:10]:
-        print ('reading page ')
+    for p in reader.get_pages_text():
+
         sentences = sentence_tokenizer.tokenize(p.encode("ascii", "ignore"))
 
         for sentence in sentences:
@@ -68,7 +68,7 @@ def extract_from_file(activity_file, document_file, doc_reader=Pdfreader):
             #print (sentence)
             tokenized_text = word_tokenizer.tokenize(sentence)
             features = bag_of_words(tokenized_text)
-            print (classifier.classify(bag_of_words(tokenized_text)))
+
             if classifier.classify(bag_of_words(tokenized_text)) == 'geography':
                 tagged = tagger.get_entities(sentence)
                 locs = [(word) for word, tag in tagged if tag in ['LOCATION']]
