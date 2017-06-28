@@ -2,7 +2,7 @@
 Automatically  geocode aid projects by applying natural language processing techniques, try it by executing geocode.py passing a valid iati activity identifier.
 
 
-you need to have running standford ner server
+you need to have running standford ner server running the following command:
 
 java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 1234
 
@@ -10,7 +10,7 @@ then run the geocode script passing a iati identifier as argument
 
 
 
-python geocode.py  46002-P-GN-DB0-005
+python geocode.py  46002-P-GN-DB0-005f
 
 
 you will obtain a result like this:
