@@ -10,7 +10,7 @@ then run the geocode script passing a iati identifier as argument
 
 
 
-python geocode.py  46002-P-GN-DB0-005f
+python geocode.py  46002-P-GN-DB0-005
 
 
 you will obtain a result like this:
