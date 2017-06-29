@@ -1,7 +1,7 @@
 import nltk
 
 from sner import Ner
-tagger = Ner(host='localhost', port=9000)
+tagger = Ner(host='localhost', port=1234)
 
 sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 

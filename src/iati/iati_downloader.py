@@ -98,5 +98,7 @@ def download_some_data():
 def activity_data_download(identifier):
     url = 'http://datastore.iatistandard.org/api/1/access/activity.xml?iati-identifier=%s' % identifier
     root = ET.parse(urllib.urlopen(url)).getroot()
+    print (urllib.urlopen(url))
+
     activities_files = process_activity(root.findall('iati-activities/iati-activity')[0])
     return activities_files
