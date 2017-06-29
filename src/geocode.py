@@ -46,12 +46,6 @@ def auto_geocode(identifier):
         results = extract_from_file(activity_files[0], doc)
         for r in results:
             try:
-                #extract = ''
-                context = find_in_text(r[0].lower(), r[1].lower())
-               # for value in context:
-                #extract = extract + '...' + r[1][value[1] - 50 if value[1] - 50 > 0 else 0:value[2] + 50]
-                #print('%s\t\t\t\t\t\t\t\t [ %s ]' % (r[0].encode('utf-8'), extract.encode('utf-8')))
-
                 table.add_row([r[0], r[1][0:100]])
             except ValueError:
                 print 'Error'
