@@ -1,1 +1,8 @@
 nltk==3.2.4
+numpy==1.12.1
+prettytable==0.7.2
+psycopg2==2.7.1
+PyPDF2==1.26.0
+sner==0.2
+urllib==1.21.1
+
