@@ -1,1 +1,0 @@
-These in turn will generate additional resources for the service providers.

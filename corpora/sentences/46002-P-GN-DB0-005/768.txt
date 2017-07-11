@@ -1,1 +1,0 @@
-Sensitivity tests, which make it possible to measure the impact of the various parameters concerned, show that the EIRRs are relatively stable, not sensitive to variations in cost (+10%), in benefits (-10 %) or a combination of both assumptions.

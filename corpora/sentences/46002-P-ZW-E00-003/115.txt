@@ -1,1 +1,0 @@
-It is to be implemented as a stand-alone project in two stages.

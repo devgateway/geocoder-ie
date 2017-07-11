@@ -1,1 +1,0 @@
-5: Study cost by category of expenditure [UA millions net of Taxes] Categories of expenditure Total Costs Consultancy Services 0.83 Study Support and Coordination 0.09 Total Base Cost 0.92 Price Contingency 0.05 Total Cost 0.97  Table 2.

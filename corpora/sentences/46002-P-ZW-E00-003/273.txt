@@ -1,1 +1,0 @@
-4.7.2 In order to ensure system compatibility and capability, the Project will move away from introducing new technologies for which the Project is not able to build capacity as well as unable to meet heavy investment for system modifications and maintenance.
