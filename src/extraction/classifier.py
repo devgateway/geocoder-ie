@@ -21,7 +21,7 @@ corpora_path = os.path.join(os.path.dirname(__file__),'../../corpora/categorized
 #word_tokenizer = TreebankWordTokenizer()
 
 def get_tokenizer():
-    return RegexpTokenizer(r'[A-z]+')
+        return RegexpTokenizer(r'[A-z]+')
 
 
 st = LancasterStemmer()
