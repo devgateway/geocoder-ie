@@ -2,9 +2,7 @@ import os
 import numpy
 from pandas import DataFrame
 from sner import Ner
-
 tagger = Ner(host='localhost', port=1234)
-
 
 class FileDataLoader:
     def __init__(self, path=''):
@@ -23,9 +21,7 @@ class FileDataLoader:
                     classification = file_path.split(os.path.sep)[-2]
                     yield file_path, content, classification
 
-
-
-    def build_data_frame(self,remove_entities=False):
+    def build_data_frame(self, remove_entities=False):
         rows = []
         index = []
         for file_name, text, classification in self.read_files():

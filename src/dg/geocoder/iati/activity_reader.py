@@ -1,6 +1,6 @@
 import urllib
 import xml.etree.ElementTree as ET
-from iati.iati_codes import countries, regions, organisations
+from dg.geocoder.iati.iati_codes import iati_regions, iati_countries, iati_organisations
 
 
 class ActivityReader:
@@ -20,7 +20,7 @@ class ActivityReader:
         return None
 
     def get_recipient_region_name(self):
-        return regions[int(self.get_recipient_region_code())] if self.get_recipient_region_code() is not None else None
+        return iati_regions[int(self.get_recipient_region_code())] if self.get_recipient_region_code() is not None else None
 
     def get_recipient_country_code(self):
         recipient_country = self.root.find('recipient-country')
@@ -29,7 +29,7 @@ class ActivityReader:
         return None
 
     def get_recipient_country_name(self):
-        return countries[self.get_recipient_country_code()] if self.get_recipient_country_code() is not None else None
+        return iati_countries[self.get_recipient_country_code()] if self.get_recipient_country_code() is not None else None
 
     def get_reporting_organisation_code(self):
         element = self.root.find('reporting-org')
@@ -38,7 +38,7 @@ class ActivityReader:
         return None
 
     def get_reporting_organisation_name(self):
-        return organisations[self.get_reporting_organisation_code()]
+        return iati_organisations[self.get_reporting_organisation_code()]
 
     def get_document_links(self):
         return [(doc) for doc in self.root.findall("document-link") if

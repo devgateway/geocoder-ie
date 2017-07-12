@@ -1,7 +1,6 @@
 import numpy
 from sklearn.metrics.classification import confusion_matrix, f1_score, recall_score, precision_score
 from sklearn.model_selection._split import KFold, train_test_split
-
 from dg.geocoder.classification.classifier import Classifier
 from dg.geocoder.classification.plot import plot_confusion_matrix
 
@@ -74,4 +73,4 @@ class Trainer:
         print(self.confusion)
 
     def plot_stats(self):
-        plot_confusion_matrix(self.confusion,['geography','none'])
+        plot_confusion_matrix(self.confusion, ['geography', 'none'])

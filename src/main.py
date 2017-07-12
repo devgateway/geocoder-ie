@@ -1,20 +1,64 @@
-import os
+import argparse
+import sys
 
-from dg.geocoder.classification.trainer import Trainer
-from dg.geocoder.data.loader import FileDataLoader
+from dg.geocoder.iati.iati_codes import iati_organisations, iati_countries
+from dg.geocoder.iati.iati_downloader import bulk_data_download
 
-dir = os.path.dirname(__file__)
 
-target = os.path.normpath(os.path.join(dir, '../categorized'))
+def main(args):
+    try:
+        parser = argparse.ArgumentParser(description="Utility to auto-geocode IATI projects")
 
-loader = FileDataLoader(target)
+        parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download'],
+                            required=False,
+                            dest='command',
+                            help='use geocode to auto-geocode projects provide in file, or download to get raw data from '
+                                 'IATI registry')
 
-trainer = Trainer(loader.build_data_frame())
+        parser.add_argument("-f", "--file", type=str, default=None, required=False, dest='file',
+                            help='XML file to be parsed')
 
-trainer.kfold_train()
+        parser.add_argument("-p", "--path", type=str, default='docs', required=False, dest='path',
+                            help='path to lookup for private documents ')
 
-trainer.plot_stats()
+        parser.add_argument("-d", "--download_path", type=str, default='download', required=False, dest='download_path',
+                            help='Target destination for downloaded data, default will be download folder')
 
-classifier=trainer.get_classifier()
+        parser.add_argument("-o", "--org", type=str, default=None, required=False, dest='organisation',
+                            help='Reporting organisation of the data to be download')
 
-print(classifier.predict(['Project area covers two towns in Cordoba City and Municipality','Eating at London wa snice']))
+        parser.add_argument("-c", "--countries", type=str, default=None, required=False, dest='countries',
+                            help='Countries codes')
+
+        args = parser.parse_args(args)
+
+        if args.command == 'geocode':
+            file = args.file
+            doc_path = args.path
+            if file is None:
+                print('Please provide an input file')
+
+        elif args.command == 'download':
+            if args.organisation is None or args.organisation not in iati_organisations:
+                print(
+                    'Please provide a valid reporting organisation code please look at http://iatistandard.org/202/codelists/OrganisationIdentifier/')
+                return
+            if args.countries is None or args.countries != 'ALL':
+                print(
+                    'Provide a recipien country code or set it to ALL, please look at http://iatistandard.org/202/codelists/Country/')
+                return
+            if args.countries == 'ALL':
+                countries = iati_countries
+            else:
+                countries = args.countries
+        bulk_data_download(args.organisation, countries, download_path=args.download_path)
+    except (KeyboardInterrupt, SystemExit):
+        print('By!')
+
+
+
+# report error and proceed
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
