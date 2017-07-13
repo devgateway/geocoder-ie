@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from dg.geocoder.iati.iati_codes import iati_organisations, iati_countries
+from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
 from dg.geocoder.iati.iati_downloader import bulk_data_download
 
 
@@ -30,6 +30,9 @@ def main(args):
         parser.add_argument("-c", "--countries", type=str, default=None, required=False, dest='countries',
                             help='Countries codes')
 
+        parser.add_argument("-l", "--limit", type=str, default=100, required=False, dest='limit',
+                            help='Number of activities to download')
+
         args = parser.parse_args(args)
 
         if args.command == 'geocode':
@@ -39,7 +42,7 @@ def main(args):
                 print('Please provide an input file')
 
         elif args.command == 'download':
-            if args.organisation is None or args.organisation not in iati_organisations:
+            if args.organisation is None or args.organisation not in iati_publishers:
                 print(
                     'Please provide a valid reporting organisation code please look at http://iatistandard.org/202/codelists/OrganisationIdentifier/')
                 return
@@ -51,7 +54,7 @@ def main(args):
                 countries = iati_countries
             else:
                 countries = args.countries
-        bulk_data_download(args.organisation, countries, download_path=args.download_path)
+        bulk_data_download(args.organisation, countries, download_path=args.download_path,activities_limit=args.limit)
     except (KeyboardInterrupt, SystemExit):
         print('By!')
 

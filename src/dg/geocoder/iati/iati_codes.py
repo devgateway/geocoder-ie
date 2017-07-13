@@ -271,7 +271,7 @@ iati_countries = {'AF': 'AFGHANISTAN',
                   'ZM': 'ZAMBIA',
                   'ZW': 'ZIMBABWE'}
 
-iati_organisations = {
-    'GB-GOV': 'DIFD',
+iati_publishers = {
+    'GB-GOV-1': 'DIFD',
     '46002': 'AFDB'
 }

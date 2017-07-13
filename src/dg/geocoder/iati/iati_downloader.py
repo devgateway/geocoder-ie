@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 from urllib.request import urlopen
 
 from dg.geocoder.iati.activity_reader import ActivityReader
+from dg.geocoder.iati.iati_codes import iati_countries
 from dg.geocoder.util.file_util import get_folder_name, create_folder
 
 
@@ -26,15 +27,12 @@ def download(dest_path, url):
         print('download error %s', error)
 
 
-def process_activity(act_doc, download_path='downloads'):
-    parser = ActivityReader(root=act_doc)
+def process_activity(parser, download_path='downloads'):
     identifier = parser.get_identifier()
 
     if parser.has_documents():
-        print('has documents')
         activity_xml = None
         downloaded_files = []
-
         print('Activity %s has documents we will process it ' % identifier)
 
         region = parser.get_recipient_region_name()
@@ -52,7 +50,7 @@ def process_activity(act_doc, download_path='downloads'):
         print('Saving xml file %s' % identifier)
         activity_xml = '%s/activity.xml' % path
         f = open(activity_xml, 'w')
-        content = ET.tostring(act_doc)
+        content = parser.getXML()
         f.write(content.decode('utf-8'))
         f.close()
 
@@ -65,25 +63,31 @@ def process_activity(act_doc, download_path='downloads'):
         return activity_xml, downloaded_files
 
     else:
-        print("Activity %s hasn't any doc type A02 or A07", identifier)
+        print("Activity %s hasn't any doc type A02 or A07" % identifier)
         return None, None
 
 
 def bulk_data_download(org, countries=[], download_path='downloads', offset=0, activities_limit=100):
     for country in countries:
+        print('Searching activities fo %s in country %s' % (org, country))
         url = 'http://datastore.iatistandard.org/api/1/access/activity.xml' \
               '?reporting-org=%s&recipient-country=%s&offset=%s&limit=%s' % (org, country, offset, activities_limit)
 
         root = ET.parse(urlopen(url)).getroot()
         activity_list = root.findall('iati-activities/iati-activity')
-
+        print('Found %d activities ' % (len(activity_list)))
         for activity in activity_list:
-            process_activity(activity, download_path)
+            reader = ActivityReader(root=activity)
+            process_activity(reader, download_path)
 
 
 def activity_data_download(identifier):
     url = 'http://datastore.iatistandard.org/api/1/access/activity.xml?iati-identifier=%s' % identifier
-    root = ET.parse(urlopen(url).read()).getroot()
+    root = ET.parse(urlopen(url)).getroot()
 
     activities_files = process_activity(root.findall('iati-activities/iati-activity')[0])
     return activities_files
+
+
+if __name__ == '__main__':
+    bulk_data_download('46002', iati_countries, activities_limit=10)

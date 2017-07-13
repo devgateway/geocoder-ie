@@ -2,28 +2,34 @@
 import PyPDF2
 import re
 
-class Pdfreader:
+
+class PdfReader:
     def __init__(self, file):
         self.file = file
+        self.paragraphs = []
+        self.reader = PyPDF2.PdfFileReader(open(self.file, 'rb'))
 
-        ##returns text collection
+        # split pd in paragraphs
 
-    def read(self):
-        bfile = open(self.file, 'rb')
-        reader = PyPDF2.PdfFileReader(bfile)
-        page = reader.getPage(0)
-        self.paragraphs= []
-        self.texts = []
-        for page in reader.pages:
-            raw_text = page.extractText()
-            self.texts.append(raw_text)
-            paragprahs=re.split('/\n/',raw_text)
-            for p in paragprahs:
-                self.paragraphs.append(p)
+    def split(self):
+        if len(self.paragraphs) == 0:
+            for page in self.reader.pages:
+                raw_text = self.read(page)
+                ps = re.split('/\n/', raw_text)
+                self.paragraphs = +ps
+
+        return self.paragraphs
+
+    # Extract raw text from page number
+    def get_page(self, n):
+        return self.read_page(self.reader.getPage(n))
+
+    # Extract raw text from page
+    def read_page(self, page):
+        return page.extractText()
 
     def get_paragraphs(self):
         return self.paragraphs
 
     def get_pages_text(self):
         return self.texts
-
