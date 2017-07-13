@@ -6,7 +6,6 @@ import nltk
 class OdtReader:
     def __init__(self, file):
         self.sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-
         self.file = file
         self.paragraphs = []
         zip_archive = zipfile.ZipFile(file, "r")

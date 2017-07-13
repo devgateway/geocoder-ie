@@ -2,21 +2,28 @@
 import PyPDF2
 import re
 
+import nltk
+from nltk.tokenize.regexp import regexp_tokenize, RegexpTokenizer
+
 
 class PdfReader:
     def __init__(self, file):
         self.file = file
         self.paragraphs = []
         self.reader = PyPDF2.PdfFileReader(open(self.file, 'rb'))
-
+        self.sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
         # split pd in paragraphs
 
     def split(self):
         if len(self.paragraphs) == 0:
-            for page in self.reader.pages:
-                raw_text = self.read(page)
-                ps = re.split('/\n/', raw_text)
-                self.paragraphs = +ps
+            reg_exp = RegexpTokenizer(r'\w+([.,]\w+)*|\S+')
+            for page in self.reader.pages[2:]:
+                raw_text = self.read_page(page)
+                ps = self.sentence_tokenizer.tokenize(raw_text)
+                for s in ps:
+                    cleaned = re.sub(r'\w*\d\w*\s*', '', s)
+                    if len(cleaned) > 10:
+                        self.paragraphs.append(cleaned)
 
         return self.paragraphs
 

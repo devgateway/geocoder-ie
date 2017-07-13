@@ -1,45 +1,51 @@
 import os
-from importlib._bootstrap_external import _path_join
-
+import random
 from os import walk
-from sys import path
 
 from langdetect import detect
 
+from dg.geocoder.db.corpora import save_sentences, clean
 from dg.geocoder.readers.odt_reader import OdtReader
 from dg.geocoder.readers.pdf_reader import PdfReader
 
 
-def save_sentences(reader):
-    print(reader)
+def is_valid_type(file):
+    ex = file.split('.')[-1]
+    return ex.lower() in ['pdf', 'odt']
 
 
-def process_file(dirpath, file):
+def process_file(dir_path, file):
     try:
         f_ex = file.split('.')[-1]
-        if f_ex.lower() == 'pdf_':
+        if f_ex.lower() == 'pdf':
             print('pdf file ')
-            pdf = PdfReader(_path_join(dirpath, file))
-            if detect(pdf.get_page(1)):
-                save_sentences(pdf.split())
+            pdf = PdfReader(os.path.join(dir_path, file))
+            if detect(pdf.get_page(1)) == 'en':
+                save_sentences(file, pdf.split())
 
         elif f_ex.lower() == 'odt':
-            odt = OdtReader(_path_join(dirpath, file))
+            odt = OdtReader(os.path.join(dir_path, file))
             if detect(odt.split()[1]) == 'en':
-                save_sentences(odt.split())
+                save_sentences(file, odt.split())
 
     except Exception as error:
         print(error)
 
 
-def generate_database_corpora(files_path='download'):
-    for (dir_path, dir_names, file_names) in walk(files_path):
+def generate_docs_list(folder, list):
+    for (dir_path, dir_names, file_names) in walk(folder):
         for f in file_names:
-            process_file(dir_path, f)
+            if is_valid_type(f):
+                list.append((dir_path, f))
         for folder in dir_names:
-            generate_database_corpora(folder)
+            generate_docs_list(folder, list)
 
 
+##process_file(dir_path, f)
 if __name__ == '__main__':
-    print(detect("War doesn't show who's right, just who's left."))
-    generate_database_corpora(path=os.path.abspath('download'))
+    clean()
+    docs_to_process = []
+    generate_docs_list(os.path.abspath('download'), docs_to_process)
+    sample = random.sample(docs_to_process, 100)
+    for path, file in sample:
+        process_file(path, file)
