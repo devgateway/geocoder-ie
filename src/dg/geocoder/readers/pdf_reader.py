@@ -21,9 +21,8 @@ class PdfReader:
                 raw_text = self.read_page(page)
                 ps = self.sentence_tokenizer.tokenize(raw_text)
                 for s in ps:
-                    cleaned = re.sub(r'\w*\d\w*\s*', '', s)
-                    if len(cleaned) > 10:
-                        self.paragraphs.append(cleaned)
+                    if len(s) > 150:
+                        self.paragraphs.append(s)
 
         return self.paragraphs
 

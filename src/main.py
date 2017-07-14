@@ -12,17 +12,17 @@ def main(args):
         parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download'],
                             required=False,
                             dest='command',
-                            help='use geocode to auto-geocode projects provide in file, or download to get raw data from '
-                                 'IATI registry')
+                            help='use geocode to auto-geocode projects in file provided, or download to get raw '
+                                 'data from IATI registry')
 
         parser.add_argument("-f", "--file", type=str, default=None, required=False, dest='file',
-                            help='XML file to be parsed')
+                            help='IATI XML activities')
 
         parser.add_argument("-p", "--path", type=str, default='docs', required=False, dest='path',
-                            help='path to lookup for private documents ')
+                            help='lookup path for of private documents ')
 
         parser.add_argument("-d", "--download_path", type=str, default='download', required=False, dest='download_path',
-                            help='Target destination for downloaded data, default will be download folder')
+                            help='Downloaded data storage folder, default will be download folder')
 
         parser.add_argument("-o", "--org", type=str, default=None, required=False, dest='organisation',
                             help='Reporting organisation of the data to be download')
@@ -39,7 +39,7 @@ def main(args):
             file = args.file
             doc_path = args.path
             if file is None:
-                print('Please provide an input file')
+                print('Please provide an input file using -f')
 
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:
@@ -54,10 +54,10 @@ def main(args):
                 countries = iati_countries
             else:
                 countries = args.countries
-        bulk_data_download(args.organisation, countries, download_path=args.download_path,activities_limit=args.limit)
+            bulk_data_download(args.organisation, countries, download_path=args.download_path,
+                               activities_limit=args.limit)
     except (KeyboardInterrupt, SystemExit):
         print('By!')
-
 
 
 # report error and proceed
