@@ -35,13 +35,17 @@ def doc_download(id):
 def corpora_list():
     page = 1
     query = None
+    category = None
     if 'page' in request.args:
         page = request.args['page']
 
     if 'query' in request.args:
         query = request.args['query']
 
-    return Response(json.dumps(get_sentences(page=page, query=query)), mimetype='application/json')
+    if 'category' in request.args:
+        category = request.args['category']
+
+    return Response(json.dumps(get_sentences(page=page, query=query, category=category)), mimetype='application/json')
 
 
 @app.route('/corpora/<id>', methods=['DELETE'])

@@ -82,7 +82,7 @@ def get_sentence_by_id(id):
         close(conn)
 
 
-def get_sentences(page=1, limit=50, query=None):
+def get_sentences(page=1, limit=50, query=None, category=None):
     conn = None
     try:
         if page == 0:
@@ -92,22 +92,27 @@ def get_sentences(page=1, limit=50, query=None):
         offset = (limit * int(page)) - limit
         cur = conn.cursor()
 
+        sql_count = "SELECT COUNT(*) FROM CORPORA WHERE 1=1 "
+        sql_select = """SELECT * FROM CORPORA WHERE 1=1 """
+        data = ()
+
         if query is not None:
-            sql_count = "SELECT COUNT(*) FROM CORPORA where sentence ilike %s "
-            sql_select = """SELECT * FROM CORPORA where sentence ilike %s order by id OFFSET %s LIMIT %s """
-            data = ('%%%s%%' % query, offset, limit)
-            cur.execute(sql_count, ('%%%s%%' % query,))
-            count = cur.fetchone()[0]
+            sql_count = sql_count + " AND SENTENCE ilike %s "
+            sql_select =sql_select + """AND SENTENCE ilike %s """
+            data = data + ('%%%s%%' % query,)
 
+        if category is not None:
+            sql_count = sql_count + " AND CATEGORY = %s "
+            sql_select = sql_select + """AND CATEGORY = %s """
+            data = data + (category,)
 
-        else:
-            sql_count = "SELECT COUNT(*) FROM CORPORA"
-            sql_select = """SELECT * FROM CORPORA order by id OFFSET %s LIMIT %s """
-            data = (offset, limit)
-            cur.execute(sql_count)
-            count = cur.fetchone()[0]
+        cur.execute(sql_count, data)
+        count = cur.fetchone()[0]
 
+        sql_select = sql_select + " ORDER BY ID  OFFSET %s LIMIT %s "
+        data = data + (offset,limit)
         cur.execute(sql_select, data)
+
         results = [(c) for c in cur]
         cur.close()
 
