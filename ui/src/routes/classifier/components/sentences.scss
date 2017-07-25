@@ -1,0 +1,51 @@
+.corpora {
+  font-size: 11px;
+  font-family: Arial;
+
+  .search{
+    width: 60%;
+    height: 44px;
+    font-size: 14px;
+  }
+  table,
+  td {
+    border: 1px solid #000;
+    text-align: left;
+    padding: 5px;
+  }
+
+  .geo,
+  .none,
+  .delete {
+    height: 22px;
+    border: 0px;
+    padding: 2px;
+    margin: 2px;
+  }
+
+  .pagination {
+    display: block;
+    text-align: center;
+
+    li {
+      display: inline;
+      padding: 4px;
+    }
+  }
+
+  a {
+    cursor: pointer;
+  }
+
+  tr.none {
+    background-color: #CCC;
+  }
+
+  tr.geography {
+    background-color: green;
+
+    a{
+      color: #FFF
+    }
+  }
+}

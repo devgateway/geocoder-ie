@@ -9,7 +9,7 @@ def main(args):
     try:
         parser = argparse.ArgumentParser(description="Utility to auto-geocode IATI projects")
 
-        parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download'],
+        parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download', 'generate'],
                             required=False,
                             dest='command',
                             help='use geocode to auto-geocode projects in file provided, or download to get raw '
@@ -43,12 +43,12 @@ def main(args):
 
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:
-                print(
-                    'Please provide a valid reporting organisation code please look at http://iatistandard.org/202/codelists/OrganisationIdentifier/')
+                print('Please provide a valid reporting organisation code please look at '
+                      'http://iatistandard.org/202/codelists/OrganisationIdentifier/')
                 return
             if args.countries is None or args.countries != 'ALL':
-                print(
-                    'Provide a recipien country code or set it to ALL, please look at http://iatistandard.org/202/codelists/Country/')
+                print('Provide a recipient country code or set it to ALL, please '
+                      'look at http://iatistandard.org/202/codelists/Country/')
                 return
             if args.countries == 'ALL':
                 countries = iati_countries
@@ -56,6 +56,9 @@ def main(args):
                 countries = args.countries
             bulk_data_download(args.organisation, countries, download_path=args.download_path,
                                activities_limit=args.limit)
+        elif args.command == 'generate':
+            print('generate corpora')
+
     except (KeyboardInterrupt, SystemExit):
         print('By!')
 

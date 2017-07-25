@@ -3,6 +3,7 @@ from sklearn.metrics.classification import confusion_matrix, f1_score, recall_sc
 from sklearn.model_selection._split import KFold, train_test_split
 from dg.geocoder.classification.classifier import Classifier
 from dg.geocoder.classification.plot import plot_confusion_matrix
+from dg.geocoder.data.loader import FileDataLoader
 
 
 class Trainer:
@@ -74,3 +75,10 @@ class Trainer:
 
     def plot_stats(self):
         plot_confusion_matrix(self.confusion, ['geography', 'none'])
+
+
+z=FileDataLoader('categorized')
+a = Trainer(z.build_data_frame())
+a.kfold_train()
+a.print_stats()
+

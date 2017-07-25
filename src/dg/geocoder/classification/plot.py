@@ -1,14 +1,9 @@
-from matplotlib.pyplot import pause
-
 print(__doc__)
 
 import itertools
-import numpy as np
-import matplotlib.pyplot as plt
 
-from sklearn import svm, datasets
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def plot_confusion_matrix(cm, classes,
