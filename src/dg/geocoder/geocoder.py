@@ -1,22 +1,4 @@
-from dg.geocoder.classification.trainer import Trainer
-from dg.geocoder.data.loader import FileDataLoader
-
-# dir = os.path.dirname(__file__)
-
-# target = os.path.normpath(os.path.join(dir, '../categorized'))
-
-# loader = FileDataLoader(target)
-
-# trainer = Trainer(loader.build_data_frame())
-
-# trainer.kfold_train()
-
-# trainer.plot_stats()
-
-# classifier=trainer.get_classifier()
-
-# print(classifier.predict(['Project area covers two towns in Cordoba City and Municipality','Eating at London wa snice']))
-from dg.geocoder.iati import activity_reader
+from dg.geocoder.classification.classifier import load_classifier
 
 
 def process_activity(activity):
@@ -30,5 +12,11 @@ def bulk_process(xml, path_to_docs='docs'):
         print('Process list of activities')
 
 
-def classify_document(file,classifier='default_classifier'):
-    print(file)
+def classify_document(file, cls_name='default_classifier'):
+    classifier = load_classifier(cls_name)
+
+
+
+if __name__ == '__main__':
+    classify_document(None,cls_name='sebas')
+

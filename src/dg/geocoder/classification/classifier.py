@@ -22,9 +22,9 @@ class Classifier:
         self.clf.fit(self.vectorizer.fit_transform(x), y)
 
     def save(self, name):
-        pickle.dump(self.clf, open("classifiers/%s.p" % name, "wb"))
+        pickle.dump(self, open("classifiers/%s.p" % name, "wb"))
         return self.clf
 
 
 def load_classifier(name):
-    return pickle.load(open(("%s.p" % name), "rb"))
+    return pickle.load(open(("classifiers/%s.p" % name), "rb"))
