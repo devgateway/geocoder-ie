@@ -1,19 +1,18 @@
 import argparse
 import sys
 
+from corpora_generator import generate
+from dg.geocoder.classification.trainer import train_classifier
 from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
 from dg.geocoder.iati.iati_downloader import bulk_data_download
-
-
-
-
 
 
 def main(args):
     try:
         parser = argparse.ArgumentParser(description="Utility to auto-geocode IATI projects")
 
-        parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download', 'generate'],
+        parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download', 'generate',
+                                                                                     'train'],
                             required=False,
                             dest='command',
                             help='use geocode to auto-geocode projects in file provided, or download to get raw '
@@ -37,6 +36,9 @@ def main(args):
         parser.add_argument("-l", "--limit", type=str, default=100, required=False, dest='limit',
                             help='Number of activities to download')
 
+        parser.add_argument("-n", "--name", type=str, required=False, dest='name',
+                            help='classifier name')
+
         args = parser.parse_args(args)
 
         if args.command == 'geocode':
@@ -58,10 +60,24 @@ def main(args):
                 countries = iati_countries
             else:
                 countries = args.countries
+
             bulk_data_download(args.organisation, countries, download_path=args.download_path,
                                activities_limit=args.limit)
+        elif args.command == 'train':
+            name = args.name
+            if name is None:
+                print('Please provide a name for the new classifier using -n')
+            else:
+                print('we will train and save a new classifier from database corpora')
+                cls = train_classifier(plot_results=True)
+                cls.save(name)
+
         elif args.command == 'generate':
-            print('generate corpora')
+            print('Corpora database will be erased, Are you sure to continue?')
+            if input('[y/n]').lower() == 'y':
+                generate()
+                print('done!')
+
 
     except (KeyboardInterrupt, SystemExit):
         print('By!')

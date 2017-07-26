@@ -1,5 +1,3 @@
-print(__doc__)
-
 import itertools
 
 import matplotlib.pyplot as plt

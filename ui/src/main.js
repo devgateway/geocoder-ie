@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import './styles/main.scss'
+
 window.API_ROOT = 'http://localhost:8080'
 
 // Store Initialization

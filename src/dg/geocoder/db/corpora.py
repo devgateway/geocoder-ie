@@ -82,7 +82,7 @@ def get_sentence_by_id(id):
         close(conn)
 
 
-def get_sentences(page=1, limit=50, query=None, category=None):
+def get_sentences(page=1, limit=50, query=None, category=None, document=None):
     conn = None
     try:
         if page == 0:
@@ -98,7 +98,7 @@ def get_sentences(page=1, limit=50, query=None, category=None):
 
         if query is not None:
             sql_count = sql_count + " AND SENTENCE ilike %s "
-            sql_select =sql_select + """AND SENTENCE ilike %s """
+            sql_select = sql_select + """AND SENTENCE ilike %s """
             data = data + ('%%%s%%' % query,)
 
         if category is not None:
@@ -106,11 +106,17 @@ def get_sentences(page=1, limit=50, query=None, category=None):
             sql_select = sql_select + """AND CATEGORY = %s """
             data = data + (category,)
 
+        if document is not None:
+            sql_count = sql_count + " AND FILE like %s "
+            sql_select = sql_select + """ AND FILE like %s """
+            data = data + ('%%%s' % document,)
+
         cur.execute(sql_count, data)
         count = cur.fetchone()[0]
 
         sql_select = sql_select + " ORDER BY ID  OFFSET %s LIMIT %s "
-        data = data + (offset,limit)
+
+        data = data + (offset, limit)
         cur.execute(sql_select, data)
 
         results = [(c) for c in cur]
@@ -118,6 +124,23 @@ def get_sentences(page=1, limit=50, query=None, category=None):
 
         return {'count': count, 'rows': results, 'limit': limit}
 
+    except Exception as error:
+        print(error)
+        pass
+    finally:
+        close(conn)
+
+
+def get_doc_list():
+    conn = None
+    try:
+        conn = open()
+        cur = conn.cursor()
+        sql_select = """SELECT distinct(file) FROM CORPORA order by file"""
+        cur.execute(sql_select)
+        results = [(c[0]) for c in cur]
+        cur.close()
+        return results
     except Exception as error:
         print(error)
         pass

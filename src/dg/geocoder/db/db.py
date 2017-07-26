@@ -3,7 +3,6 @@ import psycopg2
 
 def open():
     try:
-        print('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect('dbname=geocoder user=postgres password=admin')
         return conn
     except (Exception, psycopg2.DatabaseError) as error:

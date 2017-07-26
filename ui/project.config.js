@@ -10,7 +10,7 @@ module.exports = {
   /** The file name of the application's entry point */
   main: 'main',
   /** The name of the directory in which to emit compiled assets */
-  outDir: 'dist',
+  outDir: '../static',
   /** The base path for all projects assets (relative to the website root) */
   publicPath: '/',
   /** Whether to generate sourcemaps */

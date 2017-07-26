@@ -2,7 +2,8 @@ import Immutable from 'immutable'
 import {
   getSentences,
   deleteSentenceById,
-  updateSentenceById
+  updateSentenceById,
+  getDocList
 } from 'api'
 
 // ------------------------------------
@@ -14,6 +15,8 @@ export const SENTENCE_DELETED = 'SENTENCE_DELETED'
 export const SENTENCE_UPDATED = 'SENTENCE_UPDATED'
 export const TERM_UPDATED = 'TERM_UPDATED'
 export const PAGE_CHANGED = 'PAGE_CHANGED'
+export const DOC_LIST_LOADED = 'DOC_LIST_LOADED'
+export const DOCUMENT_CHANGED = 'DOCUMENT_CHANGED'
 
 // ------------------------------------
 // Actions
@@ -31,19 +34,50 @@ export function pageClick(page) {
   return (dispatch, getState) => {
     dispatch({
       type: PAGE_CHANGED,
-      page:page + 1
+      page: page + 1
     })
-      const term = getState().getIn(['classifier', 'term'])
-      dispatch(loadSentences({page:page+1,query:term}))
+
+    dispatch(loadSentences(getParams(getState)))
   }
 
 }
 
 
+export function changeDocument(doc) {
+  debugger
+  return (dispatch, getState) => {
+    dispatch({
+      type: DOCUMENT_CHANGED,
+      doc: doc
+    })
+
+    dispatch(loadSentences(getParams(getState)))
+  }
+
+}
+
 export function search() {
   return (dispatch, getState) => {
-    const term = getState().getIn(['classifier', 'term'])
-    dispatch(loadSentences({query: term}))
+
+    dispatch({
+      type: PAGE_CHANGED,
+      page: 1
+    })
+    dispatch(loadSentences(getParams(getState, 1)))
+  }
+}
+
+export function loadDocList() {
+  return (dispatch, getState) => {
+    getDocList().then((response) => {
+        dispatch({
+          type: DOC_LIST_LOADED,
+          data: response.data
+        });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 }
 
@@ -73,13 +107,26 @@ export function deleteSentence(id) {
   }
 }
 
+function getParams(getState, page) {
+  let term = getState().getIn(['classifier', 'term'])
+  page = (page) ? page : getState().getIn(['classifier', 'page'])
+  let doc = getState().getIn(['classifier', 'doc'])
+
+  if (doc == 'All') {
+    doc = null
+  }
+  return {
+    page,
+    query: term,
+    doc
+  }
+}
 export function updateSentence(id, category) {
   return (dispatch, getState) => {
-      const term = getState().getIn(['classifier', 'term'])
-      const page = getState().getIn(['classifier', 'page'])
+
 
     updateSentenceById(id, category).then((response) => {
-        dispatch(loadSentences({page,query:term}))
+        dispatch(loadSentences(getParams(getState)))
       })
       .catch((error) => {
         console.log(error)
@@ -95,11 +142,19 @@ const ACTION_HANDLERS = {
     const newList = Immutable.Map(action.data)
     return state.set('sentences', newList)
   },
+  [DOC_LIST_LOADED]: (state, action) => {
+    debugger
+    const newList = Immutable.List(action.data)
+    return state.set('docs', newList)
+  },
   [TERM_UPDATED]: (state, action) => {
     return state.set('term', action.term)
   },
   [PAGE_CHANGED]: (state, action) => {
     return state.set('page', action.page)
+  },
+  [DOCUMENT_CHANGED]: (state, action) => {
+    return state.set('doc', action.doc)
   }
 }
 
@@ -107,7 +162,8 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = Immutable.Map({
-  'term': ''
+  'term': '',
+  'doc': 'All'
 })
 
 export default function counterReducer(state = initialState, action) {

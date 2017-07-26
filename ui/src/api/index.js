@@ -14,8 +14,13 @@ export function deleteSentenceById(id) {
 }
 
 export function updateSentenceById(id, category) {
-  debugger
   return axios.post(`${ROOT}/corpora/${id}`, {
     category: category
   })
+}
+
+
+
+export function getDocList() {
+  return axios.get(`${ROOT}/corpora/docs`)
 }

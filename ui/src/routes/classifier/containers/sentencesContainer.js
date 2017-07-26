@@ -7,7 +7,9 @@ import {
   deleteSentence ,
   updateSentence,
   updateTerm,
-  search
+  search,
+  loadDocList,
+  changeDocument
 } from '../modules/sentences'
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -22,22 +24,24 @@ import View from '../components/sentences'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
+  onChangeDocument:changeDocument,
   onDelete:deleteSentence,
   onUpdate:updateSentence,
   onLoad: loadSentences,
-
+  onLoadDocs:loadDocList,
   onSearchChange:updateTerm,
   onSearch:search,
   onPageClick: pageClick
 }
 
 const mapStateToProps = (state) => {
-  debugger;
   return {
+    doc:state.getIn(['classifier','doc']),
     term:state.getIn(['classifier','term']),
     rows: state.getIn(['classifier', 'sentences','rows']),
     limit: state.getIn(['classifier', 'sentences','limit']),
-    count: state.getIn(['classifier', 'sentences','count'])
+    count: state.getIn(['classifier', 'sentences','count']),
+    docs: state.getIn(['classifier', 'docs'])
   }
 }
 

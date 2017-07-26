@@ -8,25 +8,38 @@ const Label=(props)=>(<div>{props.value?props.value:'N/A'}</div>)
 const Delete=(props)=>(<div><input type='button' value='Delete' className='delete' onClick={props.onClick}/></div>)
 const Geo=(props)=>(<div><input type='button' className='geo' value='Geography'  onClick={props.onClick}/></div>)
 const None=(props)=>(<div><input type='button' className='none' value='None'  onClick={props.onClick}/></div>)
-
-
+const Option=(props)=>(<option  value={props.value}>{props.value}</option>)
 
 export default class Sentences extends Component {
 
   componentWillMount() {
     this.props.onLoad();
+    this.props.onLoadDocs();
   }
 
     render() {
-      debugger;
-      const {rows=[],onPageClick,count,limit,onUpdate,onDelete,onSearchChange, term,onSearch}=this.props
+      const {rows=[],onPageClick,count,limit,onUpdate,onDelete,onSearchChange, term,onSearch,docs=[],doc,onChangeDocument}=this.props
       const pageCount=count/limit
         return (
           <div className='corpora' style={{ margin: '0 auto' }} >
             <h1>Training Data  </h1>
             <h3>{count} Records  </h3>
-                <input type="text" className="search" onChange={e=>onSearchChange(e.target.value)} value={term}/>
-                <input type='button' className='none' value='Search'  onClick={onSearch}/>
+
+            <div className="search-form">
+                <div className="search-row">
+                  <select onChange={e=>onChangeDocument(e.target.value)} value={doc}>
+                    <Option value='All' current={doc}/>
+                    {docs.map(d=><Option value={d.split('/')[d.split('/').length-1]}/>)}
+                  </select>
+                </div>
+                <div className="search-row">
+                  <input type="text" className="input-search" onChange={e=>onSearchChange(e.target.value)} value={term}/>
+                </div>
+                <div className="search-row right">
+                    <input type='button' className='btn-search' value='Search'  onClick={onSearch}/>
+                </div>
+            </div>
+
                 <ReactPaginate
                            previousLabel={"previous"}
                            nextLabel={"next"}

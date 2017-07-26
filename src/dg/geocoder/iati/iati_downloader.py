@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import uuid
 import xml.etree.ElementTree as ET
+from email.utils import unquote
 from urllib.request import urlopen
 
 from dg.geocoder.iati.activity_reader import ActivityReader
@@ -18,7 +19,7 @@ def download(dest_path, url):
             file_name = '%s.html' % uuid.uuid1()
         else:
             md = 'wb'
-            path = "%s/%s" % (dest_path, file_name)
+            path = "%s/%s" % (dest_path, unquote(file_name))
             with open(path, md) as local_file:
                 local_file.write(f.read())
                 print('file saved')

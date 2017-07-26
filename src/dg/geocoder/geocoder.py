@@ -30,3 +30,5 @@ def bulk_process(xml, path_to_docs='docs'):
         print('Process list of activities')
 
 
+def classify_document(file,classifier='default_classifier'):
+    print(file)

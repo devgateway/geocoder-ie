@@ -17,6 +17,11 @@ class PdfReader:
     def split(self):
         if len(self.paragraphs) == 0:
             reg_exp = RegexpTokenizer(r'\w+([.,]\w+)*|\S+')
+
+            #paragprahs = re.split('/\n/', raw_text)
+            #for p in paragprahs:
+            #   self.paragraphs.append(p)
+
             for page in self.reader.pages[2:]:
                 raw_text = self.read_page(page)
                 ps = self.sentence_tokenizer.tokenize(raw_text)
