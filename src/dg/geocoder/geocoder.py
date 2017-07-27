@@ -17,6 +17,7 @@ def classify_document(file, cls_name='default_classifier'):
 
 
 
+
 if __name__ == '__main__':
     classify_document(None,cls_name='sebas')
 

@@ -10,4 +10,4 @@ stanford-ner-2016-10-31
 src2.6
 download
 ./download
-./download
+./docs/**

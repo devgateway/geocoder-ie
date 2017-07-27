@@ -1,1 +1,0 @@
-This system should make it possible to monitor project expenditure against projections by financing source, by expenditure category and by component.
