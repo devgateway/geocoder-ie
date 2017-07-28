@@ -78,13 +78,10 @@ def main(args):
                 generate()
                 print('done!')
 
-
     except (KeyboardInterrupt, SystemExit):
-        print('By!')
+        print('adios!')
 
 
 # report error and proceed
-
-
 if __name__ == '__main__':
     main(sys.argv[1:])

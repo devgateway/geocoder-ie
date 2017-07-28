@@ -8,6 +8,8 @@ const Label=(props)=>(<div>{props.value?props.value:'N/A'}</div>)
 const Delete=(props)=>(<div><input type='button' value='Delete' className='delete' onClick={props.onClick}/></div>)
 const Geo=(props)=>(<div><input type='button' className='geo' value='Geography'  onClick={props.onClick}/></div>)
 const None=(props)=>(<div><input type='button' className='none' value='None'  onClick={props.onClick}/></div>)
+const Null=(props)=>(<div><input type='button' className='none' value='Unset'  onClick={props.onClick}/></div>)
+
 const Option=(props)=>(<option  value={props.value}>{props.value}</option>)
 
 export default class Sentences extends Component {
@@ -58,6 +60,7 @@ export default class Sentences extends Component {
                                     <td><Label value={l[2]}/></td>
                                     <td><Geo value={l[2]} onClick={e=>onUpdate(l[0],'geography')}/></td>
                                     <td><None value={l[2]} onClick={e=>onUpdate(l[0],'none')}/></td>
+                                    <td><Null value={l[2]} onClick={e=>onUpdate(l[0],'')}/></td>
                                     <td><Delete value={l[2]} onClick={e=>onDelete(l[0])}/></td>
                                     <td><a target='new' href={`${window.API_ROOT}/download/${l[0]}`}>{l[3].split('/').pop()}</a></td>
                                 </tr>):null}

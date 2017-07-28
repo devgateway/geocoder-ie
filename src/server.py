@@ -35,7 +35,7 @@ def doc_download(id):
     full_path = os.path.realpath(os.path.realpath(os.path.join('', path)))
     parts = full_path.split(os.path.sep)
 
-    return send_from_directory(sep.join(parts[0:-1]), parts[-1])
+    return send_from_directory(sep.join(parts[0:-1]), parts[-1], as_attachment=True)
 
 
 @app.route('/corpora', methods=['GET'])

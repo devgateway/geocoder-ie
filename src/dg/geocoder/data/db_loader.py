@@ -7,8 +7,6 @@ from dg.geocoder.db.corpora import get_sentences
 
 
 class DbDataLoader:
-    def __init__(self, path=''):
-        self.tagger = Ner(host='localhost', port=1234)
 
     def get_geography_rows(self, limit=2000):
         return get_sentences(category='geography', limit=limit)['rows']
