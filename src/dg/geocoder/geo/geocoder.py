@@ -3,6 +3,7 @@ from sner import Ner
 
 from dg.geocoder.classification.classifier import load_classifier
 from dg.geocoder.config import get_ner_host, get_ner_port
+from dg.geocoder.geo.result_parser import ResultsParser
 from dg.geocoder.readers.factory import get_reader
 
 
@@ -36,9 +37,10 @@ def tag_sentences(sentences):
     tagger = Ner(host=get_ner_host(), port=get_ner_port())
     tagged_sentences = []
     for s in sentences:
-        tagged = tagger.get_entities(s)
-        locs = [(word) for word, tag in tagged if tag in ['LOCATION']]
-        tagged_sentences.append((s, locs))
+        tagged = tagger.get_entities(s.replace('\n', ' '))
+        locs = [(word.strip()) for word, tag in tagged if tag in ['LOCATION']]
+        if len(locs) > 0:
+            tagged_sentences.append((s, locs))
     return tagged_sentences
 
 
@@ -46,5 +48,13 @@ if __name__ == '__main__':
     texts = classify_document(
         'docs/GN-2005-009-EN-ADF-BD-WP-APPROVED-GUINEA-PPF-RURAL-DEVT-SUPPORT-PROJECT-FOR-THE-NORTH-WEST-FOUTA-DJALLON-AREA-LOTB-APPROVED.PDF',
         cls_name='default_classifier_1')
-    tagged = tag_sentences(texts)
-    print(tagged)
+    results = ResultsParser(tag_sentences(texts))
+    for loc, text in results.get_results():
+        print('%s' % loc)
+
+
+
+
+        # for i=0 i < len(tagged)
+        # for sentence, locations in tagged:
+        # print('\t -----> %s' % ','.join(merge_locations(locations, sentence)))
