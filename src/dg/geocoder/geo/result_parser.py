@@ -17,7 +17,7 @@ class ResultsParser(object):
         inter_text = text[pos1_e:pos2_e]
         return gap, edited_text, inter_text
 
-    def get_results(self):
+    def get_results(self, cut_off=0):
         ret = {}
         for i in range(len(self.tagged)):
             val = self.tagged[i]
@@ -26,12 +26,12 @@ class ResultsParser(object):
             m = self.__merge(locs, text)
             for location in m:
                 if location in ret:
-                    ret[location]['texts'].append(location)
+                    ret[location]['texts'].append(text)
                     ret[location]['count'] += 1
                 else:
                     ret[location] = {'texts': [text], 'count': 1}
 
-        return ret
+        return [(k, ret[k]) for k in ret if ret[k]['count'] > cut_off]
 
     def __merge(self, locs, text, distance=1):
         """Merges all words in locs list that are spaced at most two characters

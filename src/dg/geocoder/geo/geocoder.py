@@ -46,11 +46,13 @@ def tag_sentences(sentences):
 
 if __name__ == '__main__':
     texts = classify_document(
-        'docs/GN-2005-009-EN-ADF-BD-WP-APPROVED-GUINEA-PPF-RURAL-DEVT-SUPPORT-PROJECT-FOR-THE-NORTH-WEST-FOUTA-DJALLON-AREA-LOTB-APPROVED.PDF',
+        'docs/3794149.odt',
         cls_name='default_classifier_1')
-    results = ResultsParser(tag_sentences(texts))
-    for loc, text in results.get_results():
-        print('%s' % loc)
+    results = ResultsParser(tag_sentences(texts)).get_results()
+
+    for loc in results:
+        print(loc)
+
 
 
 
