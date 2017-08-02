@@ -1,4 +1,4 @@
-class ResultsParser(object):
+class CodingResults(object):
     def __init__(self, tagged):
         self.tagged = tagged
 
@@ -23,13 +23,15 @@ class ResultsParser(object):
             val = self.tagged[i]
             text = val[0]
             locs = val[1]
-            m = self.__merge(locs, text)
-            for location in m:
-                if location in ret:
-                    ret[location]['texts'].append(text)
-                    ret[location]['count'] += 1
+
+            merged = self.__merge(locs, text)
+            for location in merged:
+                if location[0] in ret:
+                    ret[location[0]]['texts'].append(text)
+                    ret[location[0]]['rels'].append(location[1])
+                    ret[location[0]]['count'] += 1
                 else:
-                    ret[location] = {'texts': [text], 'count': 1}
+                    ret[location[0]] = {'texts': [text], 'count': 1, 'rels': [location[1]]}
 
         return [(k, ret[k]) for k in ret if ret[k]['count'] > cut_off]
 
@@ -41,18 +43,19 @@ class ResultsParser(object):
         last_idx = len(locs) - 1
         merged = []
         while idx <= last_idx:
-            loc = locs[idx]
+            # loc is a tuple of (location name , relations[])
+            loc = locs[idx][0]
             while not idx is last_idx:
                 # "Trims" the text after looking at each location to prevent
                 # indexing the wrong occurence of the location word if it
                 # occurs multiple times in the text.
-                gap, text, merge = self.gap_length(locs[idx], locs[idx + 1], text)
+                gap, text, merge = self.gap_length(locs[idx][0], locs[idx + 1][0], text)
                 if gap <= distance:
                     loc += merge
                     idx += 1
                 else:
                     break
-            merged.append(loc)
+            merged.append((loc, locs[idx][1]))
             idx += 1
         return merged
 

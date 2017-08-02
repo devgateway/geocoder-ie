@@ -1,3 +1,6 @@
+pycorenlp
+numpy
+sner
 langdetect
 sklearn
 pandas
