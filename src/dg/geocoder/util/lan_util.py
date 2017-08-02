@@ -1,0 +1,1 @@
+from langdetect import detect
