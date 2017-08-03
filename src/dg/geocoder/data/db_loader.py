@@ -1,7 +1,6 @@
 import numpy
 from numpy import random
 from pandas.core.frame import DataFrame
-from sner.client import Ner
 
 from dg.geocoder.db.corpora import get_sentences
 

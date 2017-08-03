@@ -2,13 +2,10 @@
 import io
 import re
 
-from Scripts.pdf2txt import extract_text
+from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.pdfpage import PDFPage
-
-from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 
 
 class PdfReader(BaseReader):
