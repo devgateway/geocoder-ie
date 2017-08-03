@@ -8,7 +8,7 @@ class TestGeocoder(unittest.TestCase):
         text = """During this period, PRIME expanded to include 4 new upazilas 
                     (Tala in Satkhira district and Islampur, Dewanganj and Melandaha in Jamalpur district) 
                         to serve large numbers of poor people in these adjacent areas"""
-        geo = geocode(text=text)
+        geo = geocode(text=text,country_codes=['BD'])
 
     def test_merge(self):
         text = "Congo,New Guinea and Burkina Faso, same as the route Cordoba-Catamarca, Democratic Republic of Congo"

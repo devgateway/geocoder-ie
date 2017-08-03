@@ -3,6 +3,7 @@ import pycorenlp.corenlp
 
 from dg.geocoder.classification.classifier import load_classifier
 from dg.geocoder.config import get_ner_host, get_ner_port
+from dg.geocoder.geo.geonames import query, search
 from dg.geocoder.readers.factory import get_text_reader, get_reader
 
 
@@ -34,12 +35,15 @@ def classify(text=None, file=None, cls_name='default_classifier'):
 
 
 # query geonames an get geographical information
-def geonames(list, country_code=None):
-    for row in list:
+def geonames(list, country_codes=[]):
+    for i in range(len(list)):
+        row = list[i]
         locations = row['locations']
-        relations = row['relations']
+        relations = row['relations'][i]
+        rels = [(r.get('object')) for r in relations if r['relation'] == 'is in']
         for l in locations:
-            print(l)
+            results = search(l, country_codes=country_codes, rels=rels)
+    return None
 
 
 # Perform natural language processing to text, get annotated entities and entities relations
@@ -52,7 +56,6 @@ def extract(sentences):
         relations = [output["sentences"][0]["openie"] for item in output]
         locations_found = [(t['originalText']) for t in output["sentences"][0]["tokens"] for item in output if
                            t['ner'] == 'LOCATION']
-
         if len(locations_found) > 0:
             extraction.append(({'text': s, 'entities': locations_found, 'relations': relations}))
 
@@ -103,7 +106,7 @@ def merge(extracted, distance=2, ignored_gap_chars=[',', '-']):
     return extracted
 
 
-def geocode(text=None, file=None, cls_name='default_classifier'):
+def geocode(text=None, file=None, cls_name='default_classifier', country_codes=[]):
     texts = ''
     results = None
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
@@ -111,4 +114,4 @@ def geocode(text=None, file=None, cls_name='default_classifier'):
     # 3) merge names
     # 3) resolve locations using Geo Names
 
-    return geonames(merge(extract(classify(text=text, file=file, cls_name=cls_name))))
+    return geonames(merge(extract(classify(text=text, file=file, cls_name=cls_name))), country_codes=country_codes)
