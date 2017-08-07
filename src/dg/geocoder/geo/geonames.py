@@ -1,6 +1,9 @@
 import json
+import time
 from urllib.error import URLError
 from urllib.request import urlopen
+
+from requests.utils import quote
 
 from dg.geocoder.config import get_geonames_base_url, get_geonames_user_name
 
@@ -32,35 +35,58 @@ def parse(data):
     }
 
 
+def importance_3(results):
+    for l in results:
+        f_code = l.get('fcode')
+        if f_code in ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLL']:
+            return l
+
+    return None
+
+
+def importance_2(results):
+    for l in results:
+        f_code = l.get('fcode')
+        if f_code in ['RGN', 'RGNE', 'RGNH']:
+            return l
+
+    return None
+
+
+def importance_1(results):
+    for l in results:
+        f_code = l.get('fcode')
+        if f_code in ['ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5']:
+            return l
+
+    return None
+
+
 # this method should return a single location
-def search(name, country_codes=[], rels=[]):
+def resolve(loc, country_codes=[], rels=[]):
+    locations = query(loc, country_codes=country_codes)
+    selected_loc = importance_1(locations)
+
+    if selected_loc is None:
+        selected_loc = importance_2(locations)
+    if selected_loc is None:
+        selected_loc = importance_3(locations)
+
+    if selected_loc is None and len(locations) > 0:
+        selected_loc = locations[0]
+
+    return selected_loc
+
+
+def query(location, country_codes=None):
     results = []
-
-    if len(rels) > 0:
-        for r in rels:
-            results = query('{0} {1}'.format(name, r), mode='q')
-
-    print('.............looking for {}.........'.format(name))
-    if (len(results) > 0):
-        # non single results, let's see if we can reduce it
-        for loc in results[0:10]:
-            adm1 = loc.get('adminName1')
-            adm2 = loc.get('adminName2')
-            adm3 = loc.get('adminName3')
-            adm4 = loc.get('adminName4')
-            print('{} {} {} {} '.format(adm1, adm2, adm3, adm4))
-    return results
-
-
-def query(location, country_codes=None, mode='equals_name'):
-    results = []
+    tick = time.clock()
     try:
-        baseurl = get_geonames_base_url()
+        base_url = get_geonames_base_url()
         username = get_geonames_user_name()
-        query_string = baseurl + 'username={user}&equals_name={name}&style=FULL&orderby={order}'.format(
-            user=username,
-            name=location,
-            order='population')
+        query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5' \
+            .format(user=username, name=quote(location), order='relevance')
+
         if country_codes and len(country_codes) > 0:
             query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in country_codes])
 
@@ -75,5 +101,6 @@ def query(location, country_codes=None, mode='equals_name'):
     except URLError as e:
         print("Oops!  something didn't go well")
         print(e)
-
+    tock = time.clock()
+    print('Querying geonames for {} took ms'.format(location, tock - tick))
     return results

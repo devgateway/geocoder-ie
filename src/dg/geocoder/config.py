@@ -18,3 +18,14 @@ def get_geonames_base_url():
 
 def get_geonames_user_name():
     return parser.get('geonames', 'username')
+
+
+def get_ignore_entities():
+    return parser.get('ie', 'ignore_entities').lower().split(',')
+
+
+def get_ignore_gap_chars():
+    return parser.get('ie', 'ignore_gap_chars').lower().split(',')
+
+def get_classifiers_path():
+    return parser.get('fs','classifiers_path')

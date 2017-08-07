@@ -2,10 +2,12 @@
 import io
 import re
 
-from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.pdfpage import PDFPage
+
+from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 
 
 class PdfReader(BaseReader):
@@ -14,7 +16,7 @@ class PdfReader(BaseReader):
         self.paragraphs = []
         # split pd in paragraphs
 
-    def convert_pdf_to_txt(self):
+    def convert_pdf_to_txt(self, limit=20):
         rsrcmgr = PDFResourceManager()
         retstr = io.StringIO()
         codec = 'utf-8'
@@ -26,12 +28,15 @@ class PdfReader(BaseReader):
         maxpages = 0
         caching = True
         pagenos = set()
-
+        i = 0
         for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
                                       password=password,
                                       caching=caching,
                                       check_extractable=True):
+            print('Reading pdf page {}'.format(i))
             interpreter.process_page(page)
+
+            i = i + 1
 
         text = retstr.getvalue()
 
@@ -40,8 +45,8 @@ class PdfReader(BaseReader):
         retstr.close()
         return text
 
-
-    def split(self):
+    def split(self, limit=20):
+        print('Splitting document in sentences')
         if len(self.paragraphs) == 0:
             raw_text = self.convert_pdf_to_txt()
             tokenizer = get_sentence_tokenizer()
@@ -52,8 +57,7 @@ class PdfReader(BaseReader):
                 for s in tokens:
                     ps.append(s)
             for s in ps:
-                if len(s) > 150:
-                    self.paragraphs.append(s)
+                self.paragraphs.append(s)
 
         return self.paragraphs
 

@@ -1,9 +1,10 @@
-from nltk.corpus import stopwords
 import pickle
 
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.svm.classes import LinearSVC
+
+from dg.geocoder.config import get_classifiers_path
 
 english_stops = stopwords.words('english')
 
@@ -21,10 +22,10 @@ class Classifier:
     def train(self, x, y):
         self.clf.fit(self.vectorizer.fit_transform(x), y)
 
-    def save(self, name):
-        pickle.dump(self, open("classifiers/%s.p" % name, "wb"))
+    def save(self, name, path=get_classifiers_path()):
+        pickle.dump(self, open("{}/{}.p".format(path, name), "wb"))
         return self.clf
 
 
-def load_classifier(name):
-    return pickle.load(open(("classifiers/%s.p" % name), "rb"))
+def load_classifier(name, path=get_classifiers_path()):
+    return pickle.load(open(("{}/{}.p".format(path, name)), "rb"))

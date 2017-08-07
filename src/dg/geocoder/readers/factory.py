@@ -6,8 +6,10 @@ from dg.geocoder.util.file_util import is_pdf, is_odt
 
 def get_reader(path_to_file):
     if is_pdf(path_to_file):
+        print('Creating pdf reader')
         return PdfReader(path_to_file)
     elif is_odt(path_to_file):
+        print('Creating odt reader')
         return OdtReader(path_to_file)
     else:
         return None

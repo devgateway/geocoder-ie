@@ -1,6 +1,5 @@
-import zipfile
 import xml.etree.ElementTree as ET
-import nltk
+import zipfile
 
 from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 
