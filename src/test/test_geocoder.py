@@ -55,7 +55,14 @@ class TestGeocoder(unittest.TestCase):
     def test_geocode_document(self):
         geo = geocode(file='src/test/1.pdf', country_codes=['GN'])
         locs = [(l) for (l, data) in geo if data.get('geocoding')]
-        self.assertTrue(['Guinea', 'Conakry', 'Koundara', 'UPPER GUINEA', 'Fouta Djallon', 'Republic of Guinea', 'Gaoual'] ==[(l) for (l, data) in geo if data.get('geocoding')])
+        self.assertTrue('Guinea' in locs)
+        self.assertTrue('Conakry' in locs)
+        self.assertTrue('Koundara' in locs)
+        self.assertTrue('UPPER GUINEA' in locs)
+        self.assertTrue('Fouta Djallon' in locs)
+        self.assertTrue('Republic of Guinea' in locs)
+        self.assertTrue('Gaoual' in locs)
 
-    if __name__ == '__main__':
-        unittest.main()
+
+if __name__ == '__main__':
+    unittest.main()
