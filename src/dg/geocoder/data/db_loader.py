@@ -6,7 +6,6 @@ from dg.geocoder.db.corpora import get_sentences
 
 
 class DbDataLoader:
-
     def get_geography_rows(self, limit=2000):
         return get_sentences(category='geography', limit=limit)['rows']
 
@@ -22,7 +21,6 @@ class DbDataLoader:
         return all_records
 
     def build_data_frame(self, remove_entities=False):
-
         rows = []
         index = []
         for id, text, classification, file_name in self.read_rows():

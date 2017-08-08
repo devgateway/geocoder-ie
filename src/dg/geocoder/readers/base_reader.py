@@ -1,6 +1,7 @@
 import nltk
 from langdetect.detector_factory import detect
-punk_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+from nltk.tokenize.texttiling import TextTilingTokenizer
+
 
 class BaseReader:
     def __init__(self, file):
@@ -15,4 +16,6 @@ class BaseReader:
 
 
 def get_sentence_tokenizer():
+    punk_tokenizer = nltk .data.load('tokenizers/punkt/english.pickle')
     return punk_tokenizer
+    #TextTilingTokenizer(demo_mode=False)

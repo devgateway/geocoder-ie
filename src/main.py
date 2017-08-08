@@ -1,10 +1,7 @@
 import argparse
 import sys
-
-from corpora_generator import generate
-from dg.geocoder.classification.trainer import train_classifier
 from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
-from dg.geocoder.iati.iati_downloader import bulk_data_download
+
 
 
 def main(args):
@@ -61,6 +58,7 @@ def main(args):
             else:
                 countries = args.countries
 
+            from dg.geocoder.iati.iati_downloader import bulk_data_download
             bulk_data_download(args.organisation, countries, download_path=args.download_path,
                                activities_limit=args.limit)
         elif args.command == 'train':
@@ -69,12 +67,14 @@ def main(args):
                 print('Please provide a name for the new classifier using -n')
             else:
                 print('we will train and save a new classifier from database corpora')
+                from dg.geocoder.classification.trainer import train_classifier
                 cls = train_classifier(plot_results=True)
                 cls.save(name)
 
         elif args.command == 'generate':
             print('Corpora database will be erased, Are you sure to continue?')
             if input('[y/n]').lower() == 'y':
+                from corpora_generator import generate
                 generate()
                 print('done!')
 

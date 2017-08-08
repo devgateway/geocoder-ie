@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import io
-import re
 
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -16,7 +15,7 @@ class PdfReader(BaseReader):
         self.paragraphs = []
         # split pd in paragraphs
 
-    def convert_pdf_to_txt(self, limit=20):
+    def convert_pdf_to_txt(self, pagenos=None):
         rsrcmgr = PDFResourceManager()
         retstr = io.StringIO()
         codec = 'utf-8'
@@ -27,7 +26,7 @@ class PdfReader(BaseReader):
         password = ""
         maxpages = 0
         caching = True
-        pagenos = set()
+        pagenos = set(pagenos) if pagenos is not None else set()
         i = 0
         for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
                                       password=password,
@@ -45,25 +44,20 @@ class PdfReader(BaseReader):
         retstr.close()
         return text
 
-    def split(self, limit=20):
+    def split(self, pagenos=None):
         print('Splitting document in sentences')
         if len(self.paragraphs) == 0:
-            raw_text = self.convert_pdf_to_txt()
+            raw_text = self.convert_pdf_to_txt(pagenos)
             tokenizer = get_sentence_tokenizer()
-            texts = re.split('/\n/', raw_text)
-            ps = []
-            for t in texts:
-                tokens = tokenizer.tokenize(t)
-                for s in tokens:
-                    ps.append(s)
-            for s in ps:
-                self.paragraphs.append(s)
+            tokens = tokenizer.tokenize(raw_text)
+            for t in tokens:
+                self.paragraphs.append(t)
 
         return self.paragraphs
 
     # Extract raw text from page number
     def get_page(self, n):
-        return self.read_page(self.reader.getPage(n))
+        return self.convert_pdf_to_txt(pagenos=[2])
 
     # Extract raw text from page
     def read_page(self, page):
