@@ -1,5 +1,6 @@
 import argparse
 import sys
+
 from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
 from dg.geocoder.util.file_util import is_xml
 
@@ -8,7 +9,7 @@ def main(args):
     try:
         parser = argparse.ArgumentParser(description="Utility to auto-geocode IATI projects")
 
-        parser.add_argument("-m", "--command", type=str, default='geocode', choices=['geocode', 'download', 'generate',
+        parser.add_argument("-c", "--command", type=str, default='geocode', choices=['geocode', 'download', 'generate',
                                                                                      'train'],
                             required=False,
                             dest='command',
@@ -18,19 +19,13 @@ def main(args):
         parser.add_argument("-f", "--file", type=str, default=None, required=False, dest='file',
                             help='IATI XML activities')
 
-        parser.add_argument("-p", "--path", type=str, default='docs', required=False, dest='path',
-                            help='lookup path for of private documents ')
-
-        parser.add_argument("-d", "--download_path", type=str, default='download', required=False, dest='download_path',
-                            help='Downloaded data storage folder, default will be download folder')
-
-        parser.add_argument("-o", "--org", type=str, default=None, required=False, dest='organisation',
+        parser.add_argument("-p", "--publisher", type=str, default=None, required=False, dest='organisation',
                             help='Reporting organisation of the data to be download')
 
-        parser.add_argument("-c", "--countries", type=str, default=None, required=False, dest='countries',
+        parser.add_argument("-co", "--countries", type=str, default=None, required=False, dest='countries',
                             help='Countries codes')
 
-        parser.add_argument("-l", "--limit", type=str, default=100, required=False, dest='limit',
+        parser.add_argument("-l", "--limit", type=str, default=50, required=False, dest='limit',
                             help='Number of activities to download')
 
         parser.add_argument("-n", "--name", type=str, required=False, dest='name',
@@ -50,7 +45,7 @@ def main(args):
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:
                 print('Please provide a valid reporting organisation code please look at '
-                      'http://iatistandard.org/202/codelists/OrganisationIdentifier/')
+                      'https://www.iatiregistry.org/publisher')
                 return
             if args.countries is None or args.countries != 'ALL':
                 print('Provide a recipient country code or set it to ALL, please '
@@ -62,8 +57,7 @@ def main(args):
                 countries = args.countries
 
             from dg.geocoder.iati.iati_downloader import bulk_data_download
-            bulk_data_download(args.organisation, countries, download_path=args.download_path,
-                               activities_limit=args.limit)
+            bulk_data_download(args.organisation, countries, activities_limit=args.limit)
         elif args.command == 'train':
             name = args.name
             if name is None:

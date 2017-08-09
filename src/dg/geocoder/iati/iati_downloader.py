@@ -83,7 +83,7 @@ def bulk_data_download(org, countries=[], download_path=get_download_path(), off
         print('Found %d activities ' % (len(activity_list)))
         for activity in activity_list:
             reader = ActivityReader(root=activity)
-            download_activity_data(reader, download_path)
+            download_activity_data(reader, download_path, dump_activity=True)
 
 
 if __name__ == '__main__':

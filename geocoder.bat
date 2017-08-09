@@ -1,2 +1,0 @@
-python src\main.py %*
-
