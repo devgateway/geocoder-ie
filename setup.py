@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-
+#todo add nltk download
 setup(
     name='autogeocoder',
     version='1.0',

@@ -27,5 +27,20 @@ def get_ignore_entities():
 def get_ignore_gap_chars():
     return parser.get('ie', 'ignore_gap_chars').lower().split(' ')
 
+
 def get_classifiers_path():
-    return parser.get('fs','classifiers_path')
+    return parser.get('fs', 'classifiers_path')
+
+
+def get_db_name():
+    return parser.get('postgres', 'db_name')
+
+
+def get_user_name():
+    return parser.get('postgres', 'user_name')
+
+
+def get_password():
+    return parser.get('postgres', 'password')
+
+
