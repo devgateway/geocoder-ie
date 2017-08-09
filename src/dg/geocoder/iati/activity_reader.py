@@ -1,4 +1,3 @@
-import urllib
 import xml.etree.ElementTree as ET
 
 from dg.geocoder.iati.iati_codes import iati_regions, iati_countries, iati_publishers
@@ -11,7 +10,7 @@ def read_activities():
 class ActivityReader:
     def __init__(self, path=None, root=None):
         if path is not None:
-            self.root = ET.parse(urllib.urlopen(path)).getroot()
+            self.root = ET.parse(path).getroot()
         elif root is not None:
             self.root = root
 
@@ -55,8 +54,11 @@ class ActivityReader:
         return len(self.root.findall("document-link/category[@code='A02']") + self.root.findall(
             "document-link/category[@code='A07']")) > 0
 
-    def getXML(self):
-        return ET.tostring(self.root)
+    def __str__(self):
+        return ET.tostring(self.root).decode('utf-8')
+
+    def xml(self):
+        return self.__str__()
 
     def save(self):
         print('Save activity in database')

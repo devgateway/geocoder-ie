@@ -1,7 +1,7 @@
 import argparse
 import sys
 from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
-
+from dg.geocoder.util.file_util import is_xml
 
 
 def main(args):
@@ -43,6 +43,9 @@ def main(args):
             doc_path = args.path
             if file is None:
                 print('Please provide an input file using -f')
+            else:
+                if is_xml(file):
+                    print('XML parser')
 
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:
