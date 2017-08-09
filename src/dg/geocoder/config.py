@@ -1,7 +1,14 @@
+import os
 from configparser import ConfigParser
 
+import dg as main_package
+
+app_root_path = os.path.realpath(os.path.join(os.path.dirname(main_package.__file__), '..', '..', ))
+
+app_config_file_path = os.path.realpath(os.path.join(app_root_path, 'geocoder.ini'))
+
 parser = ConfigParser()
-parser.read('geocoder.ini')
+parser.read(app_config_file_path)
 
 
 def get_ner_host():
@@ -29,7 +36,7 @@ def get_ignore_gap_chars():
 
 
 def get_classifiers_path():
-    return parser.get('fs', 'classifiers_path')
+    return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'classifiers_path')))
 
 
 def get_db_name():
@@ -44,3 +51,17 @@ def get_password():
     return parser.get('postgres', 'password')
 
 
+def get_download_path():
+    return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'download_path')))
+
+
+def get_iati_xsd_path():
+    return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'iati_xsd_path')))
+
+
+def get_activities_xsd_file_path(version):
+    target = os.path.realpath(os.path.join(get_iati_xsd_path(), version, 'iati-activities-schema.xsd'))
+    if not os.path.exists(target):
+        raise IOError("Wasn't able to find xsd file for version {}".format(version))
+    else:
+        return target

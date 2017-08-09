@@ -1,6 +1,10 @@
 import unittest
 
+from dg.geocoder.config import get_download_path
 from dg.geocoder.geo.geocoder import geocode, merge
+from dg.geocoder.iati.activities_reader import ActivitiesReader
+from dg.geocoder.iati.iati_downloader import download_activity_data
+from dg.geocoder.iati.iati_validator import is_valid_schema
 
 
 class TestGeocoder(unittest.TestCase):
@@ -53,7 +57,7 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Democratic Republic of Congo' in results[0]['locations'])
 
     def test_geocode_document(self):
-        geo = geocode(file='src/test/1.pdf', country_codes=['GN'])
+        geo = geocode(file='1.pdf', country_codes=['GN'])
         locs = [(l) for (l, data) in geo if data.get('geocoding')]
         self.assertTrue('Guinea' in locs)
         self.assertTrue('Conakry' in locs)
@@ -62,6 +66,15 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Fouta Djallon' in locs)
         self.assertTrue('Republic of Guinea' in locs)
         self.assertTrue('Gaoual' in locs)
+
+    def test_geocode_activities_XML(self):
+        self.assertTrue(is_valid_schema('afdb_ag_activities.xml', version='202'))
+        reader = ActivitiesReader('afdb_ag_activities.xml')
+        activities = reader.get_activities()
+        for activity in activities:
+            documents = download_activity_data(activity, get_download_path())
+            ##geo = geocode(file='1.pdf', country_codes=['GN'])
+            print(documents)
 
 
 if __name__ == '__main__':

@@ -7,9 +7,8 @@ setup(
     author='Sebastian Dimunzio',
     author_email='sdimunzio@developmentgateway.org',
     package_dir={'': 'src'},
-    packages = find_packages(),
+    packages=find_packages(),
     install_requires=[
         'nltk',
         'psycopg2'
-    ]
-)
+    ])
