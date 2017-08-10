@@ -72,7 +72,7 @@ def join(list):
 
 
 # query geonames an get geographical information
-def geonames(list, cty_codes):
+def geonames(list, cty_codes=[]):
     for name, metadata in list:
         coding = resolve(name, cty_codes)
         if coding is not None:
@@ -88,7 +88,7 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
     extraction = []
 
     for s in sentences:
-        output = nlp.annotate(s.replace('\n', ' '), properties={"annotators": "openie,ner", "outputFormat": "json"})
+        output = nlp.annotate(s, properties={"annotators": "openie,ner", "outputFormat": "json"})
         relations = [output["sentences"][0]["openie"] for item in output]
         locations_found = [(t['originalText']) for t in output["sentences"][0]["tokens"] for item in output if
                            t['ner'] in ['LOCATION', 'PERSON'] and t[
@@ -103,8 +103,7 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
 
 def gap_length(word1, word2, text):
     start_1 = text.index(word1)
-    start_2 = text.index(word2)
-
+    start_2 = text.index(word2, start_1 + len(word1))
     end_1 = start_1 + len(word1)
     # end_2 = start_2 + len(word2)
     gap = start_2 - end_1
@@ -116,7 +115,7 @@ def gap_length(word1, word2, text):
 def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     ret_val = []
     for row in extracted:
-        text = row['text']
+        text = ' '.join(row['text'].replace('\n', ' ').split())
         entities = row['entities']
         x = 0
         last_idx = len(entities) - 1
@@ -145,7 +144,7 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     return extracted
 
 
-def geocode(texts, documents, cty_codes, cls_name=get_default_classifier()):
+def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), persits=False):
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
     # 3) merge names
@@ -154,4 +153,7 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier()):
     texts = classify(texts, documents, cls_name=cls_name)
     entities = merge(extract(texts))
     normalized = join(entities)
-    return geonames(normalized, cty_codes)
+    if persits:
+        pass
+        # save to database
+    return geonames(normalized, cty_codes=cty_codes)

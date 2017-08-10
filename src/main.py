@@ -16,8 +16,7 @@ def main(args):
                             help='use geocode to auto-geocode projects in file provided, or download to get raw '
                                  'data from IATI registry')
 
-        parser.add_argument("-f", "--file", type=str, default=None, required=False, dest='file',
-                            help='IATI XML activities')
+        parser.add_argument("file", type=str, default=None, nargs='+', help='IATI XML activities')
 
         parser.add_argument("-p", "--publisher", type=str, default=None, required=False, dest='organisation',
                             help='Reporting organisation of the data to be download')
@@ -34,13 +33,13 @@ def main(args):
         args = parser.parse_args(args)
 
         if args.command == 'geocode':
-            file = args.file
-            doc_path = args.path
+
+            file = args.file[0]
+            print('GEOCODE {}'.format(file))
             if file is None:
                 print('Please provide an input file using -f')
             else:
-                if is_xml(file):
-                    print('XML parser')
+                __geocode(file)
 
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:
@@ -77,6 +76,11 @@ def main(args):
 
     except (KeyboardInterrupt, SystemExit):
         print('adios!')
+
+
+def __geocode(file, persits):
+    pass
+
 
 
 # report error and proceed

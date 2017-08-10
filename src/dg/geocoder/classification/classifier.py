@@ -13,8 +13,7 @@ class Classifier:
     def __init__(self):
         self.clf = LinearSVC()
         self.scores = []
-        self.vectorizer = CountVectorizer(token_pattern=r'[A-z]+', min_df=5, stop_words=english_stops,
-                                          ngram_range=(1, 3))
+        self.vectorizer = CountVectorizer(token_pattern=r'[A-z]+', min_df=5, stop_words=english_stops, ngram_range=(1, 3))
 
     def predict(self, texts):
         return self.clf.predict(self.vectorizer.transform(texts))
