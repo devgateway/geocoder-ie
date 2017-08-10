@@ -17,6 +17,11 @@ class ActivityReader:
     def get_identifier(self):
         return self.root.find('iati-identifier').text
 
+    def get_texts(self):
+        texts = []
+        [[texts.append(item.text) for item in el] for el in self.root if el.tag in {'title', 'description'}]
+        return texts
+
     def get_recipient_region_code(self):
         recipient_region_code = self.root.find('recipient-region')
         if recipient_region_code is not None:

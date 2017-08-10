@@ -57,15 +57,20 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Democratic Republic of Congo' in results[0]['locations'])
 
     def test_geocode_document(self):
-        geo = geocode(file='1.pdf', country_codes=['GN'])
+        geo = geocode([], ['1.pdf'], ['GN'])
         locs = [(l) for (l, data) in geo if data.get('geocoding')]
         self.assertTrue('Guinea' in locs)
         self.assertTrue('Conakry' in locs)
         self.assertTrue('Koundara' in locs)
-        self.assertTrue('UPPER GUINEA' in locs)
+        self.assertTrue('GUINEA' in locs)
         self.assertTrue('Fouta Djallon' in locs)
         self.assertTrue('Republic of Guinea' in locs)
         self.assertTrue('Gaoual' in locs)
+
+    def test_geocode_documen_2(self):
+        geo = geocode([], ['2.pdf'], ['GN'])
+        locs = [(l) for (l, data) in geo if data.get('geocoding')]
+        print(locs)
 
     def test_geocode_activities_XML(self):
         self.assertTrue(is_valid_schema('afdb_ag_activities.xml', version='202'))
@@ -73,8 +78,8 @@ class TestGeocoder(unittest.TestCase):
         activities = reader.get_activities()
         for activity in activities:
             documents = download_activity_data(activity, get_download_path())
-            ##geo = geocode(file='1.pdf', country_codes=['GN'])
-            print(documents)
+            texts = activity.get_texts()
+            results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_name()])
 
 
 if __name__ == '__main__':

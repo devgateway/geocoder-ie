@@ -1,4 +1,180 @@
 <iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+    <iati-activity xmlns:ns0="http://datastore.iatistandard.org/ns" default-currency="XDR" hierarchy="1"
+                   last-updated-datetime="2017-07-24T12:48:59" ns0:version="2.01" xml:lang="en">
+        <iati-identifier>46002-P-BF-AAD-006</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">Burkina Faso - Cashew Development Support Project in Como&#233; Basin for REDD+
+            </narrative>
+            <narrative xml:lang="fr">Burkina Faso - Projet d'appui au d&#233;veloppement de l'anacarde dans le bassin de
+                la Como&#233; pour la REDD+
+            </narrative>
+        </title>
+        <description type="1">
+            <narrative xml:lang="fr">Le Programme d?investissement forestier (FIP) est un des trois programmes du Fonds
+                strat&#233;gique sur le climat mis en place pour faciliter la r&#233;duction de la d&#233;forestation et
+                de la
+                d&#233;gradation foresti&#232;re et promouvoir la gestion durable des for&#234;ts, et ainsi contribuer
+                &#224; la diminution des &#233;missions des gaz &#224; effet de serre, le maintien du stock de carbone
+                forestier et la lutte contre la pauvret&#233; (REDD+).
+            </narrative>
+        </description>
+        <description type="2">
+            <narrative xml:lang="fr">Les principaux r&#233;sultats attendus sont i) la plantation de 25 000 ha
+                d?anacardes en agroforesterie, ii) la mise &#224; niveau et construction de 10 unit&#233;s de
+                transformation d?anacardes et de mangues, iii) l?am&#233;nagement de 10 centres de cuisson et de d&#233;corticage
+                pour les femmes, et iv) l?encadrement de 540
+                producteurs (trices) et 540 femmes transformatrices respectivement sur les bonnes pratiques de
+                production et de transformation ainsi que de 60 coop&#233;ratives et GIE sur la gestion des
+                exploitations et des unit&#233;s de transformation. Le co&#251;t du projet est de 10,968 millions de
+                $US.
+                Le projet sera ex&#233;cut&#233; sur une p&#233;riode de cinq ans (2017 &#224; 2021) par une unit&#233;
+                de coordination
+                du projet qui sera log&#233;e au sein du Minist&#232;re de l?Environnement, de l?&#201;conomie Verte et
+                du
+                Changement Climatique (MEEVCC). Le PADA touchera directement 10 000 producteurs (trices) et
+                transformateurs (trices) membres de l?Association Wouol, des r&#233;seaux
+                d?approvisionnement de ANATRANS et SOTRIAB et des associations des transformatrices
+                artisanales.
+            </narrative>
+        </description>
+        <description type="3">
+            <narrative xml:lang="fr">Le projet sera mis en ?uvre dans la zone d?intervention de l?Association Wouol dans
+                le bassin
+                de la Como&#233; qui couvre les r&#233;gions des Cascades, des Hauts Bassins et du Sud-Ouest. Il
+                touchera 8 provinces des 3 r&#233;gions totalisant une population estim&#233;e &#224; 3 168 101
+                habitants. Les
+                plantations d?anacardes de la zone couvrent une superficie estim&#233;e &#224; 65 800 ha dont 1950 ha
+                sous l?encadrement de l?Association Wouol. La production est estim&#233;e &#224; environ 35000 tonnes
+                en 2013. Les b&#233;n&#233;ficiaires directs sont les membres des groupements et des cinq unit&#233;s de
+                transformation de l?Association Wouol au nombre de 2500 membres dont 1300 femmes, les
+                membres des groupements de ANATRANS et SOTRIAB d?un nombre respectif de 4000 et de
+                3000 producteurs dont 40% des femmes, les associations des femmes transformatrices de
+                DIERI notamment les membres de l?Union Balamaya Kadi au nombre de 300 femmes et trois
+                promoteurs priv&#233;s b&#233;n&#233;ficieront des appuis du Projet dans la mise en place de leurs unit&#233;s
+                de
+                transformation. Enfin l?Association Interprofessionnelle b&#233;n&#233;ficiera d?appui en &#233;quipement
+                du
+                Projet. Les unit&#233;s semi-industrielles et artisanales g&#233;n&#232;rent actuellement 2500 emplois
+                dont
+                (90% pour les femmes) lesquels pourront &#234;tre multipli&#233;s par 1,5 suite aux augmentations des
+                capacit&#233;s de production des unit&#233;s qui seront mises &#224; niveau
+            </narrative>
+        </description>
+        <participating-org ref="46003" role="1" type="40">
+            <narrative>African Development Fund</narrative>
+        </participating-org>
+        <participating-org ref="" role="4" type="10">
+            <narrative>Minist&#232;re de l?Environnement, de l?&#201;conomie
+                Verte et du Changement Climatique (MEEVCC)
+            </narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2017-03-24" type="1"/>
+        <activity-date iso-date="2022-12-31" type="3"/>
+        <activity-date iso-date="2022-12-31" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Environment and Sustainable Development/ Environnement et D&#233;veloppement Durable
+                </narrative>
+            </department>
+            <person-name>
+                <narrative>GARBA Louali</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Senior Environmentalist</narrative>
+            </job-title>
+            <telephone>+225 2020 1990</telephone>
+            <email>l.garba@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group
+                    Headquarters
+                    Avenue Joseph Anoma
+                    01 BP 1387
+                    Abidjan 01, C&#244;te d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="BF"/>
+        <sector code="31220" vocabulary="DAC">
+            <narrative>Forestry / Plantations</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2100155034216">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2017-03-24"/>
+            <value value-date="2017-03-24">1000000.00</value>
+            <provider-org>
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOUVERNEMENT DE LA REPUBLIQUE DU BURKINAMINISTERE DE L'ECONOMIE ET DES FINANCES</narrative>
+            </receiver-org>
+            <flow-type code="10"/>
+            <finance-type code="110"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <document-link format="WebPage"
+                       url="http://www.afdb.org/en/projects-and-operations/project-portfolio/project/p-bf-aad-006/">
+            <title>
+                <narrative>Activity Web Site</narrative>
+            </title>
+            <category code="A12"/>
+            <language code="fr"/>
+        </document-link>
+        <document-link format="application/pdf"
+                       url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Environmental-and-Social-Assessments/Burkina_Faso_-_Projet_d%E2%80%99Appui_au_D%C3%A9veloppement_de_l%E2%80%99Anacarde_dans_le_Bassin_de_la_Como%C3%A9_pour_la_REDD_%E2%80%93_R%C3%A9sum%C3%A9_PCGES.pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <document-link format="application/pdf"
+                       url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Burkina_Faso_-_Approved_Cashew_Dev__Support_Project_in_Como%C3%A9_Basin.pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link format="application/pdf"
+                       url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Burkina_Faso_-Approuv%C3%A9_Projet_d_appui_au_d%C3%A9v._de_l_Anacarde_PADA_REDD.pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    </iati-activity>
     <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T11:55:36">
         <iati-identifier>46002-P-TN-AAC-009</iati-identifier>
         <reporting-org ref="46002" type="40">
@@ -30,6 +206,7 @@
                 protection de l'environnement..
             </narrative>
         </description>
+
         <participating-org role="1" ref="46002" type="40">
             <narrative>African Development Bank</narrative>
         </participating-org>

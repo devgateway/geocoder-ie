@@ -12,4 +12,4 @@ class TextReader(BaseReader):
         return self.paragraphs
 
     def get_sample(self):
-        return self.split()[1]
+        return self.split()[0]

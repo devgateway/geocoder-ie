@@ -5,9 +5,10 @@ import numpy as np
 import pycorenlp.corenlp
 
 from dg.geocoder.classification.classifier import load_classifier
-from dg.geocoder.config import get_ner_host, get_ner_port, get_ignore_entities, get_ignore_gap_chars
+from dg.geocoder.config import get_ner_host, get_ner_port, get_ignore_entities, get_ignore_gap_chars, \
+    get_default_classifier
 from dg.geocoder.geo.geonames import resolve
-from dg.geocoder.readers.factory import get_text_reader, get_reader
+from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 
 def process_activity(activity):
@@ -21,28 +22,39 @@ def bulk_process(xml, path_to_docs='docs'):
         print('Process list of activities')
 
 
-def classify(text=None, file=None, cls_name='default_classifier'):
-    if file is not None:
-        if not isfile(file):
-            raise SystemError("Can't find {}".format(file))
-        reader = get_reader(file)
-    else:
-        reader = get_text_reader(text)
-
-    if reader is None:
-        raise SystemError("Wasn't able to initialize a reader check file type and extension ".format(file))
+def classify(texts, files, cls_name):
+    # extract sentences from files
     tic = time.clock()
-    # split document in sentences
-    sentences = reader.split()
-    toc = time.clock()
+    sentences = []
+    for text in texts:
+        reader = get_text_reader(text)
+        if reader.is_english_lan():
+            sentences += reader.split()
+        else:
+            print('Non english text, it will be ignored')
 
+    for file in files:
+
+        if file is not None:
+            if not isfile(file):
+                raise SystemError("Can't find {}".format(file))
+            reader = get_reader(file)
+            if reader is None:
+                print("Wasn't able to initialize a reader check file type and extension fro {}".format(file))
+            # split document in sentences
+            elif not reader.is_english_lan():
+                print('Non english document it will be ignored')
+            else:
+                sentences += reader.split()
+
+    toc = time.clock()
     print('There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
     classifier = load_classifier(cls_name)
     predicted = classifier.predict(sentences)
     indexes = np.where(predicted == 'geography')[0]
     print('{} geographical sentences found '.format(len(indexes)))
-
     geo_sentences = [(sentences[i]) for i in indexes]
+
     return geo_sentences
 
 
@@ -60,9 +72,9 @@ def join(list):
 
 
 # query geonames an get geographical information
-def geonames(list, country_codes=[]):
+def geonames(list, cty_codes):
     for name, metadata in list:
-        coding = resolve(name, country_codes=country_codes)
+        coding = resolve(name, cty_codes)
         if coding is not None:
             metadata['geocoding'] = coding
 
@@ -79,7 +91,8 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
         output = nlp.annotate(s.replace('\n', ' '), properties={"annotators": "openie,ner", "outputFormat": "json"})
         relations = [output["sentences"][0]["openie"] for item in output]
         locations_found = [(t['originalText']) for t in output["sentences"][0]["tokens"] for item in output if
-                           t['ner'] in ['LOCATION', 'PERSON'] and t['originalText'].lower() not in ignore_entities]
+                           t['ner'] in ['LOCATION', 'PERSON'] and t[
+                               'originalText'].lower() not in ignore_entities]
         if len(locations_found) > 0:
             extraction.append(({'text': s, 'entities': locations_found, 'relations': relations}))
 
@@ -132,13 +145,13 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     return extracted
 
 
-def geocode(text=None, file=None, cls_name='default_classifier', country_codes=[]):
-    texts = ''
-    results = None
+def geocode(texts, documents, cty_codes, cls_name=get_default_classifier()):
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
     # 3) merge names
     # 3) resolve locations using Geo Names
-    return geonames(join(merge(extract(classify(text=text, file=file, cls_name=cls_name)
-                                       )
-                               )), country_codes=country_codes)
+
+    texts = classify(texts, documents, cls_name=cls_name)
+    entities = merge(extract(texts))
+    normalized = join(entities)
+    return geonames(normalized, cty_codes)

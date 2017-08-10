@@ -63,8 +63,8 @@ def importance_1(results):
 
 
 # this method should return a single location
-def resolve(loc, country_codes=[], rels=[]):
-    locations = query(loc, country_codes=country_codes)
+def resolve(loc, cty_codes, rels=[]):
+    locations = query(loc, cty_codes)
     selected_loc = importance_1(locations)
 
     if selected_loc is None:
@@ -78,7 +78,7 @@ def resolve(loc, country_codes=[], rels=[]):
     return selected_loc
 
 
-def query(location, country_codes=None):
+def query(location, cty_codes):
     results = []
     tick = time.clock()
     try:
@@ -87,8 +87,8 @@ def query(location, country_codes=None):
         query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5' \
             .format(user=username, name=quote(location), order='relevance')
 
-        if country_codes and len(country_codes) > 0:
-            query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in country_codes])
+        if cty_codes and len(cty_codes) > 0:
+            query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in cty_codes])
 
         json_decode = json.JSONDecoder()  # used to parse json response
         response = urlopen(query_string)
