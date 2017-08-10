@@ -149,7 +149,6 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), pers
     # 2) extract entities and relationships
     # 3) merge names
     # 3) resolve locations using Geo Names
-
     texts = classify(texts, documents, cls_name=cls_name)
     entities = merge(extract(texts))
     normalized = join(entities)
