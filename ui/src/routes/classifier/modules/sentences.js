@@ -3,7 +3,7 @@ import {
   getSentences,
   deleteSentenceById,
   updateSentenceById,
-  getDocList
+  getCorporaDocList
 } from 'api'
 
 // ------------------------------------
@@ -15,7 +15,7 @@ export const SENTENCE_DELETED = 'SENTENCE_DELETED'
 export const SENTENCE_UPDATED = 'SENTENCE_UPDATED'
 export const TERM_UPDATED = 'TERM_UPDATED'
 export const PAGE_CHANGED = 'PAGE_CHANGED'
-export const DOC_LIST_LOADED = 'DOC_LIST_LOADED'
+export const CORPORA_DOC_LIST_LOADED = 'CORPORA_DOC_LIST_LOADED'
 export const DOCUMENT_CHANGED = 'DOCUMENT_CHANGED'
 
 // ------------------------------------
@@ -69,9 +69,9 @@ export function search() {
 
 export function loadDocList() {
   return (dispatch, getState) => {
-    getDocList().then((response) => {
+    getCorporaDocList().then((response) => {
         dispatch({
-          type: DOC_LIST_LOADED,
+          type: CORPORA_DOC_LIST_LOADED,
           data: response.data
         });
       })
@@ -139,11 +139,11 @@ export function updateSentence(id, category) {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [SENTENCES_LIST_LOADED]: (state, action) => {
+    debugger;
     const newList = Immutable.Map(action.data)
     return state.set('sentences', newList)
   },
-  [DOC_LIST_LOADED]: (state, action) => {
-    debugger
+  [CORPORA_DOC_LIST_LOADED]: (state, action) => {
     const newList = Immutable.List(action.data)
     return state.set('docs', newList)
   },

@@ -65,3 +65,9 @@ def get_activities_xsd_file_path(version):
         raise IOError("Wasn't able to find xsd file for version {}".format(version))
     else:
         return target
+
+
+def get_doc_queue_path():
+    return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'docs_queue_path')))
+
+
