@@ -38,6 +38,16 @@ class TestMerge(unittest.TestCase):
         self.assertTrue('Mozambique' in found)
         self.assertTrue('Burkina Faso' in found)
 
+    def test_merge_new_lines(self):
+        text="""Dadieso Forest
+Reserves
+
+Kakum National Park area, Central Region"""
+
+        entities = ['Dadieso', 'Forest', 'Reserves', 'Kakum', 'National', 'Park']
+        ner_decorated = [{'text': text, 'entities': entities, 'relations': []}]
+        merge_decorated = merge(ner_decorated, ignored_gap_chars=[','])
+        print(merge_decorated)
 
 if __name__ == '__main__':
     unittest.main()

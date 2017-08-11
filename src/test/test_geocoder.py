@@ -1,6 +1,7 @@
 import unittest
 
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames
+from dg.geocoder.processor import process_xml
 from dg.geocoder.readers.factory import get_text_reader, get_reader
 
 
@@ -63,22 +64,12 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Republic of Guinea' in locs)
         self.assertTrue('Gaoual' in locs)
 
-        #  def test_afdb_doc_tables(self):
-        #  pass
-        # geo = geocode([], ['resources/afdb_with_tables.pdf'], ['BF'])
-        # locs = [(l) for (l, data) in geo if data.get('geocoding')]
-        # print(locs)
+    def test_geocode_text_3(self):
+        geo = geocode([], ['resources/sample_text_3.txt'], [])
+        locs = [(l) for (l, data) in geo if data.get('geocoding')]
 
-        # def test_afdb_activities_XML(self):
-        # pass
-        # self.assertTrue(is_valid_schema('resources/afdb_ag_activities.xml', version='202'))
-        #   reader = ActivitiesReader('resources/afdb_ag_activities.xml')
-        #   activities = reader.get_activities()
-        #   for activity in activities:
-        #       documents = download_activity_data(activity, get_download_path())
-        #       texts = activity.get_texts()
-        #       results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
-        #       locs = [(l) for (l, data) in results if data.get('geocoding')]
+    def test_afdb_activities_XML(self):
+        process_xml('resources/afdb_3_activities.xml')
 
 
 if __name__ == '__main__':

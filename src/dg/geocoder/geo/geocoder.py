@@ -30,6 +30,7 @@ def classify(texts, files, cls_name):
         reader = get_text_reader(text)
         if reader.is_english_lan():
             sentences += reader.split()
+            reader = None
         else:
             print('Non english text, it will be ignored')
 
@@ -46,6 +47,7 @@ def classify(texts, files, cls_name):
                 print('Non english document it will be ignored')
             else:
                 sentences += reader.split()
+                reader = None
 
     toc = time.clock()
     print('There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
@@ -54,6 +56,7 @@ def classify(texts, files, cls_name):
     indexes = np.where(predicted == 'geography')[0]
     print('{} geographical sentences found '.format(len(indexes)))
     geo_sentences = [(sentences[i]) for i in indexes]
+    sentences = None
 
     return geo_sentences
 
@@ -115,7 +118,7 @@ def gap_length(word1, word2, text):
 def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     ret_val = []
     for row in extracted:
-        text = ' '.join(row['text'].replace('\n', ' ').split())
+        text = ' '.join(row['text'].replace('\n\n', ', ').split())
         entities = row['entities']
         x = 0
         last_idx = len(entities) - 1

@@ -12,7 +12,8 @@ class TxtReader(BaseReader):
                 text = f.read()
             self.paragraphs = [e for e in get_sentence_tokenizer().tokenize(text)]
             f.close()
-            return self.paragraphs
+
+        return self.paragraphs
 
     def get_sample(self):
         return self.split()[0]

@@ -84,7 +84,7 @@ def query(location, cty_codes):
     try:
         base_url = get_geonames_base_url()
         username = get_geonames_user_name()
-        query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5' \
+        query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy=.9' \
             .format(user=username, name=quote(location), order='relevance')
 
         if cty_codes and len(cty_codes) > 0:

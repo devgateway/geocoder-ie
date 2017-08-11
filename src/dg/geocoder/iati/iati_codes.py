@@ -271,9 +271,69 @@ iati_countries = {'AF': 'AFGHANISTAN',
                   'ZM': 'ZAMBIA',
                   'ZW': 'ZIMBABWE'}
 
-iati_publishers = {
-    'GB-GOV-1': 'DIFD',
-    '46002': 'AFDB',
-    'XM-DAC-411124': 'UN_WOMEN',
-    'US-GOV-1': 'USAID'
+iati_publishers = {''
+                   'GB-GOV-1': 'DIFD',
+                   '46002': 'AFDB',
+                   'XM-DAC-411124': 'UN_WOMEN',
+                   'US-GOV-1': 'USAID'
+                   }
+
+iati_geo_location_class = {
+    1: 'Administrative Region	The designated geographic location is an administrative region '
+       '(state, county, province, district, municipality etc.)',
+    2: 'Populated Place	The designated geographic location is a populated place (town, village, farm etc.)',
+    3: 'Structure	The designated geopgraphic location is a structure (such as a school or a clinic)',
+    4: 'Other Topographical Feature	The designated geographic location is a topographical feature, such as a mountain,'
+       ' a river, a forest'
+}
+
+iati_geo_exactness = {
+    1: 'Exact	The designated geographic location is exact',
+    2: 'Approximate	The designated geographic location is approximate'
+}
+
+iati_geo_location_reach = {
+    1: 'Activity	The location specifies where the activity is carried out',
+    2: 'Intended Beneficiaries	The location specifies where the intended beneficiaries of the activity live'
+}
+
+iati_geo_vocabulary = {
+    'A1': 'Global Admininistrative Unit Layers	 http://www.fao.org/geonetwork/srv/en/metadata.show?id=12691',
+    'A2': 'UN Second Administrative Level Boundary Project	Note: the unsalb.org website is no longer accessible, '
+          'and public access to the boundaries resources has been removed '
+          'http://www.ungiwg.org/content/united-nations-international-and-administrative-boundaries-resources '
+          'http://www.unsalb.org/',
+    'A3': 'Global Administrative Areas	 	http://www.gadm.org/',
+    'A4': 'ISO Country (3166-1 alpha-2)	http://www.iso.org/iso/country_codes.htm',
+    'G1': 'Geonames	 					http://www.geonames.org/',
+    'G2': 'OpenStreetMap Note: the code should be formed by prefixing the relevant OpenStreetMap '
+          'ID with node/ way/ or relation/ as appropriate, e.g. node/1234567	http://www.openstreetmap.org/'
+}
+
+iati_geo_precision = {
+    1: 'Exact location	The coordinates corresponds to an exact location, such as a populated place or a hill. The code '
+       'is also used for locations that join a location which is a line (such as a road or railroad). Lines are not '
+       'coded only the points that connect lines. All points that are mentioned in the source are coded.',
+    2: 'Near exact location	The location is mentioned in the source as being “near”, in the “area” of, or up to 25 km '
+       'away from an exact location. The coordinates refer to that adjacent, exact, location.',
+    3: 'Second order administrative division	The location is, or lies in, a second order administrative division '
+       '(ADM2), such as a district, municipality or commune',
+    4: 'First order administrative division	The location is, or lies in, a first order administrative division (ADM1), '
+       'such as a province, state or governorate.',
+    5: 'Estimated coordinates	The location can only be related to estimated coordinates, such as when a location lies '
+       'between populated places; along rivers, roads and borders; more than 25 km away from a specific location; '
+       'or when sources refer to parts of a country greater than ADM1 (e.g. “northern Uganda”).',
+    6: 'Independent political entity	The location can only be related to an independent political entity, meaning'
+       ' the pair of coordinates that represent a country.',
+    7: 'Unclear - capital	Unclear. The capital is assumed to be one of two possible locations. (The other option'
+       ' is the country level, with precision 9.)',
+    8: 'Local or national capital	The location is estimated to be a seat of an administrative division '
+       '(local capital) or the national capital. If aid goes to Luanda without further specification on the location, '
+       'and there is an ADM1 and a capital called Luanda, then code the coordinates of the capital with precision '
+       '8. If it is not spelled out that aid goes to the capital; but if it is clear that it goes to a government'
+       ' ministry or to government financial institutions; and if those institutions are most likely located in '
+       'the capital; then the coordinates of the capital are coded with precision 8. (However, if it can be verified'
+       ' that the recipient institution is located in the capital then precision 1 is used.)',
+    9: 'Unclear - country	Unclear. The locations is estimated to be the country level (often paired with the capital'
+       ', with precision 7)'
 }
