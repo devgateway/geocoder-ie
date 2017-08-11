@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import io
 
+import sys
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
@@ -28,15 +29,19 @@ class PdfReader(BaseReader):
         caching = True
         pagenos = set(pagenos) if pagenos is not None else set()
         i = 0
+        print('Reading pdf pages '.format(i), end=' ')
+
         for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
                                       password=password,
                                       caching=caching,
                                       check_extractable=True):
-            print('Reading pdf page {}'.format(i))
+            print('{}'.format(i), end=' ')
+            sys.stdout.flush()
             interpreter.process_page(page)
 
             i = i + 1
 
+        print('\n')
         text = retstr.getvalue()
 
         fp.close()

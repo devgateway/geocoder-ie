@@ -12,6 +12,7 @@ def process_xml(file, to_xml=False, persist=False):
         reader = ActivitiesReader(file)
         activities = reader.get_activities()
         for activity in activities:
+            print('.......... Coding activity {} ..........'.format(activity.get_identifier()))
             # Get activity related documents
             documents = download_activity_data(activity, get_download_path())
             # extract title and descriptions a
@@ -24,6 +25,7 @@ def process_xml(file, to_xml=False, persist=False):
             geocoded = [(l) for (l, data) in results if data.get('geocoding')]
             print(geocoded)
 
+
             # if persist:
             #    persist(results)
             # if to_xml:
@@ -32,6 +34,9 @@ def process_xml(file, to_xml=False, persist=False):
             # xml_output(reader,results)
             # else:
             #    console_output()
+
+
+
 
 
 def process_files(files, persist=False):

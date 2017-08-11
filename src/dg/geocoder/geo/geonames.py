@@ -1,5 +1,4 @@
 import json
-import time
 from urllib.error import URLError
 from urllib.request import urlopen
 
@@ -65,6 +64,7 @@ def importance_1(results):
 # this method should return a single location
 def resolve(loc, cty_codes, rels=[]):
     locations = query(loc, cty_codes)
+
     selected_loc = importance_1(locations)
 
     if selected_loc is None:
@@ -75,12 +75,17 @@ def resolve(loc, cty_codes, rels=[]):
     if selected_loc is None and len(locations) > 0:
         selected_loc = locations[0]
 
+    if selected_loc:
+        print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],selected_loc['lng']))
+    else:
+        print("{} was not geocoded :( ")
+
     return selected_loc
 
 
 def query(location, cty_codes):
     results = []
-    tick = time.clock()
+
     try:
         base_url = get_geonames_base_url()
         username = get_geonames_user_name()
@@ -101,6 +106,5 @@ def query(location, cty_codes):
     except URLError as e:
         print("Oops!  something didn't go well")
         print(e)
-    tock = time.clock()
-    print('Querying geonames for {} took ms'.format(location, tock - tick))
+
     return results
