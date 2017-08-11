@@ -3,9 +3,10 @@ from dg.geocoder.geo.geocoder import geocode
 from dg.geocoder.iati.activities_reader import ActivitiesReader
 from dg.geocoder.iati.iati_downloader import download_activity_data
 from dg.geocoder.iati.iati_validator import is_valid_schema
+from dg.geocoder.util.file_util import is_xml
 
 
-def process_xml(file, to_xml=False, persist=False):
+def process_xml(file, xml_name='out.xml', persist=False):
     if not is_valid_schema(file, version='202'):
         print('Invalid xml file supplied please check IATI standard ')
     else:
@@ -21,35 +22,12 @@ def process_xml(file, to_xml=False, persist=False):
             # TODO CHECK if country code can be an array
             # full results
             results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
-            # geocoded location only
-            geocoded = [(l) for (l, data) in results if data.get('geocoding')]
-            print(geocoded)
+            [activity.add_location(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+
+        reader.save(xml_name)
+        print('File {} saved '.format(xml_name))
 
 
-            # if persist:
-            #    persist(results)
-            # if to_xml:
-            #    print('Update xml tree')
-            #    pass
-            # xml_output(reader,results)
-            # else:
-            #    console_output()
-
-
-
-
-
-def process_files(files, persist=False):
-    results = geocode([], files)
-
-
-def console_output():
-    pass
-
-
-def xml_output():
-    pass
-
-
-def persit():
-    pass
+def process(file):
+    if is_xml(file):
+        process_xml(file)

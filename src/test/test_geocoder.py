@@ -71,6 +71,8 @@ class TestGeocoder(unittest.TestCase):
     def test_afdb_activities_XML(self):
         process_xml('resources/afdb_3_activities.xml')
 
+    def test_afdb_activities_XML_1(self):
+        process_xml('resources/afdb_1_no_docs_activities.xml')
 
 if __name__ == '__main__':
     unittest.main()

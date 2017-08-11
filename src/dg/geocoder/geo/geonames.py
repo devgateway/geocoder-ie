@@ -76,9 +76,10 @@ def resolve(loc, cty_codes, rels=[]):
         selected_loc = locations[0]
 
     if selected_loc:
-        print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],selected_loc['lng']))
+        print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+                                                                   selected_loc['lng']))
     else:
-        print("{} was not geocoded :( ")
+        print("{} wasn't geocoded :( ".format(loc))
 
     return selected_loc
 

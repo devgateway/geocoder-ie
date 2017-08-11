@@ -1,0 +1,136 @@
+<iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T12:28:37">
+        <iati-identifier>46002-P-GH-AAD-002</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">
+                The project has high potential to enhance carbon stocks in the off reserve areas in the High Forest Zones (Western and Brong Ahafo regions) by engaging communities in approaches that generate direct financial and environmental benefits for them leading to reduced deforestation and forest degradation (REDD+). It will specifically address the key drivers of deforestation which include conversion of forest lands for agricultural production, illegal logging, and low productivity in already opened up for crop production, high demand for fuel wood and charcoal, and wildfires among others. The increased land-use and land-use change will further add significant heterogeneity and variation in national carbon stocks. The Project will directly benefit an estimated 72,000 people, with women representing about half of the targeted population. Furthermore, the project is expected to indirectly benefit 175,000 people (5% of the population of the two regions). Direct beneficiaries will be supported with capacity building, inputs (e.g. seeds), equipment, and financial incentives through benefit-sharing agreements, to develop forestry, agroforestry and alternate livelihoods activities.
+            </narrative>
+            <narrative xml:lang="en">Ghana - Projet d'association des communaut�s locales au programme REDD+ /
+                Renforcement des stocks de carbone
+            </narrative>
+        </title>
+        <description>
+            <narrative/>
+        </description>
+        <participating-org role="1" ref="46003" type="40">
+            <narrative>African Development Fund</narrative>
+        </participating-org>
+        <participating-org role="3" ref="" type="10">
+            <narrative>Government Of Ghana</narrative>
+        </participating-org>
+        <participating-org role="4" ref="" type="10">
+            <narrative>Ministry of Lands Forestry and Mines</narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2014-07-26" type="1"/>
+        <activity-date iso-date="2015-02-25" type="2"/>
+        <activity-date iso-date="2019-12-31" type="3"/>
+        <activity-date iso-date="2019-12-31" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Environment and Sustainable Development/ Environnement et D�veloppement Durable</narrative>
+            </department>
+            <person-name>
+                <narrative>MOHAMEDAHMED Siham Abdel Rahman</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Principal Natural Resources Management Expert</narrative>
+            </job-title>
+            <telephone>+225 2020 2259</telephone>
+            <email>s.mohamedahmed@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
+                    d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="GH"/>
+
+        <sector vocabulary="DAC" code="31220">
+            <narrative>Forestry / Plantations</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2100155026819">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2014-07-26"/>
+            <value value-date="2014-07-26">3200000.00</value>
+            <provider-org>
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOVERNMENT OF GHANA</narrative>
+            </receiver-org>
+            <flow-type code="10"/>
+            <finance-type code="110"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2015-03-31"/>
+            <value value-date="2015-03-31">85205.37</value>
+            <description>
+                <narrative>Total Disbursement in First Quarter of 2015</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2015-12-31"/>
+            <value value-date="2015-12-31">44792.54</value>
+            <description>
+                <narrative>Total Disbursement in Fourth Quarter of 2015</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-03-31"/>
+            <value value-date="2016-03-31">463090.16</value>
+            <description>
+                <narrative>Total Disbursement in First Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-06-30"/>
+            <value value-date="2016-06-30">166137.39</value>
+            <description>
+                <narrative>Total Disbursement in Second Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2014-07-26"/>
+            <value value-date="2014-07-26">499000.00</value>
+            <provider-org>
+                <narrative>Government Of Ghana</narrative>
+            </provider-org>
+        </transaction>
+
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    </iati-activity>
+
+</iati-activities>

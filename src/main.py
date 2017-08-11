@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
-from dg.geocoder.util.file_util import is_xml
+from dg.geocoder.processor import process
 
 
 def main(args):
@@ -39,7 +39,7 @@ def main(args):
             if file is None:
                 print('Please provide an input file using -f')
             else:
-                __geocode(file)
+                process(file)
 
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:
@@ -76,11 +76,6 @@ def main(args):
 
     except (KeyboardInterrupt, SystemExit):
         print('adios!')
-
-
-def __geocode(file, persits):
-    pass
-
 
 
 # report error and proceed
