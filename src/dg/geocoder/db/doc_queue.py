@@ -1,13 +1,13 @@
 from dg.geocoder.db.db import open, close
 
 
-def save_doc(file_name, file_type):
+def save_doc(file_name, file_type, country_iso):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE) VALUES (NEXTVAL('DOC_ID_SEQ'),%s,%s, 'PENDING', NOW() )"""
+        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES (NEXTVAL('DOC_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
         cur = conn.cursor()
-        data = (file_name, file_type)
+        data = (file_name, file_type, country_iso)
         cur.execute(sql, data)
         conn.commit()
         cur.close()

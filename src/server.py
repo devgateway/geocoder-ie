@@ -111,11 +111,12 @@ def docs_list():
 def upload_doc():
     if request.method == 'POST':
         f = request.files['file']
+        countryISO = request.form['countryISO']
         filename = f.filename
         filetype = f.content_type
         docs_path = get_doc_queue_path()+"""\\"""+filename
         f.save(docs_path)
-        save_doc(filename, filetype)
+        save_doc(filename, filetype, countryISO)
     return jsonify({"success": True}), 200
 
 

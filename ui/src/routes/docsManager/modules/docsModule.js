@@ -16,6 +16,20 @@ export const UPLOAD_DOC = 'UPLOAD_DOC';
 // Actions
 // ------------------------------------
 
+export function updateDocsList() {
+  return (dispatch, getState) => {
+    getDocsList({'page': getState().getIn(['docqueue', 'page'])}).then((response) => {
+        dispatch({
+          type: DOCS_LIST_LOADED,
+          data: response.data
+        });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+}
+
 export function loadDocsList() {
   return (dispatch, getState) => {
     getDocsList().then((response) => {
@@ -36,14 +50,17 @@ export function docsPageChange(page) {
       type: DOC_PAGE_CHANGED,
       page: page + 1
     })
-    dispatch(getDocsList({'page': getState().getIn(['docqueue', 'page'])}))
+    dispatch(updateDocsList());
   }
 
 }
 
 export function uploadDoc(data) {
   return (dispatch, getState) => {
-    uploadDocToAPI(data);
+    uploadDocToAPI(data).then(
+      (results) => {
+        dispatch(updateDocsList());
+      });
     dispatch({
       type: UPLOAD_DOC,
       docName: data.file.name

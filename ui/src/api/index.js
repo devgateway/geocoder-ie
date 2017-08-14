@@ -27,12 +27,22 @@ export function getDocsList(params) {
 }
 
 export function uploadDocToAPI(fileData) {
-  const {file, country} = fileData;
+  const {file, countryISO} = fileData;
   let data = new FormData();
   data.append('file', file, file.name);
-  data.append('country', country);
+  data.append('countryISO', countryISO);
   const config = {
     headers: { 'content-type': 'multipart/form-data' }
   };
-  return axios.post(`${ROOT}/docqueue/upload`, data, config);
+  return new Promise(
+      function(resolve, reject) {
+        axios.post(`${ROOT}/docqueue/upload`, data, config)
+        .then(function(response) {
+          resolve(response);
+        })
+        .catch(function(response) {
+          reject(response);
+        });
+      });
+  //return axios.post(`${ROOT}/docqueue/upload`, data, config);
 }
