@@ -6,6 +6,7 @@ PDF = 'pdf'
 ODT = 'odt'
 HTML = 'html'
 XML = 'xml'
+TXT = 'txt'
 
 
 def is_pdf(name):
@@ -22,6 +23,10 @@ def is_html(name):
 
 def is_xml(name):
     return get_file_type(name) == XML
+
+
+def is_txt(name):
+    return get_file_type(name) == TXT
 
 
 # todo use libmagic

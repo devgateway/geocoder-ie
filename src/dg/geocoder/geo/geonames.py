@@ -1,5 +1,4 @@
 import json
-import time
 from urllib.error import URLError
 from urllib.request import urlopen
 
@@ -63,8 +62,9 @@ def importance_1(results):
 
 
 # this method should return a single location
-def resolve(loc, country_codes=[], rels=[]):
-    locations = query(loc, country_codes=country_codes)
+def resolve(loc, cty_codes, rels=[]):
+    locations = query(loc, cty_codes)
+
     selected_loc = importance_1(locations)
 
     if selected_loc is None:
@@ -75,20 +75,26 @@ def resolve(loc, country_codes=[], rels=[]):
     if selected_loc is None and len(locations) > 0:
         selected_loc = locations[0]
 
+    if selected_loc:
+        print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+                                                                   selected_loc['lng']))
+    else:
+        print("{} wasn't geocoded :( ".format(loc))
+
     return selected_loc
 
 
-def query(location, country_codes=None):
+def query(location, cty_codes):
     results = []
-    tick = time.clock()
+
     try:
         base_url = get_geonames_base_url()
         username = get_geonames_user_name()
-        query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5' \
+        query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy=.9' \
             .format(user=username, name=quote(location), order='relevance')
 
-        if country_codes and len(country_codes) > 0:
-            query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in country_codes])
+        if cty_codes and len(cty_codes) > 0:
+            query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in cty_codes])
 
         json_decode = json.JSONDecoder()  # used to parse json response
         response = urlopen(query_string)
@@ -101,6 +107,5 @@ def query(location, country_codes=None):
     except URLError as e:
         print("Oops!  something didn't go well")
         print(e)
-    tock = time.clock()
-    print('Querying geonames for {} took ms'.format(location, tock - tick))
+
     return results

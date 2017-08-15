@@ -18,3 +18,13 @@ class ActivitiesReader:
     def get_activities(self):
         for activity in self.root.findall('iati-activity'):
             yield ActivityReader(root=activity)
+
+    def __str__(self):
+        return etree.tostring(self.root).decode('utf-8')
+
+    def xml(self):
+        return self.__str__()
+
+    def save(self, name):
+        tree = etree.ElementTree(self.root)
+        tree.write(name, pretty_print=True, xml_declaration=True, encoding="utf-8")

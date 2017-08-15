@@ -14,18 +14,24 @@ from dg.geocoder.util.file_util import get_folder_name, create_folder
 def download(dest_path, url):
     try:
         file_name = url.split('/')[-1]
-        f = urlopen(url)
-        headers = f.headers['content-type'].split('/')
-        md = 'w'
-        if 'html' in headers:
-            file_name = '{}.html'.format(uuid.uuid1())
+        path = os.path.realpath(os.path.join(dest_path, unquote_plus(file_name)))
+        if not os.path.exists(path):
+            f = urlopen(url)
+            headers = f.headers['content-type'].split('/')
+            md = 'w'
+            if 'html' in headers:
+                file_name = '{}.html'.format(uuid.uuid1())
+            else:
+                md = 'wb'
+
+                with open(path, md) as local_file:
+                    local_file.write(f.read())
+
+        if os.path.exists(path):
+            return path
         else:
-            md = 'wb'
-            path = os.path.realpath(os.path.join(dest_path, unquote_plus(file_name)))
-            with open(path, md) as local_file:
-                local_file.write(f.read())
-                print('file saved')
-                return path
+            print("Wasn't able to find the file....!")
+            return None
     except Exception as error:
         print('download error %s', error)
 
@@ -83,7 +89,7 @@ def bulk_data_download(org, countries=[], download_path=get_download_path(), off
         print('Found %d activities ' % (len(activity_list)))
         for activity in activity_list:
             reader = ActivityReader(root=activity)
-            download_activity_data(reader, download_path)
+            download_activity_data(reader, download_path, dump_activity=True)
 
 
 if __name__ == '__main__':

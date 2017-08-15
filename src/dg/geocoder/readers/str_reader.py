@@ -8,8 +8,8 @@ class TextReader(BaseReader):
 
     def split(self):
         if len(self.paragraphs) == 0:
-            self.paragraphs = [(e.replace('\n', ' ')) for e in get_sentence_tokenizer().tokenize(self.text)]
+            self.paragraphs = [(e) for e in get_sentence_tokenizer().tokenize(self.text)]
         return self.paragraphs
 
     def get_sample(self):
-        return self.split()[1]
+        return self.split()[0]

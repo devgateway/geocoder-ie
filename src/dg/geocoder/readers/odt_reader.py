@@ -14,7 +14,7 @@ class OdtReader(BaseReader):
         for part in self.doc.getroot().itertext():
             self.text = self.text + '\n' + part
 
-    def split(self, pagenos=None):
+    def split(self, n=None):
         if len(self.paragraphs) == 0:
             self.paragraphs = [e for e in get_sentence_tokenizer().tokenize(self.text)]
         return self.paragraphs

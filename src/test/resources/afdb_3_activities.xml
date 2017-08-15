@@ -1,0 +1,738 @@
+<iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T12:28:37">
+        <iati-identifier>46002-P-GH-AAD-002</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">Ghana - Engaging Local Communities in REDD+ / Enhancement of Carbon Stocks
+                Project
+            </narrative>
+            <narrative xml:lang="fr">Ghana - Projet d'association des communaut�s locales au programme REDD+ /
+                Renforcement des stocks de carbone
+            </narrative>
+        </title>
+        <description>
+            <narrative/>
+        </description>
+        <participating-org role="1" ref="46003" type="40">
+            <narrative>African Development Fund</narrative>
+        </participating-org>
+        <participating-org role="3" ref="" type="10">
+            <narrative>Government Of Ghana</narrative>
+        </participating-org>
+        <participating-org role="4" ref="" type="10">
+            <narrative>Ministry of Lands Forestry and Mines</narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2014-07-26" type="1"/>
+        <activity-date iso-date="2015-02-25" type="2"/>
+        <activity-date iso-date="2019-12-31" type="3"/>
+        <activity-date iso-date="2019-12-31" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Environment and Sustainable Development/ Environnement et D�veloppement Durable</narrative>
+            </department>
+            <person-name>
+                <narrative>MOHAMEDAHMED Siham Abdel Rahman</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Principal Natural Resources Management Expert</narrative>
+            </job-title>
+            <telephone>+225 2020 2259</telephone>
+            <email>s.mohamedahmed@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
+                    d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="GH"/>
+        <location>
+            <location-id vocabulary="G1" code="2294076"/>
+            <name>
+                <narrative>Western Region</narrative>
+            </name>
+            <administrative code="1333.0" vocabulary="G1" level="1"/>
+            <administrative code="16671.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>5.5 -2.5</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="1"/>
+            <feature-designation code="Administrative Region"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="2302547"/>
+            <name>
+                <narrative>Brong-Ahafo</narrative>
+            </name>
+            <administrative code="1325.0" vocabulary="G1" level="1"/>
+            <administrative code="16589.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>7.75 -1.5</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="1"/>
+            <feature-designation code="Administrative Region"/>
+        </location>
+        <sector vocabulary="DAC" code="31220">
+            <narrative>Forestry / Plantations</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2100155026819">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2014-07-26"/>
+            <value value-date="2014-07-26">3200000.00</value>
+            <provider-org>
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOVERNMENT OF GHANA</narrative>
+            </receiver-org>
+            <flow-type code="10"/>
+            <finance-type code="110"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2015-03-31"/>
+            <value value-date="2015-03-31">85205.37</value>
+            <description>
+                <narrative>Total Disbursement in First Quarter of 2015</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2015-12-31"/>
+            <value value-date="2015-12-31">44792.54</value>
+            <description>
+                <narrative>Total Disbursement in Fourth Quarter of 2015</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-03-31"/>
+            <value value-date="2016-03-31">463090.16</value>
+            <description>
+                <narrative>Total Disbursement in First Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-06-30"/>
+            <value value-date="2016-06-30">166137.39</value>
+            <description>
+                <narrative>Total Disbursement in Second Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2014-07-26"/>
+            <value value-date="2014-07-26">499000.00</value>
+            <provider-org>
+                <narrative>Government Of Ghana</narrative>
+            </provider-org>
+        </transaction>
+        <document-link url="http://www.afdb.org/en/projects-and-operations/project-portfolio/project/p-gh-aad-002/"
+                       format="WebPage">
+            <title>
+                <narrative>Activity Web Site</narrative>
+            </title>
+            <category code="A12"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Environmental-and-Social-Assessments/Ghana_-_Managing_Local_Communities_in_REDD__-_Enhancement_of_Carbon_Stocks_Project_-_ESMP_Summary.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Ghana_-_Engaging_Local_Communities_in_REDD__Enhancement_of_Carbon_Stocks__ELCIR___-_Appraisal_Report.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Ghana_-_Projet_d_association_des_communaut%C3%A9s_locales_au_programme_REDD__-Renforcement_des_stocks_de_carbone_ELCIR__-_Rapport_d_%C3%A9valuation.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    </iati-activity>
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T11:36:26">
+        <iati-identifier>46002-P-UG-AAD-001</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">Uganda - Farm Income Enhancement and Forestry Conservation Programme - Project 2
+            </narrative>
+            <narrative xml:lang="fr">Ouganda - Programme d'am�lioration du revenu agricole et de conservation des for�ts
+                : Projet 2
+            </narrative>
+        </title>
+        <description type="2">
+            <narrative xml:lang="en">The project objective is to improve household incomes, food security, and climate
+                resilience through sustainable natural resources management and agricultural enterprise development
+            </narrative>
+        </description>
+        <participating-org role="1" ref="46002" type="40">
+            <narrative>African Development Bank</narrative>
+        </participating-org>
+        <participating-org role="3" ref="" type="10">
+            <narrative>Government Of Uganda</narrative>
+        </participating-org>
+        <participating-org role="4" ref="" type="10">
+            <narrative>Ministry of Water &amp; Environment</narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2016-02-17" type="1"/>
+        <activity-date iso-date="2016-05-31" type="2"/>
+        <activity-date iso-date="2020-12-31" type="3"/>
+        <activity-date iso-date="2021-06-30" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Agriculture and Agro Industry North, East and South Regions/ Agriculture et Agro Industrie,
+                    R�gions de l'Afrique du Nord, de l'Est et du Sud
+                </narrative>
+            </department>
+            <person-name>
+                <narrative>LOULSEGED Mekonnen Kifle</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Senior Water Ressources Engineer</narrative>
+            </job-title>
+            <telephone>+225 2020 2293</telephone>
+            <email>m.loulseged@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
+                    d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="UG"/>
+        <sector vocabulary="DAC" code="31220">
+            <narrative>Forestry / Plantations</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2000130014931">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-02-17"/>
+            <value value-date="2016-02-17">54831145.81</value>
+            <provider-org>
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOVERNMENT OF UGANDA</narrative>
+            </receiver-org>
+            <flow-type code="20"/>
+            <finance-type code="410"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-06-30"/>
+            <value value-date="2016-06-30">814125.18</value>
+            <description>
+                <narrative>Total Disbursement in Second Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-02-17"/>
+            <value value-date="2016-02-17">6527023.16</value>
+            <provider-org>
+                <narrative>Government Of Uganda</narrative>
+            </provider-org>
+        </transaction>
+        <document-link url="http://www.afdb.org/en/projects-and-operations/project-portfolio/project/p-ug-aad-001/"
+                       format="WebPage">
+            <title>
+                <narrative>Activity Web Site</narrative>
+            </title>
+            <category code="A12"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Environmental-and-Social-Assessments/FIEFOC_ESMP_Summary_final_2015.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Ouganda-_Programme_d-am%C3%A9lioration_du_revenu_agricole_et_de_conservation_....pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Uganda-_AR_Farm_Income_Enhancement_and_Forest_Conservation_Project.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    </iati-activity>
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T11:31:19">
+        <iati-identifier>46002-P-ZM-AA0-024</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">Zambia - Cashew infrastructure development project</narrative>
+        </title>
+        <description type="2">
+            <narrative xml:lang="en">The development objective is to contribute to economic growth and food security.
+                The Project objective is to contribute to the country's poverty reduction and improved household incomes
+                through improved cashew production,
+                processing and marketing. Enhanced household incomes will lead to improved household food security. The
+                Project will (i) increase cashew tree productivity and production, (ii) contribute to improved household
+                income and food security, (iii) increase
+                foreign exchange earnings from cashew products, and (iii) improve rural employment for men, women and
+                youths.
+            </narrative>
+        </description>
+        <participating-org role="1" ref="46002" type="40">
+            <narrative>African Development Bank</narrative>
+        </participating-org>
+        <participating-org role="3" ref="" type="10">
+            <narrative>Government Of Zambia</narrative>
+        </participating-org>
+        <participating-org role="4" ref="" type="10">
+            <narrative>MINISTRY OF AGRICULTURE - WATER DEVELOPMENT</narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2016-03-29" type="1"/>
+        <activity-date iso-date="2016-08-25" type="2"/>
+        <activity-date iso-date="2021-12-31" type="3"/>
+        <activity-date iso-date="2022-06-30" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Agriculture and Agro Industry North, East and South Regions/ Agriculture et Agro Industrie,
+                    R�gions de l'Afrique du Nord, de l'Est et du Sud
+                </narrative>
+            </department>
+            <person-name>
+                <narrative>BANGWE Lewis Mupeta</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Agrcuiltural Expert</narrative>
+            </job-title>
+            <telephone/>
+            <email>l.bangwe@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
+                    d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="ZM"/>
+        <location>
+            <location-id vocabulary="G1" code="897551"/>
+            <name>
+                <narrative>Simulumbe</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65242.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-15.15644 23.548</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="898945"/>
+            <name>
+                <narrative>Senanga District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65243.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-16.08965 23.76732</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="901650"/>
+            <name>
+                <narrative>Nangweshi</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65245.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-16.39704 23.31962</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="901795"/>
+            <name>
+                <narrative>Namushakende</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65242.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-15.42897 23.1986</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="906052"/>
+            <name>
+                <narrative>Mongu District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65242.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-15.37439 23.5325</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="909482"/>
+            <name>
+                <narrative>Lukulu District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65241.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-14.22997 23.8294</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="915468"/>
+            <name>
+                <narrative>Kalabo District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65239.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-14.83997 22.71197</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="915471"/>
+            <name>
+                <narrative>Kalabo</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65239.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-14.97005 22.68138</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="10801800"/>
+            <name>
+                <narrative>Shangombo</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65245.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-16.30827 22.45556</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="10814741"/>
+            <name>
+                <narrative>Mitete District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65241.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-14.10042 22.6472</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="10815319"/>
+            <name>
+                <narrative>Sikongo District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65239.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-15.23673 22.17756</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="10815320"/>
+            <name>
+                <narrative>Limulunga District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65242.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-14.98032 23.35706</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="10815323"/>
+            <name>
+                <narrative>Nalolo District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65243.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-15.77385 22.99538</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <location>
+            <location-id vocabulary="G1" code="10815324"/>
+            <name>
+                <narrative>Sioma District</narrative>
+            </name>
+            <administrative code="3434.0" vocabulary="G1" level="1"/>
+            <administrative code="65245.0" vocabulary="G1" level="2"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-16.75362 23.2221</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="2"/>
+            <feature-designation code="Populated Place"/>
+        </location>
+        <sector vocabulary="DAC" code="31110">
+            <narrative>Agriculture</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2000130014431">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-03-29"/>
+            <value value-date="2016-03-29">32239344.90</value>
+            <provider-org>
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOVERNMENT OF ZAMBIA</narrative>
+            </receiver-org>
+            <flow-type code="20"/>
+            <finance-type code="410"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-09-30"/>
+            <value value-date="2016-09-30">534547.50</value>
+            <description>
+                <narrative>Total Disbursement in Third Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-03-29"/>
+            <value value-date="2016-03-29">5953575.01</value>
+            <provider-org>
+                <narrative>Government Of Zambia</narrative>
+            </provider-org>
+        </transaction>
+        <document-link url="http://www.afdb.org/en/projects-and-operations/project-portfolio/project/p-zm-aa0-024/"
+                       format="WebPage">
+            <title>
+                <narrative>Activity Web Site</narrative>
+            </title>
+            <category code="A12"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Environmental-and-Social-Assessments/Zambia_-_Cashew_Infrastructure_Development_Project__CIDP__%E2%80%93_SESA_Summary_%E2%80%93_06_2015.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Procurement/Project-related-Procurement/GPN_-_Zambia_-_Cashew_Infrastructure_Development_Project_-_CIDP.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Tender</narrative>
+            </title>
+            <category code="A10"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambia-AR-Cashew_Infrastructure_Development_Project__CIDP_.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambia-AR-Cashew_Infrastructure_Development_Project__CIDP_.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Memorandum of Understanding</narrative>
+            </title>
+            <category code="A09"/>
+            <language code="en"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambie-Re-_Projet_de_d%C3%A9veloppement_de_linfrastructure_danacarde__CIDP_.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <document-link
+                url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambie-Re-_Projet_de_d%C3%A9veloppement_de_linfrastructure_danacarde__CIDP_.pdf"
+                format="application/pdf">
+            <title>
+                <narrative>Memorandum of Understanding</narrative>
+            </title>
+            <category code="A09"/>
+            <language code="fr"/>
+        </document-link>
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    </iati-activity>
+</iati-activities>
