@@ -39,6 +39,18 @@ def get_classifiers_path():
     return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'classifiers_path')))
 
 
+def get_db_name():
+    return parser.get('postgres', 'db_name')
+
+
+def get_user_name():
+    return parser.get('postgres', 'user_name')
+
+
+def get_password():
+    return parser.get('postgres', 'password')
+
+
 def get_download_path():
     return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'download_path')))
 
@@ -57,3 +69,7 @@ def get_activities_xsd_file_path(version):
 
 def get_default_classifier():
     return parser.get('ie', 'default_classifier')
+
+
+def get_doc_queue_path():
+    return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'docs_queue_path')))
