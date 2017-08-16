@@ -75,7 +75,7 @@ class TestGeocoder(unittest.TestCase):
         process_xml('resources/afdb_1_no_docs_activities.xml')
 
     def test_dfid_simple_document(self):
-        process('resources/dfid_4182791.odt')
+        process('resources/dfid_4182791.odt',None)
 
 
 if __name__ == '__main__':

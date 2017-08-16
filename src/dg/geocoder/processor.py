@@ -36,7 +36,7 @@ def process_xml(file, out_file='out.xml', persist=False, path_to_docs=''):
         return out_file
 
 
-def process_document(document, out_file='out.tsv', cty_codes=[]):
+def process_document(document, out_file='out.tsv', cty_codes=[], persist=False, ):
     results = geocode([], [document], cty_codes=cty_codes)
 
     geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
@@ -69,12 +69,12 @@ def process_queue():
     pass
 
 
-def process(file):
+def process(file, out_file):
     if not is_valid(file):
         print('Not valid file provided')
         return None
     else:
         if is_xml(file):
-            process_xml(file)
+            return process_xml(file)
         else:
-            process_document(file)
+            return process_document(file)
