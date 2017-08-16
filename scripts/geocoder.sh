@@ -1,3 +1,0 @@
-python ..\src\main.py $@
-
-
