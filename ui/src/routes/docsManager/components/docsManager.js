@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import ReactPaginate from 'react-paginate';
 import {DropzoneComponent} from 'react-dropzone-component';
 
-import './docsList.scss'
+import './docsManager.scss'
 import '../../../../node_modules/react-dropzone-component/styles/filepicker.css';
 import '../../../../node_modules/dropzone/dist/min/dropzone.min.css';
 
@@ -262,7 +262,8 @@ countryList = [
   }
 
   componentWillMount() {
-    this.props.onLoadDocsList();
+    //this.props.onUpdateDocsList(1, 'PENDING');
+    //this.props.onUpdateDocsList(1, 'PROCESSED');
   }
 
   handleFileAdded(file) {
@@ -310,8 +311,9 @@ countryList = [
   }
 
   render() {
-    const {rows, count, limit, page, onDocsPageChange} = this.props;
-    const pageCount = count / limit;
+    const {pendingRows, pendingCount, pendingLimit, processedRows, processedLimit, processedCount, onUpdateDocsList} = this.props;
+    const pendingPageCount = pendingCount / pendingLimit;
+    const processedPageCount = processedCount / processedLimit;
     const dropzoneConfig = {
       iconFiletypes: ['.odt', '.xml', '.pdf'],
       showFiletypeIcon: true,
@@ -341,79 +343,116 @@ countryList = [
     return (
       <div className='docs-list' style={{ margin: '0 auto' }} >
 
-        <h1>List of Coding Docs</h1>
-        <h3>{count} Records  </h3>
+        <h1>Documents Manager</h1>
+                
+        <DropzoneComponent ref="dzComp"
+          config={dropzoneConfig}
+          eventHandlers={eventHandlers}
+          djsConfig={djsConfig} 
+        />
 
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={<a href="">...</a>}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          onPageChange={(page, count, limit) => {
-            onDocsPageChange(page.selected);
-          }}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"} />
+        {loadMessages.length > 0 ? 
+          <div className="load-messages">
+            {loadMessages.map(message => {
+              return <div key={`message:{message}`}>{message}</div>
+            })}
+          </div>
+        : null}
+        {showCountrySelector ?
+          <select value={countryISO} onChange={this.handleCountryChange.bind(this)}>
+            <option value='none'>Select a country</option>
+            {this.countryList.map(country => {
+              return <option key={country.code} value={country.code}>{country.name}</option>
+            })}
+          </select>
+        : null}
+
+        <button disabled={sendDisabled} onClick={this.uploadFile.bind(this)}>Send File</button>
 
         <table>
           <tbody>
             <tr>
-              <td><b>ID</b></td>
-              <td><b>FILE NAME</b></td>
-              <td><b>TYPE</b></td>
-              <td><b>STATUS</b></td>
-              <td><b>COUNTRY</b></td>
+              <td>
+                <h3>List of Pending Docs</h3>
+                <h4>{pendingCount} Records  </h4>
+
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={<a href="">...</a>}
+                  breakClassName={"break-me"}
+                  pageCount={pendingPageCount}
+                  initialPage={0}
+                  onPageChange={(page, count, limit) => {
+                    onUpdateDocsList(page.selected + 1, 'PENDING');
+                  }}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"} />
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><b>ID</b></td>
+                      <td><b>FILE NAME</b></td>
+                      <td><b>TYPE</b></td>
+                      <td><b>STATUS</b></td>
+                      <td><b>COUNTRY</b></td>
+                    </tr>
+                    {(pendingRows)?pendingRows.map(l => 
+                      <tr className={l[2]} key={l[0]}>
+                        <td>{l[0]}</td>
+                        <td>{l[1]}</td>
+                        <td>{l[2]}</td>
+                        <td>{l[3]}</td>
+                        <td>{this.countryList.find(country => {return country.code === l[6]})? this.countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
+                      </tr>)
+                    : null}
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <h3>List of Processed Docs</h3>
+                <h4>{processedCount} Records  </h4>
+
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={<a href="">...</a>}
+                  breakClassName={"break-me"}
+                  pageCount={processedPageCount}
+                  initialPage={0}
+                  onPageChange={(page, count, limit) => {
+                    onUpdateDocsList(page.selected + 1, 'PROCESSED');
+                  }}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"} />
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><b>ID</b></td>
+                      <td><b>FILE NAME</b></td>
+                      <td><b>TYPE</b></td>
+                      <td><b>STATUS</b></td>
+                      <td><b>COUNTRY</b></td>
+                    </tr>
+                    {(processedRows)?processedRows.map(l => 
+                      <tr className={l[2]} key={l[0]}>
+                        <td>{l[0]}</td>
+                        <td>{l[1]}</td>
+                        <td>{l[2]}</td>
+                        <td>{l[3]}</td>
+                        <td>{this.countryList.find(country => {return country.code === l[6]})? this.countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
+                      </tr>)
+                    : null}
+                  </tbody>
+                </table>
+              </td>
             </tr>
-            {(rows)?rows.map(l => 
-              <tr className={l[2]} key={l[0]}>
-                <td>{l[0]}</td>
-                <td>{l[1]}</td>
-                <td>{l[2]}</td>
-                <td>{l[3]}</td>
-                <td>{this.countryList.find(country => {return country.code === l[6]})? this.countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
-              </tr>)
-            : null}
           </tbody>
         </table>
-        
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={<a href="">...</a>}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          onPageChange={(page, count, limit) => {
-            onDocsPageChange(page.selected);
-          }}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"} />
-
-          <DropzoneComponent ref="dzComp"
-            config={dropzoneConfig}
-            eventHandlers={eventHandlers}
-            djsConfig={djsConfig} 
-          />
-
-          {loadMessages.length > 0 ? 
-            <div className="load-messages">
-              {loadMessages.map(message => {
-                return <div key={`message:{message}`}>{message}</div>
-              })}
-            </div>
-          : null}
-          {showCountrySelector ?
-            <select value={countryISO} onChange={this.handleCountryChange.bind(this)}>
-              <option value='none'>Select a country</option>
-              {this.countryList.map(country => {
-                return <option key={country.code} value={country.code}>{country.name}</option>
-              })}
-            </select>
-          : null}
-
-          <button disabled={sendDisabled} onClick={this.uploadFile.bind(this)}>Send File</button>
 
       </div>
     );

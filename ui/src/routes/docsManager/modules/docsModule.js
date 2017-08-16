@@ -9,18 +9,17 @@ import {
 // ------------------------------------
 
 export const DOCS_LIST_LOADED = 'DOCS_LIST_LOADED';
-export const DOCS_PAGE_CHANGED = 'DOCS_PAGE_CHANGED';
-export const UPLOAD_DOC = 'UPLOAD_DOC';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-export function updateDocsList() {
+export function updateDocsList(page, state) {
   return (dispatch, getState) => {
-    getDocsList({'page': getState().getIn(['docqueue', 'page'])}).then((response) => {
+    getDocsList({page, state}).then((response) => {
         dispatch({
           type: DOCS_LIST_LOADED,
+          state,
           data: response.data
         });
       })
@@ -28,38 +27,13 @@ export function updateDocsList() {
         console.log(error)
       })
   }
-}
-
-export function loadDocsList() {
-  return (dispatch, getState) => {
-    getDocsList().then((response) => {
-        dispatch({
-          type: DOCS_LIST_LOADED,
-          data: response.data
-        });
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-}
-
-export function docsPageChange(page) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: DOC_PAGE_CHANGED,
-      page: page + 1
-    })
-    dispatch(updateDocsList());
-  }
-
 }
 
 export function uploadDoc(data) {
   return (dispatch, getState) => {
     uploadDocToAPI(data).then(
       (results) => {
-        dispatch(updateDocsList());
+        dispatch(updateDocsList(1, 'PENDING'));
       });
     dispatch({
       type: UPLOAD_DOC,
@@ -75,11 +49,12 @@ export function uploadDoc(data) {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [DOCS_LIST_LOADED]: (state, action) => {
-    const newList = Immutable.Map(action.data)
-    return state.set('docs', newList)
-  },
-  [DOCS_PAGE_CHANGED]: (state, action) => {
-    return state.set('page', action.page)
+    const newList = Immutable.Map(action.data);
+    if (action.state === 'PENDING') {
+      return state.set('pendingDocs', newList);
+    } else {
+      return state.set('processedDocs', newList);
+    }
   }
 }
 

@@ -18,7 +18,7 @@ def save_doc(file_name, file_type, country_iso):
         close(conn)
 
 
-def get_docs(page=1, limit=50, state=None, doc_type=None):
+def get_docs(page=1, limit=5, state=None, doc_type=None):
     conn = None
     try:
         if page == 0:
@@ -45,7 +45,7 @@ def get_docs(page=1, limit=50, state=None, doc_type=None):
         cur.execute(sql_count, data)
         count = cur.fetchone()[0]
 
-        sql_select = sql_select + " ORDER BY ID  OFFSET %s LIMIT %s "
+        sql_select = sql_select + " ORDER BY CREATE_DATE DESC OFFSET %s LIMIT %s "
 
         data = data + (offset, limit)
         cur.execute(sql_select, data)

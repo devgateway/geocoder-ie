@@ -2,26 +2,27 @@ import {
   connect
 } from 'react-redux'
 import {
-  loadDocsList,
-  docsPageChange,
+  updateDocsList,
   uploadDoc
 } from '../modules/docsModule'
 
-import View from '../components/docsList'
+import View from '../components/docsManager'
 
 
 const mapDispatchToProps = {
   onUploadDoc: uploadDoc,
-  onLoadDocsList: loadDocsList,
-  onDocsPageChange: docsPageChange
+  onUpdateDocsList: updateDocsList
 }
 
 const mapStateToProps = (state) => {
   return {
-    rows: state.getIn(['docsqueue','docs','rows']),
-    limit: state.getIn(['docsqueue','docs','limit']),
-    count: state.getIn(['docsqueue','docs','count']),
-    page: state.getIn(['docsqueue','page'])
+    pendingRows: state.getIn(['docsmanager','pendingDocs','rows']),
+    pendingLimit: state.getIn(['docsmanager','pendingDocs','limit']),
+    pendingCount: state.getIn(['docsmanager','pendingDocs','count']),
+
+    processedRows: state.getIn(['docsmanager','processedDocs','rows']),
+    processedLimit: state.getIn(['docsmanager','processedDocs','limit']),
+    processedCount: state.getIn(['docsmanager','processedDocs','count']),
   }
 }
 
