@@ -36,18 +36,18 @@ def process_xml(file, out_file='out.xml', persist=False, path_to_docs=''):
         return out_file
 
 
-def process_document(document, out_file='out.csv', cty_codes=[]):
+def process_document(document, out_file='out.tsv', cty_codes=[]):
     results = geocode([], [document], cty_codes=cty_codes)
 
     geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
 
     with open(out_file, 'w+', newline='') as csvfile:
-        # spamwriter = csv.writer(csvfile, delimiter='\t',quotechar='"', quoting=csv.QUOTE_MINIMAL)ç
         fieldnames = ['geonameId', 'name', 'toponymName', 'fcl', 'fcode', 'fcodeName', 'fclName', 'lat', 'lng',
                       'adminCode1', 'adminName1', 'adminCode2', 'adminName2', 'adminCode3', 'adminName3', 'adminCode4',
                       'adminName4', 'countryName', 'population', 'continentCode', 'countryCode',
                       ]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='\t', quotechar='"',
+                                quoting=csv.QUOTE_MINIMAL)
         writer.writeheader()
         for data, text in geocoding:
             writer.writerow(data)
