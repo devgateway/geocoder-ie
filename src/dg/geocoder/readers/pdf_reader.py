@@ -29,13 +29,13 @@ class PdfReader(BaseReader):
         caching = True
         pagenos = set(pagenos) if pagenos is not None else set()
         i = 0
-        print('Reading pdf pages '.format(i), end=' ')
+        print('Reading pdf pages '.format(i+1), end=' ')
 
         for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
                                       password=password,
                                       caching=caching,
                                       check_extractable=True):
-            print('{}'.format(i), end=' ')
+            print('{}'.format(i+1), end=' ')
             sys.stdout.flush()
             interpreter.process_page(page)
 

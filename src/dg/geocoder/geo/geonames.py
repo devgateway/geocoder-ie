@@ -4,7 +4,7 @@ from urllib.request import urlopen
 
 from requests.utils import quote
 
-from dg.geocoder.config import get_geonames_base_url, get_geonames_user_name
+from dg.geocoder.config import get_geonames_base_url, get_geonames_user_name, get_geonames_retry_policy
 
 
 def parse(data):
@@ -29,70 +29,62 @@ def parse(data):
         'adminCode3': data.get('adminCode3', ''),
         'adminName3': data.get('adminName3', ''),
         'adminCode4': data.get('adminCode4', ''),
-        'adminName4': data.get('adminName4', ''),
-        'timezone': data.get('timezone', '')
+        'adminName4': data.get('adminName4', '')
     }
 
 
-def importance_3(results):
-    for l in results:
-        f_code = l.get('fcode')
-        if f_code in ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLL']:
-            return l
+def get_by_priority(results):
+    if len(results) > 0:
+        priorities = ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5', 'RGN', 'RGNE', 'RGNH', 'PPL', 'PPLA', 'PPLA2',
+                      'PPLA3', 'PPLA4', 'PPLL']
+        list = []
+        for l in results:  # iterate locations
+            f_code = l.get('fcode')
+            # if f_code is equ to current priority return
+            for idx, p in enumerate(priorities):
+                if f_code == p:
+                    list.append((idx, l))
+                    pass
 
-    return None
-
-
-def importance_2(results):
-    for l in results:
-        f_code = l.get('fcode')
-        if f_code in ['RGN', 'RGNE', 'RGNH']:
-            return l
-
-    return None
-
-
-def importance_1(results):
-    for l in results:
-        f_code = l.get('fcode')
-        if f_code in ['ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5']:
-            return l
-
-    return None
-
-
-# this method should return a single location
-def resolve(loc, cty_codes, rels=[]):
-    locations = query(loc, cty_codes)
-
-    selected_loc = importance_1(locations)
-
-    if selected_loc is None:
-        selected_loc = importance_2(locations)
-    if selected_loc is None:
-        selected_loc = importance_3(locations)
-
-    if selected_loc is None and len(locations) > 0:
-        selected_loc = locations[0]
-
-    if selected_loc:
-        print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
-                                                                   selected_loc['lng']))
+            list.sort(key=lambda x: x[0])
+        # return element that got in first order
+        if len(list) > 0:
+            return list[0][1]
     else:
-        print("{} wasn't geocoded :( ".format(loc))
+        return None
+
+
+def resolve(loc, cty_codes, rels=[], query_method='name_equals', fuzzy=.9, retry=get_geonames_retry_policy()):
+    selected_loc = None
+    if len(loc) > 3:
+        locations = query(loc, cty_codes, query_method, fuzzy)
+        selected_loc = get_by_priority(locations)
+
+        if selected_loc is None and len(locations) > 0:
+            selected_loc = locations[0]
+
+        if selected_loc:
+            print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+                                                                       selected_loc['lng']))
+        else:
+            print("Wasn't able to geocode  {}".format(loc))
+            if retry:
+                print("let's try using other parameters".format(loc))
+                selected_loc = resolve(loc, cty_codes, rels, query_method='q', fuzzy=1, retry=False)
+    else:
+        print('{} Too short location name'.format(loc))
 
     return selected_loc
 
 
-def query(location, cty_codes):
+def query(location, cty_codes, query_method, fuzzy):
     results = []
 
     try:
         base_url = get_geonames_base_url()
         username = get_geonames_user_name()
-        query_string = base_url + 'username={user}&name_equals={name}&style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy=.9' \
-            .format(user=username, name=quote(location), order='relevance')
-
+        query_string = base_url + 'username={user}&{query_method}={name}&style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy={fuzzy}' \
+            .format(user=username, query_method=query_method, name=quote(location), order='relevance', fuzzy=fuzzy)
         if cty_codes and len(cty_codes) > 0:
             query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in cty_codes])
 
@@ -100,7 +92,7 @@ def query(location, cty_codes):
         response = urlopen(query_string)
         response_string = response.read().decode('utf-8')
         parsed_response = json_decode.decode(response_string)
-        if len(parsed_response['geonames']) > 0:
+        if parsed_response.get('geonames') and len(parsed_response.get('geonames')) > 0:
             for item in parsed_response['geonames']:
                 results.append(parse(item))
 

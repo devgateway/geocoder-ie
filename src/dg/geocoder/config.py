@@ -73,3 +73,7 @@ def get_default_classifier():
 
 def get_doc_queue_path():
     return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'docs_queue_path')))
+
+
+def get_geonames_retry_policy():
+    return True

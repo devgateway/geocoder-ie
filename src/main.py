@@ -33,13 +33,13 @@ def main(args):
         args = parser.parse_args(args)
 
         if args.command == 'geocode':
-
             file = args.file[0]
-            print('GEOCODE {}'.format(file))
+            print('{} will be geocoded'.format(file))
             if file is None:
                 print('Please provide an input file using -f')
             else:
-                process(file)
+                out = process(file)
+                print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':
             if args.organisation is None or args.organisation not in iati_publishers:

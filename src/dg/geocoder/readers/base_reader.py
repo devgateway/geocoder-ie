@@ -12,6 +12,7 @@ class BaseReader:
         pass
 
     def is_english_lan(self):
+        print('Detecting document language ')
         return detect(self.get_sample()) == 'en'
 
 

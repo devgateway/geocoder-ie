@@ -8,6 +8,12 @@ HTML = 'html'
 XML = 'xml'
 TXT = 'txt'
 
+valid_formats = [PDF, HTML, XML, TXT, ODT]
+
+
+def is_valid(name):
+    return get_file_type(name) in valid_formats
+
 
 def is_pdf(name):
     return get_file_type(name) == PDF
