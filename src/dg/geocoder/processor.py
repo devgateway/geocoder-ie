@@ -69,7 +69,7 @@ def process_queue():
     pass
 
 
-def process(file, out_file):
+def process(file):
     if not is_valid(file):
         print('Not valid file provided')
         return None
