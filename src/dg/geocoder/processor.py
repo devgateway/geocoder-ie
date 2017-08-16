@@ -28,10 +28,11 @@ def process_xml(file, out_file='out.xml', persist=False, path_to_docs=''):
             results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
             [activity.add_location(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
 
-            reader.save(os.path.realpath(os.path.join(path_to_docs, out_file)))
             # if persist:
             # call persit geocoder
             # save in db
+
+        reader.save(os.path.realpath(os.path.join(path_to_docs, out_file)))
         print('File {} saved '.format(out_file))
         return out_file
 
