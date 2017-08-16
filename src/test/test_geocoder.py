@@ -69,7 +69,7 @@ class TestGeocoder(unittest.TestCase):
         locs = [(l) for (l, data) in geo if data.get('geocoding')]
 
     def test_afdb_activities_XML(self):
-        process_xml('resources/afdb_3_activities.xml')
+        process_xml('resources/afdb_2_activities.xml')
 
     def test_afdb_activities_XML_1(self):
         process_xml('resources/afdb_1_no_docs_activities.xml')
