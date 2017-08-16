@@ -1,1 +1,1 @@
-python ..\src\server.py
+python src\server.py
