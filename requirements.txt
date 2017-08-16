@@ -12,3 +12,4 @@ sklearn==0.0
 pycorenlp
 flask
 lxlm
+flask_cors
