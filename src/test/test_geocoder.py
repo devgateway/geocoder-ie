@@ -1,7 +1,7 @@
 import unittest
 
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames
-from dg.geocoder.processor import process_xml
+from dg.geocoder.processor import process_xml, process
 from dg.geocoder.readers.factory import get_text_reader, get_reader
 
 
@@ -73,6 +73,10 @@ class TestGeocoder(unittest.TestCase):
 
     def test_afdb_activities_XML_1(self):
         process_xml('resources/afdb_1_no_docs_activities.xml')
+
+    def test_dfid_simple_document(self):
+        process('resources/dfid_4182791.odt')
+
 
 if __name__ == '__main__':
     unittest.main()
