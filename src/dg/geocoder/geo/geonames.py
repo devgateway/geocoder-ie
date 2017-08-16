@@ -29,8 +29,7 @@ def parse(data):
         'adminCode3': data.get('adminCode3', ''),
         'adminName3': data.get('adminName3', ''),
         'adminCode4': data.get('adminCode4', ''),
-        'adminName4': data.get('adminName4', ''),
-        'timezone': data.get('timezone', '')
+        'adminName4': data.get('adminName4', '')
     }
 
 
@@ -73,7 +72,7 @@ def resolve(loc, cty_codes, rels=[], query_method='name_equals', fuzzy=.9, retry
                 print("let's try using other parameters".format(loc))
                 selected_loc = resolve(loc, cty_codes, rels, query_method='q', fuzzy=1, retry=False)
     else:
-        print('{} Non Location name'.format(loc))
+        print('{} Too short location name'.format(loc))
 
     return selected_loc
 

@@ -1,3 +1,4 @@
+import csv
 import os
 
 from dg.geocoder.config import get_download_path
@@ -8,7 +9,7 @@ from dg.geocoder.iati.iati_validator import is_valid_schema
 from dg.geocoder.util.file_util import is_xml, is_valid
 
 
-def process_xml(file, out_put_name='out.xml', persist=False, path_to_docs=''):
+def process_xml(file, out_file='out.xml', persist=False, path_to_docs=''):
     if not is_valid_schema(file, version='202'):
         print('Invalid xml file supplied please check IATI standard ')
         return None
@@ -27,16 +28,32 @@ def process_xml(file, out_put_name='out.xml', persist=False, path_to_docs=''):
             results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
             [activity.add_location(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
 
-            reader.save(os.path.realpath(os.path.join(path_to_docs, out_put_name)))
+            reader.save(os.path.realpath(os.path.join(path_to_docs, out_file)))
             # if persist:
             # call persit geocoder
             # save in db
-        print('File {} saved '.format(out_put_name))
-        return out_put_name
+        print('File {} saved '.format(out_file))
+        return out_file
 
 
-def process_document(document, out_put_name='out.csv', cty_codes=[]):
-    results = geocode([], [document], cty_codes=[])
+def process_document(document, out_file='out.csv', cty_codes=[]):
+    results = geocode([], [document], cty_codes=cty_codes)
+
+    geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+
+    with open(out_file, 'w+', newline='') as csvfile:
+        # spamwriter = csv.writer(csvfile, delimiter='\t',quotechar='"', quoting=csv.QUOTE_MINIMAL)ç
+        fieldnames = ['geonameId', 'name', 'toponymName', 'fcl', 'fcode', 'fcodeName', 'fclName', 'lat', 'lng',
+                      'adminCode1', 'adminName1', 'adminCode2', 'adminName2', 'adminCode3', 'adminName3', 'adminCode4',
+                      'adminName4', 'countryName', 'population', 'continentCode', 'countryCode',
+                      ]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for data, text in geocoding:
+            writer.writerow(data)
+    csvfile.close()
+
+    return out_file
 
 
 def persist_db():
