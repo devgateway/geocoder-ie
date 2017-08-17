@@ -13219,7 +13219,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 //window.API_ROOT = 'http://localhost:8080'
-window.API_ROOT = document.location.href.indexOf('localhost') > 0 ? 'http://localhost:8080' : '/';
+window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:8080' : 'http://autogeocoder.dgstg.org';
 // Store Initialization
 // ------------------------------------
 var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__store_createStore__["a" /* default */])(window.__INITIAL_STATE__);
