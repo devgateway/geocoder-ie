@@ -177,7 +177,7 @@ const ACTION_HANDLERS = {
 const initialState = Immutable.Map({
   'term': '',
   'doc': 'All',
-  'category': 'None',
+  'category': null,
 })
 
 export default function counterReducer(state = initialState, action) {

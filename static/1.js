@@ -3040,7 +3040,7 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
 var initialState = __WEBPACK_IMPORTED_MODULE_1_immutable___default.a.Map({
   'term': '',
   'doc': 'All',
-  'category': 'None'
+  'category': null
 });
 
 function counterReducer() {
