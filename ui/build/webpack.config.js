@@ -45,6 +45,9 @@ const config = {
       __PROD__,
     }, project.globals))
   ],
+  devServer: {
+      historyApiFallback: true,
+  } 
 }
 
 // JavaScript
