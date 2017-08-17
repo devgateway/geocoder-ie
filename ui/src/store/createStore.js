@@ -62,7 +62,7 @@ import {
     })
   }
 
-  return store
+  return {store, history}
 }
 
 export default createStore

@@ -13117,7 +13117,7 @@ var App = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'div',
           { style: { height: '100%' } },
-          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_router__["Router"], { history: __WEBPACK_IMPORTED_MODULE_5_react_router__["browserHistory"], children: this.props.routes })
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_router__["Router"], { history: this.props.history, children: this.props.routes })
         )
       );
     }
@@ -13222,17 +13222,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:9095' : 'http://autogeocoder.dgstg.org';
 // Store Initialization
 // ------------------------------------
-var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__store_createStore__["a" /* default */])(window.__INITIAL_STATE__);
+
+var _createStore = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__store_createStore__["a" /* default */])(window.__INITIAL_STATE__),
+    store = _createStore.store,
+    history = _createStore.history;
 
 // Render Setup
 // ------------------------------------
+
+
 var MOUNT_NODE = document.getElementById('root');
 
 var render = function render() {
   var App = __webpack_require__("./src/components/App.js").default;
   var routes = __webpack_require__("./src/routes/index.js").default(store);
 
-  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, { store: store, routes: routes }), MOUNT_NODE);
+  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, { store: store, routes: routes, history: history }), MOUNT_NODE);
 };
 
 // Development Tools
@@ -13562,7 +13567,7 @@ var createStore = function createStore() {
     })(__WEBPACK_OUTDATED_DEPENDENCIES__); });
   }
 
-  return store;
+  return { store: store, history: history };
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (createStore);
