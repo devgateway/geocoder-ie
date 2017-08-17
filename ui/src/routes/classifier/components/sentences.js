@@ -35,7 +35,7 @@ export default class Sentences extends Component {
                   </select>
                 </div>
                 <div className="search-row">
-                  <input type="text" className="input-search" onChange={e=>onSearchChange(e.target.value)} value={term}/>
+                  <input type="text" className="input-search" onChange={e => onSearchChange(e.target.value)} value={term}/> 
                 </div>
                 <input type="checkbox" value={category==='geography'? 'on' : 'off'} onChange={e=>onChangeCategory(e.target.value === 'off'? 'geography' : null)}/>
                 <label>Show Only Geography</label>
