@@ -2618,7 +2618,7 @@ var Sentences = function (_Component) {
                 }, value: doc },
               __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(Option, { value: 'All', current: doc }),
               docs.map(function (d, idx) {
-                debugger;return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(Option, { key: 'doc-' + idx, value: d.split('/')[d.split('/').length - 1] });
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(Option, { key: 'doc-' + idx, value: d.split('/')[d.split('/').length - 1] });
               })
             )
           ),
