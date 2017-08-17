@@ -25,7 +25,7 @@ def save_sentences(file, sentences):
         cur.close()
     except Exception as error:
         print(error)
-        pass
+        raise
     finally:
         close(conn)
 
@@ -54,7 +54,7 @@ def set_category(id, category):
         cur.close()
     except Exception as e:
         print('error %s', e)
-        pass
+        raise
 
     finally:
         close(conn)
@@ -77,7 +77,7 @@ def get_sentence_by_id(id):
 
     except Exception as error:
         print(error)
-        pass
+        raise
     finally:
         close(conn)
 
@@ -126,7 +126,7 @@ def get_sentences(page=1, limit=50, query=None, category=None, document=None):
 
     except Exception as error:
         print(error)
-        pass
+        raise
     finally:
         close(conn)
 
@@ -143,6 +143,6 @@ def get_doc_list():
         return results
     except Exception as error:
         print(error)
-        pass
+        raise
     finally:
         close(conn)

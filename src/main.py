@@ -16,12 +16,12 @@ def main(args):
                             help='use geocode to auto-geocode projects in file provided, or download to get raw '
                                  'data from IATI registry')
 
-        parser.add_argument("file", type=str, default=None, nargs='+', help='IATI XML activities')
+        parser.add_argument("-f", "--file", type=str, default=None, nargs='+', help='IATI XML activities')
 
         parser.add_argument("-p", "--publisher", type=str, default=None, required=False, dest='organisation',
                             help='Reporting organisation of the data to be download')
 
-        parser.add_argument("-co", "--countries", type=str, default=None, required=False, dest='countries',
+        parser.add_argument("-cty", "--countries", type=str, default=None, required=False, dest='countries',
                             help='Countries codes')
 
         parser.add_argument("-l", "--limit", type=str, default=50, required=False, dest='limit',
@@ -33,12 +33,13 @@ def main(args):
         args = parser.parse_args(args)
 
         if args.command == 'geocode':
-            file = args.file[0]
+            file = args.file[0] if args.file else None
             print('{} will be geocoded'.format(file))
             if file is None:
                 print('Please provide an input file using -f')
             else:
-                out = process(file)
+                cty_codes = args.countries if args.countries else None
+                out = process(file, cty_codes)
                 print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':

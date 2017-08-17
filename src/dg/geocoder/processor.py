@@ -70,7 +70,7 @@ def process_queue():
     pass
 
 
-def process(file):
+def process(file, cty_codes=[]):
     if not is_valid(file):
         print('Not valid file provided')
         return None
@@ -78,4 +78,4 @@ def process(file):
         if is_xml(file):
             return process_xml(file)
         else:
-            return process_document(file)
+            return process_document(file, cty_codes=cty_codes)

@@ -13,7 +13,7 @@ def save_doc(file_name, file_type, country_iso):
         cur.close()
     except Exception as error:
         print(error)
-        pass
+        raise
     finally:
         close(conn)
 
@@ -57,7 +57,8 @@ def get_docs(page=1, limit=5, state=None, doc_type=None):
 
     except Exception as error:
         print(error)
-        pass
+        raise
+
     finally:
         close(conn)
 
