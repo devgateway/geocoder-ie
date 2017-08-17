@@ -13219,7 +13219,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 //window.API_ROOT = 'http://localhost:8080'
-window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:8080' : 'http://autogeocoder.dgstg.org';
+window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:9095' : 'http://autogeocoder.dgstg.org';
 // Store Initialization
 // ------------------------------------
 var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__store_createStore__["a" /* default */])(window.__INITIAL_STATE__);
@@ -13513,7 +13513,8 @@ var createStore = function createStore() {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  var middleware = [__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a];
+  //const middleware = [thunk]
+  var historyMiddleware = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_react_router_redux__["routerMiddleware"])(__WEBPACK_IMPORTED_MODULE_2_react_router__["browserHistory"]);
 
   // ======================================================
   // Store Enhancers
@@ -13530,7 +13531,7 @@ var createStore = function createStore() {
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
-  var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__reducers__["default"])(), initialState, composeEnhancers.apply(undefined, [__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"].apply(undefined, middleware)].concat(enhancers)));
+  var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__reducers__["default"])(), initialState, composeEnhancers.apply(undefined, [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a, historyMiddleware)].concat(enhancers)));
   store.asyncReducers = {};
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime

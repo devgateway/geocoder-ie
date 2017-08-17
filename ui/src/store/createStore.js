@@ -1,5 +1,5 @@
 import { applyMiddleware, compose, createStore as createReduxStore } from 'redux'
-import thunk from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk'
 import { hashHistory  } from 'react-router'
 import makeRootReducer from './reducers'
 import { updateLocation } from './location'
@@ -8,7 +8,7 @@ import {
   browserHistory
 } from 'react-router';
 import {
-  syncHistoryWithStore
+  syncHistoryWithStore, routerMiddleware
 } from 'react-router-redux';
 
 
@@ -17,7 +17,8 @@ import {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk]
+  //const middleware = [thunk]
+  const historyMiddleware = routerMiddleware(browserHistory);
 
   // ======================================================
   // Store Enhancers
@@ -38,7 +39,7 @@ import {
     makeRootReducer(),
     initialState,
       composeEnhancers(
-      applyMiddleware(...middleware),
+      applyMiddleware(thunkMiddleware, historyMiddleware),
       ...enhancers
     )
   )

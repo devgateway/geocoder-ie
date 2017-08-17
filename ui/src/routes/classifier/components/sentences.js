@@ -31,7 +31,7 @@ export default class Sentences extends Component {
                 <div className="search-row">
                   <select onChange={e=>onChangeDocument(e.target.value)} value={doc}>
                     <Option value='All' current={doc}/>
-                    {docs.map(d=><Option key={d.split('/')[d.split('/').length-1]} value={d.split('/')[d.split('/').length-1]}/>)}
+                    {docs.map((d, idx)=>{debugger; return(<Option key={`doc-${idx}`} value={d.split('/')[d.split('/').length-1]}/>)})}
                   </select>
                 </div>
                 <div className="search-row">
