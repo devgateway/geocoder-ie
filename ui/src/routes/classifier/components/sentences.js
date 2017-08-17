@@ -20,7 +20,7 @@ export default class Sentences extends Component {
   }
 
     render() {
-      const {rows=[],onPageClick,count,limit,onUpdate,onDelete,onSearchChange, term,onSearch,docs=[],doc,onChangeDocument}=this.props
+      const {rows=[], onPageClick, count, limit, onUpdate, onDelete, onSearchChange, term, onSearch, docs=[], doc, onChangeDocument, onChangeCategory, category}=this.props
       const pageCount=count/limit
         return (
           <div className='corpora' style={{ margin: '0 auto' }} >
@@ -31,15 +31,18 @@ export default class Sentences extends Component {
                 <div className="search-row">
                   <select onChange={e=>onChangeDocument(e.target.value)} value={doc}>
                     <Option value='All' current={doc}/>
-                    {docs.map(d=><Option value={d.split('/')[d.split('/').length-1]}/>)}
+                    {docs.map(d=><Option key={d.split('/')[d.split('/').length-1]} value={d.split('/')[d.split('/').length-1]}/>)}
                   </select>
                 </div>
                 <div className="search-row">
                   <input type="text" className="input-search" onChange={e=>onSearchChange(e.target.value)} value={term}/>
                 </div>
+                <input type="checkbox" value={category==='geography'? 'on' : 'off'} onChange={e=>onChangeCategory(e.target.value === 'off'? 'geography' : null)}/>
+                <label>Show Only Geography</label>
                 <div className="search-row right">
                     <input type='button' className='btn-search' value='Search'  onClick={onSearch}/>
                 </div>
+                
             </div>
 
                 <ReactPaginate

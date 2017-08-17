@@ -3,7 +3,9 @@ import {
 } from 'react-redux'
 import {
   updateDocsList,
-  uploadDoc
+  uploadDoc,
+  addMessage,
+  closeMessage
 } from '../modules/docsModule'
 
 import View from '../components/docsManager'
@@ -11,7 +13,9 @@ import View from '../components/docsManager'
 
 const mapDispatchToProps = {
   onUploadDoc: uploadDoc,
-  onUpdateDocsList: updateDocsList
+  onUpdateDocsList: updateDocsList,
+  onCloseMessage: closeMessage,
+  onAddMessage: addMessage,
 }
 
 const mapStateToProps = (state) => {
@@ -23,6 +27,8 @@ const mapStateToProps = (state) => {
     processedRows: state.getIn(['docsmanager','processedDocs','rows']),
     processedLimit: state.getIn(['docsmanager','processedDocs','limit']),
     processedCount: state.getIn(['docsmanager','processedDocs','count']),
+
+    messages: state.getIn(['docsmanager','messages']),
   }
 }
 

@@ -9,7 +9,8 @@ import {
   updateTerm,
   search,
   loadDocList,
-  changeDocument
+  changeDocument,
+  changeCategory
 } from '../modules/sentences'
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -31,7 +32,8 @@ const mapDispatchToProps = {
   onLoadDocs:loadDocList,
   onSearchChange:updateTerm,
   onSearch:search,
-  onPageClick: pageClick
+  onPageClick: pageClick,
+  onChangeCategory: changeCategory,
 }
 
 const mapStateToProps = (state) => {
@@ -41,7 +43,8 @@ const mapStateToProps = (state) => {
     rows: state.getIn(['classifier', 'sentences','rows']),
     limit: state.getIn(['classifier', 'sentences','limit']),
     count: state.getIn(['classifier', 'sentences','count']),
-    docs: state.getIn(['classifier', 'docs'])
+    docs: state.getIn(['classifier', 'docs']),
+    category: state.getIn(['classifier', 'category']),
   }
 }
 

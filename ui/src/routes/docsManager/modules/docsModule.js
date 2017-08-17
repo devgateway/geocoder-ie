@@ -9,6 +9,8 @@ import {
 // ------------------------------------
 
 export const DOCS_LIST_LOADED = 'DOCS_LIST_LOADED';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const CLOSE_MESSAGE = 'CLOSE_MESSAGE';
 
 // ------------------------------------
 // Actions
@@ -34,15 +36,29 @@ export function uploadDoc(data) {
     uploadDocToAPI(data).then(
       (results) => {
         dispatch(updateDocsList(1, 'PENDING'));
+        dispatch(addMessage(`File ${data.file.name} uploaded successfully`, 'success'));
+      }).catch((failure) => {
+        dispatch(addMessage(`Error on load file ${data.file.name}`));
       });
-    dispatch({
-      type: UPLOAD_DOC,
-      docName: data.file.name
-    })
   }
 
 }
 
+export function addMessage(text, msgType) {
+  return {
+    type: ADD_MESSAGE,
+    text,
+    msgType,
+    id: new Date().getTime()
+  }
+}
+
+export function closeMessage(id) {
+  return {
+    type: CLOSE_MESSAGE,
+    id
+  }
+}
 
 // ------------------------------------
 // Action Handlers
@@ -55,6 +71,16 @@ const ACTION_HANDLERS = {
     } else {
       return state.set('processedDocs', newList);
     }
+  },
+  [ADD_MESSAGE]: (state, action) => {
+    const newList = state.get('messages');
+    const {id, text, msgType} = action;
+    newList.push({id, text, msgType});
+    return state.set('messages', newList);
+  },
+  [CLOSE_MESSAGE]: (state, action) => {
+    const newList = state.get('messages');
+    return state.set('messages', newList.filter(msg => {return msg.id !== action.id}));
   }
 }
 
@@ -63,7 +89,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = Immutable.Map({
-  'page': 1
+  'messages': []
 })
 
 export default function counterReducer(state = initialState, action) {

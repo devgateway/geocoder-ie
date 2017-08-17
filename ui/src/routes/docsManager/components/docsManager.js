@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, {Component} from 'react';
 import ReactPaginate from 'react-paginate';
 import {DropzoneComponent} from 'react-dropzone-component';
-
+import {Messages} from './messages';
 import './docsManager.scss'
 import '../../../../node_modules/react-dropzone-component/styles/filepicker.css';
 import '../../../../node_modules/dropzone/dist/min/dropzone.min.css';
@@ -268,7 +268,7 @@ countryList = [
 
   handleFileAdded(file) {
     let dzComp = this.refs.dzComp;
-    let {filesToLoad, loadMessages} = this.state;
+    let {filesToLoad} = this.state;
     let duplicated = false;
     filesToLoad.forEach(fl => {
       if (fl.name === file.name){
@@ -277,18 +277,15 @@ countryList = [
     });
     if (!duplicated) {
       if (file.type !== 'text/xml' && file.type !== 'application/pdf' && file.type !== 'application/vnd.oasis.opendocument.text') {
+        this.props.onAddMessage(`File ${file.name} is not supported`, 'error');
         dzComp.dropzone.removeFile(file);
-        loadMessages.push(`File ${file.name} is not supported`);
-        this.setState({'loadMessages': loadMessages});
       } else {
         filesToLoad = dzComp.dropzone.files.slice();
-        loadMessages = [];
-        this.setState({'filesToLoad': filesToLoad, 'loadMessages': loadMessages});
+        this.setState({'filesToLoad': filesToLoad});
       }
     } else {
+      this.props.onAddMessage(`File ${file.name} is duplicatedd`, 'warning');
       dzComp.dropzone.removeFile(file);
-      loadMessages.push(`File ${file.name} is duplicated`);
-      this.setState({'loadMessages': loadMessages});
     }
   }
 
@@ -310,8 +307,12 @@ countryList = [
     this.setState({'countryISO': event.target.value});
   }
 
+  closeMessage(id){
+    this.props.onCloseMessage(id);
+  }
+
   render() {
-    const {pendingRows, pendingCount, pendingLimit, processedRows, processedLimit, processedCount, onUpdateDocsList} = this.props;
+    const {pendingRows, pendingCount, pendingLimit, processedRows, processedLimit, processedCount, onUpdateDocsList, messages} = this.props;
     const pendingPageCount = pendingCount / pendingLimit;
     const processedPageCount = processedCount / processedLimit;
     const dropzoneConfig = {
@@ -329,7 +330,7 @@ countryList = [
       removedfile: this.handleFileRemoved.bind(this)
     }
 
-    const {filesToLoad, loadMessages, countryISO} = this.state;
+    const {filesToLoad, countryISO} = this.state;
     let showCountrySelector = false;
     filesToLoad.forEach(fl => {
       if (fl.type === 'application/pdf' || fl.type === 'application/vnd.oasis.opendocument.text') {
@@ -351,13 +352,6 @@ countryList = [
           djsConfig={djsConfig} 
         />
 
-        {loadMessages.length > 0 ? 
-          <div className="load-messages">
-            {loadMessages.map(message => {
-              return <div key={`message:{message}`}>{message}</div>
-            })}
-          </div>
-        : null}
         {showCountrySelector ?
           <select value={countryISO} onChange={this.handleCountryChange.bind(this)}>
             <option value='none'>Select a country</option>
@@ -453,7 +447,15 @@ countryList = [
             </tr>
           </tbody>
         </table>
-
+        <div className='messages-container'>
+          {messages.map(message => {
+            return(<div className={`message-${message.msgType}`}>
+                <div className="message-text">{message.text}</div>
+                <div className="message-close" onClick={this.closeMessage.bind(this, message.id)}>X</div>
+              </div>)
+            })
+          }
+        </div>
       </div>
     );
   }
