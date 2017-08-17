@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import './styles/main.scss'
 
-window.API_ROOT = 'http://localhost:8080'
-
+//window.API_ROOT = 'http://localhost:8080'
+window.API_ROOT = document.location.href.indexOf('localhost') > 0 ? 'http://localhost:8080' : '/';
 // Store Initialization
 // ------------------------------------
 const store = createStore(window.__INITIAL_STATE__)
