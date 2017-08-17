@@ -75,7 +75,12 @@ class TestGeocoder(unittest.TestCase):
         process_xml('resources/afdb_1_no_docs_activities.xml')
 
     def test_dfid_simple_document(self):
-        process('resources/dfid_4182791.odt')
+        results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=['GN'])
+
+        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+
+        for l, data in geocoding:
+            print(l)
 
 
 if __name__ == '__main__':
