@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import uuid
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 from urllib.parse import unquote_plus
 from urllib.request import urlopen
 
