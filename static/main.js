@@ -13513,8 +13513,21 @@ var createStore = function createStore() {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  //const middleware = [thunk]
+
   var historyMiddleware = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_react_router_redux__["routerMiddleware"])(__WEBPACK_IMPORTED_MODULE_2_react_router__["browserHistory"]);
+  var redirectMiddleWare = function redirectMiddleWare(store) {
+    return function (next) {
+      return function (action) {
+        if (action.transition) {
+          history.push(action.transition);
+          return null;
+        } else {
+          return next(action);
+        }
+      };
+    };
+  };
+  var middleware = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a, historyMiddleware, redirectMiddleWare);
 
   // ======================================================
   // Store Enhancers
@@ -13531,12 +13544,12 @@ var createStore = function createStore() {
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
-  var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__reducers__["default"])(), initialState, composeEnhancers.apply(undefined, [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a, historyMiddleware)].concat(enhancers)));
+  var store = middleware(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__reducers__["default"])(), initialState);
   store.asyncReducers = {};
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   //store.unsubscribeHistory = hashHistory.listen(updateLocation(store))
-  var history = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_react_router_redux__["syncHistoryWithStore"])(__WEBPACK_IMPORTED_MODULE_2_react_router__["browserHistory"], store, {
+  var history = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_react_router_redux__["syncHistoryWithStore"])(__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"], store, {
     selectLocationState: function selectLocationState(state) {
       return state.get('location').toJS();
     }

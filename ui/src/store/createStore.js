@@ -17,9 +17,18 @@ import {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  //const middleware = [thunk]
+  
   const historyMiddleware = routerMiddleware(browserHistory);
-
+  const redirectMiddleWare = store => next => action => {
+    if (action.transition) {
+      history.push(action.transition);
+      return null;
+    } else {
+      return next(action);
+    }
+  };
+  const middleware = applyMiddleware(thunkMiddleware, historyMiddleware, redirectMiddleWare);
+ 
   // ======================================================
   // Store Enhancers
   // ======================================================
@@ -35,24 +44,16 @@ import {
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
-  const store = createReduxStore(
-    makeRootReducer(),
-    initialState,
-      composeEnhancers(
-      applyMiddleware(thunkMiddleware, historyMiddleware),
-      ...enhancers
-    )
-  )
+  const store = middleware(createReduxStore)(makeRootReducer(), initialState);
   store.asyncReducers = {}
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   //store.unsubscribeHistory = hashHistory.listen(updateLocation(store))
-  const history = syncHistoryWithStore(browserHistory, store, {
+  const history = syncHistoryWithStore(hashHistory, store, {
     selectLocationState (state) {
         return state.get('location').toJS();
     }
   });
-
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
