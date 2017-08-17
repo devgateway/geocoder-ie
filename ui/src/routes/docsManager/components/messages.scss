@@ -1,0 +1,59 @@
+
+.messages-container{
+	position: fixed;
+    bottom: 2vh;
+    right: 0;
+    left: auto;
+    z-index: 1000;
+    background-color: #fff;
+    padding: 3px;
+    width: 25vw;
+    opacity: 0.5;
+    
+}
+.messages-container:hover {
+    opacity: 1;
+}
+
+.message-success{
+	background-color: #81b381;
+    border: 1px solid #204221;
+    padding-left: 1vw;
+    height: 3vh;
+    line-height: 3vh;
+}
+
+.message-info{
+	background-color: #9bcdea;
+    border: 1px solid #2c3279;
+    padding-left: 1vw;
+    height: 3vh;
+    line-height: 3vh;
+}
+
+.message-warning{
+	background-color: #e8da73;
+    border: 1px solid #776f0e;
+    padding-left: 1vw;
+    height: 3vh;
+    line-height: 3vh;
+}
+
+.message-error{
+	background-color: #e68b8b;
+    border: 1px solid #8e2525;
+    padding-left: 1vw;
+    height: 3vh;
+    line-height: 3vh;
+}
+
+.message-close{
+	float: right;
+    padding-right: 0.5vw;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.message-text{
+	float: left;
+}

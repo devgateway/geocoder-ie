@@ -17,6 +17,7 @@ export const TERM_UPDATED = 'TERM_UPDATED'
 export const PAGE_CHANGED = 'PAGE_CHANGED'
 export const CORPORA_DOC_LIST_LOADED = 'CORPORA_DOC_LIST_LOADED'
 export const DOCUMENT_CHANGED = 'DOCUMENT_CHANGED'
+export const CATEGORY_CHANGED = 'CATEGORY_CHANGED'
 
 // ------------------------------------
 // Actions
@@ -42,6 +43,15 @@ export function pageClick(page) {
 
 }
 
+export function changeCategory (value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: CATEGORY_CHANGED,
+      value
+    })
+    dispatch(loadSentences(getParams(getState)))
+  }
+}
 
 export function changeDocument(doc) {
   debugger
@@ -58,7 +68,6 @@ export function changeDocument(doc) {
 
 export function search() {
   return (dispatch, getState) => {
-
     dispatch({
       type: PAGE_CHANGED,
       page: 1
@@ -111,6 +120,7 @@ function getParams(getState, page) {
   let term = getState().getIn(['classifier', 'term'])
   page = (page) ? page : getState().getIn(['classifier', 'page'])
   let doc = getState().getIn(['classifier', 'doc'])
+  let category = getState().getIn(['classifier', 'category'])
 
   if (doc == 'All') {
     doc = null
@@ -118,7 +128,8 @@ function getParams(getState, page) {
   return {
     page,
     query: term,
-    doc
+    doc,
+    category
   }
 }
 export function updateSentence(id, category) {
@@ -139,7 +150,6 @@ export function updateSentence(id, category) {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [SENTENCES_LIST_LOADED]: (state, action) => {
-    debugger;
     const newList = Immutable.Map(action.data)
     return state.set('sentences', newList)
   },
@@ -155,6 +165,9 @@ const ACTION_HANDLERS = {
   },
   [DOCUMENT_CHANGED]: (state, action) => {
     return state.set('doc', action.doc)
+  },
+  [CATEGORY_CHANGED]: (state, action) => {
+    return state.set('category', action.value)
   }
 }
 
@@ -163,7 +176,8 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = Immutable.Map({
   'term': '',
-  'doc': 'All'
+  'doc': 'All',
+  'category': 'None',
 })
 
 export default function counterReducer(state = initialState, action) {

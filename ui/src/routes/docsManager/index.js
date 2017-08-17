@@ -1,7 +1,7 @@
 import { injectReducer } from '../../store/reducers'
 
 export default (store) => ({
-  path : 'docsList',
+  path : 'docsManager',
   /*  Async getComponent is only invoked when route matches   */
   getComponent (nextState, cb) {
     /*  Webpack - use 'require.ensure' to create a split point
@@ -13,12 +13,12 @@ export default (store) => ({
       const reducer = require('./modules/docsModule').default
 
       /*  Add the reducer to the store on key 'counter'  */
-      injectReducer(store, { key: 'docsqueue', reducer })
+      injectReducer(store, { key: 'docsmanager', reducer })
 
       /*  Return getComponent   */
       cb(null, Comp)
 
     /* Webpack named bundle   */
-  }, 'docsList')
+  }, 'docsManager')
   }
 })

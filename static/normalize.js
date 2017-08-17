@@ -1,4 +1,4 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
 /***/ "./node_modules/asap/browser-raw.js":
 /***/ (function(module, exports, __webpack_require__) {
@@ -1312,8 +1312,8 @@ Object.assign = __webpack_require__("./node_modules/object-assign/index.js");
 // 2) Promise
 // ------------------------------------
 if (typeof Promise === 'undefined') {
-  __webpack_require__("./node_modules/promise/lib/rejection-tracking.js").enable();
-  window.Promise = __webpack_require__("./node_modules/promise/lib/es6-extensions.js");
+   __webpack_require__("./node_modules/promise/lib/rejection-tracking.js").enable();
+   window.Promise = __webpack_require__("./node_modules/promise/lib/es6-extensions.js");
 }
 
 // 3) Fetch
@@ -1321,7 +1321,7 @@ if (typeof Promise === 'undefined') {
 // Fetch polyfill depends on a Promise implementation, so it must come after
 // the feature check / polyfill above.
 if (typeof window.fetch === 'undefined') {
-  __webpack_require__("./node_modules/whatwg-fetch/fetch.js");
+   __webpack_require__("./node_modules/whatwg-fetch/fetch.js");
 }
 
 /***/ }),
