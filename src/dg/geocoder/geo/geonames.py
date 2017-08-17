@@ -69,7 +69,7 @@ def resolve(loc, cty_codes, rels=[], query_method='name_equals', fuzzy=.9, retry
         else:
             print("Wasn't able to geocode  {}".format(loc))
             if retry:
-                print("let's try using other parameters".format(loc))
+                print("Let's try using others parameters".format(loc))
                 selected_loc = resolve(loc, cty_codes, rels, query_method='q', fuzzy=1, retry=False)
     else:
         print('{} Too short location name'.format(loc))

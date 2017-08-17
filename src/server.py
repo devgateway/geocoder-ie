@@ -8,7 +8,7 @@ from flask import Response
 from flask import request
 from flask.helpers import send_from_directory
 from flask_cors import CORS
-from dg.geocoder.config import get_doc_queue_path
+from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
 from dg.geocoder.db.doc_queue import save_doc, get_docs
 import datetime
@@ -121,4 +121,4 @@ def upload_doc():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=get_app_port(), debug=True)

@@ -11,6 +11,10 @@ parser = ConfigParser()
 parser.read(app_config_file_path)
 
 
+def get_app_port():
+    return int( parser.get('web', 'port'))
+
+
 def get_ner_host():
     return parser.get('standford', 'host')
 
