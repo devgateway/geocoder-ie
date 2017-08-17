@@ -7,7 +7,7 @@ import './styles/main.scss'
 window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:9095' : 'http://autogeocoder.dgstg.org';
 // Store Initialization
 // ------------------------------------
-const store = createStore(window.__INITIAL_STATE__)
+const {store, history} = createStore(window.__INITIAL_STATE__)
 
 // Render Setup
 // ------------------------------------
@@ -18,7 +18,7 @@ let render = () => {
   const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
-    <App store={store} routes={routes} />,
+    <App store={store} routes={routes} history={history}/>,
     MOUNT_NODE
   )
 }
