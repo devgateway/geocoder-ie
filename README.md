@@ -76,7 +76,7 @@ port=9095
  ```
 5. Run python serve.py and open http://localhost:9095
 
-## Train your own text classifier
+## Training your own text classifier
 
 One of the key pieces of the tool is the text classification module.
 The classifier attempts to reduce the number of false positives by eliminating those paragraph that shouldn’t be passed the named entity extraction phase, you can train your own classifier and make it learn about your documents.
@@ -105,8 +105,8 @@ default_classifier= my_classifier
  ```
 7. Geocode your documents
 
-## Geocoding IATI activities files
-If a iati xml activities file is provided as input, the system will geocoded each activity by following the next steps:
+## Geocoding IATI activities
+If a iati xml file is provided as input, the system will geocoded each activity by following the next steps:
 
 2)	Extract activity description
 3)	Download all documents tagged with code 02 or 07
