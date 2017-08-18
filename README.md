@@ -74,7 +74,7 @@ db_name=geocoder
 [web]
 port=9095
  ```
-5. Run python serve.py and open http://localhost:9095
+5. Run python server.py and open http://localhost:9095
 
 ## Training your own text classifier
 
