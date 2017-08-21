@@ -1,9 +1,8 @@
 import unittest
-
+import json
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames
-from dg.geocoder.processor import process_xml, process
-from dg.geocoder.readers.factory import get_text_reader, get_reader
-
+from dg.geocoder.processor import process_xml, process_queue
+from dg.geocoder.processor import persist_geocoding
 
 class TestGeocoder(unittest.TestCase):
     def test_geocode_string(self):
@@ -74,11 +73,24 @@ class TestGeocoder(unittest.TestCase):
     def test_afdb_activities_XML_1(self):
         process_xml('resources/afdb_1_no_docs_activities.xml')
 
+
+    def test_process_queue(self):
+        process_queue()
+
+
     def test_dfid_simple_document(self):
-        results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=['GN'])
+        results = geocode([], ['resources/dfid_4182791.odt'], cty_codes=[])
 
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+        persist_geocoding(geocoding, None, None)
+        for l, data in geocoding:
+            print(l)
 
+    def test_afdb_subnational_simple_document(self):
+        results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
+
+        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+        persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
 

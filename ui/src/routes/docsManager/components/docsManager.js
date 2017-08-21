@@ -396,7 +396,7 @@ countryList = [
                     {(pendingRows)?pendingRows.map(l => 
                       <tr className={l[2]} key={l[0]}>
                         <td>{l[0]}</td>
-                        <td>{l[1]}</td>
+                        <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l[0]}`}>{l[1]}</a></td>
                         <td>{l[2]}</td>
                         <td>{l[3]}</td>
                         <td>{this.countryList.find(country => {return country.code === l[6]})? this.countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
@@ -431,14 +431,16 @@ countryList = [
                       <td><b>TYPE</b></td>
                       <td><b>STATUS</b></td>
                       <td><b>COUNTRY</b></td>
+                      <td><b>ACTIONS</b></td>
                     </tr>
                     {(processedRows)?processedRows.map(l => 
                       <tr className={l[2]} key={l[0]}>
                         <td>{l[0]}</td>
-                        <td>{l[1]}</td>
+                        <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l[0]}`}>{l[1]}</a></td>
                         <td>{l[2]}</td>
                         <td>{l[3]}</td>
                         <td>{this.countryList.find(country => {return country.code === l[6]})? this.countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
+                        <td><a target='new' href={`${window.API_ROOT}/geocoding/download/${l[0]}`}>Download result</a></td>
                       </tr>)
                     : null}
                   </tbody>

@@ -10,7 +10,8 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
-from dg.geocoder.db.doc_queue import save_doc, get_docs
+from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id
+from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list
 import datetime
 
 app = Flask(__name__, static_url_path="", static_folder="../static")
@@ -119,6 +120,47 @@ def upload_doc():
         save_doc(filename, filetype, countryISO)
     return jsonify({"success": True}), 200
 
+
+@app.route('/docqueue/download/<id>', methods=['GET'])
+def document_download(id):
+    document = get_document_by_id(id)
+    doc_name = document[1]
+    return send_from_directory(get_doc_queue_path(), doc_name, as_attachment=True)
+
+
+@app.route('/geocoding', methods=['GET'])
+def geocoding_list():
+    activity_id = None
+    document_id = None
+    if 'activity_id' in request.args:
+        activity_id = request.args['activity_id']
+
+    if 'document_id' in request.args:
+        document_id = request.args['document_id']
+
+    return Response(json.dumps(get_geocoding_list(activity_id=activity_id, document_id=document_id),
+                    default=datetime_handler), mimetype='application/json')
+
+
+@app.route('/geocoding/download/<id>', methods=['GET'])
+def geocoding_download(id):
+    document = get_document_by_id(id)
+    doc_name = document[1]
+    doc_type = document[2]
+    output_ext = '_out.tsv'
+    if doc_type == 'text/xml':
+        output_ext = '_out.xml'
+    return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0]+output_ext, as_attachment=True)
+
+
+@app.route('/extracted', methods=['GET'])
+def extracted_list():
+    geocoding_id = None
+    if 'geocoding_id' in request.args:
+        geocoding_id = request.args['geocoding_id']
+
+    return Response(json.dumps(get_extracted_list(geocoding_id=geocoding_id),
+                    default=datetime_handler), mimetype='application/json')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=get_app_port(), debug=True)

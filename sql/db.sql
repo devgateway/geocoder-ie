@@ -47,6 +47,7 @@ CREATE TABLE activity
 
 CREATE TABLE geocoding
 (
+  id bigint NOT NULL,
   geoname_id bigint NOT NULL,
   toponym_name character varying(250),
   name character varying(250),
@@ -70,7 +71,7 @@ CREATE TABLE geocoding
   admin_name_4 character varying(250),
   document_id bigint,
   activity_id bigint,
-  CONSTRAINT geocoding_pk PRIMARY KEY (geoname_id),
+  CONSTRAINT geocoding_pk PRIMARY KEY (id),
   CONSTRAINT fk_geocoding_activity FOREIGN KEY (activity_id)
       REFERENCES activity (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -87,7 +88,7 @@ CREATE TABLE "extract"
   geocoding_id bigint,
   CONSTRAINT extract_pk PRIMARY KEY (id),
   CONSTRAINT fk_extract_geocoding FOREIGN KEY (geocoding_id)
-      REFERENCES geocoding (geoname_id) MATCH SIMPLE
+      REFERENCES geocoding (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
