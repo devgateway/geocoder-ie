@@ -5,7 +5,9 @@ import {
   updateDocsList,
   uploadDoc,
   addMessage,
-  closeMessage
+  deleteDoc,
+  closeMessage,
+  processDoc
 } from '../modules/docsModule'
 
 import View from '../components/docsManager'
@@ -16,6 +18,8 @@ const mapDispatchToProps = {
   onUpdateDocsList: updateDocsList,
   onCloseMessage: closeMessage,
   onAddMessage: addMessage,
+  onDeleteDoc: deleteDoc,
+  onProcessDoc: processDoc,
 }
 
 const mapStateToProps = (state) => {

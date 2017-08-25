@@ -26,6 +26,14 @@ export function getDocsList(params) {
   return axios.get(`${ROOT}/docqueue`, {params})
 }
 
+export function deleteDocById(id) {
+  return axios.delete(`${ROOT}/docqueue/${id}`)
+}
+
+export function forceProcessDoc(id) {
+  return axios.get(`${ROOT}/docqueue/process/${id}`)
+}
+
 export function uploadDocToAPI(fileData) {
   const {file, countryISO} = fileData;
   let data = new FormData();
@@ -46,3 +54,16 @@ export function uploadDocToAPI(fileData) {
       });
   //return axios.post(`${ROOT}/docqueue/upload`, data, config);
 }
+
+export function getGeocodingList(params) {
+  return axios.get(`${ROOT}/geocoding`, {params})
+}
+
+export function getActivityList(params) {
+  return axios.get(`${ROOT}/activity`, {params})
+}
+
+export function getExtractList(params) {
+  return axios.get(`${ROOT}/extracted`, {params})
+}
+

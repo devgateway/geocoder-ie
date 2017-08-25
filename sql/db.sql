@@ -35,12 +35,13 @@ CREATE TABLE doc_queue
 CREATE TABLE activity
 (
   id bigint NOT NULL,
-  name character varying(500),
-  description character varying(500),
+  title text,
+  description text,
   country_iso character varying(250),
   doc_id bigint,
+  identifier character varying(250),
   CONSTRAINT activity_pk PRIMARY KEY (id),
-  CONSTRAINT fk_doc_queue_activity_id FOREIGN KEY (id)
+  CONSTRAINT fk_doc_queue_activity_id FOREIGN KEY (doc_id)
       REFERENCES doc_queue (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );

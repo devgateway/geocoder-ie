@@ -10,8 +10,10 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
-from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id
-from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list
+from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue
+from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
+from dg.geocoder.processor import process_doc
+
 import datetime
 
 app = Flask(__name__, static_url_path="", static_folder="../static")
@@ -108,6 +110,14 @@ def docs_list():
                     mimetype='application/json')
 
 
+@app.route('/docqueue/<id>', methods=['DELETE'])
+def docqueue_delete(id):
+    if delete_doc_from_queue(id):
+        return jsonify({"success": True}), 200
+    else:
+        return jsonify({"success": False}), 500
+
+
 @app.route('/docqueue/upload', methods=['GET', 'POST'])
 def upload_doc():
     if request.method == 'POST':
@@ -121,11 +131,10 @@ def upload_doc():
     return jsonify({"success": True}), 200
 
 
-@app.route('/docqueue/download/<id>', methods=['GET'])
-def document_download(id):
-    document = get_document_by_id(id)
-    doc_name = document[1]
-    return send_from_directory(get_doc_queue_path(), doc_name, as_attachment=True)
+@app.route('/docqueue/process/<id>', methods=['GET'])
+def process_document(id):
+    process_doc(id)
+    return jsonify({"success": True}), 200
 
 
 @app.route('/geocoding', methods=['GET'])
@@ -151,6 +160,17 @@ def geocoding_download(id):
     if doc_type == 'text/xml':
         output_ext = '_out.xml'
     return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0]+output_ext, as_attachment=True)
+
+
+@app.route('/activity', methods=['GET'])
+def activity_list():
+    document_id = None
+
+    if 'document_id' in request.args:
+        document_id = request.args['document_id']
+
+    return Response(json.dumps(get_activity_list(document_id=document_id),
+                    default=datetime_handler), mimetype='application/json')
 
 
 @app.route('/extracted', methods=['GET'])

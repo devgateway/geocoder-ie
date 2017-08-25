@@ -1,7 +1,9 @@
 import Immutable from 'immutable'
 import {
   getDocsList,
-  uploadDocToAPI
+  uploadDocToAPI,
+  deleteDocById,
+  forceProcessDoc
 } from 'api'
 
 // ------------------------------------
@@ -42,6 +44,32 @@ export function uploadDoc(data) {
       });
   }
 
+}
+
+export function deleteDoc(id) {
+  return (dispatch, getState) => {
+    deleteDocById(id).then((response) => {
+        dispatch(updateDocsList(1, 'PENDING'));
+        dispatch(addMessage(`File ${data.file.name} deleted successfully`, 'success'));
+      })
+      .catch((error) => {
+        dispatch(addMessage(`Error deleting file ${data.file.name}`));
+      })
+  }
+}
+
+export function processDoc(id) {
+  return (dispatch, getState) => {
+    dispatch(updateDocsList(1, 'PENDING'));
+    forceProcessDoc(id).then((response) => {
+        dispatch(updateDocsList(1, 'PENDING'));
+        dispatch(updateDocsList(1, 'PROCESSED'));
+        dispatch(addMessage(`File ${data.file.name} processed successfully`, 'success'));
+      })
+      .catch((error) => {
+        dispatch(addMessage(`Error processing file ${data.file.name}`));
+      })
+  }
 }
 
 export function addMessage(text, msgType) {

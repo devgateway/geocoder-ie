@@ -3,6 +3,7 @@ import json
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames
 from dg.geocoder.processor import process_xml, process_queue
 from dg.geocoder.processor import persist_geocoding
+from dg.geocoder.db.geocode import save_activity
 
 class TestGeocoder(unittest.TestCase):
     def test_geocode_string(self):
@@ -77,6 +78,8 @@ class TestGeocoder(unittest.TestCase):
     def test_process_queue(self):
         process_queue()
 
+    def test_save_activity(self):
+        save_activity('identifier', 'title', 'description', 'country', 26)
 
     def test_dfid_simple_document(self):
         results = geocode([], ['resources/dfid_4182791.odt'], cty_codes=[])
