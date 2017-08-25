@@ -1,0 +1,46 @@
+
+.details-list {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 3vh;
+}
+
+.details-list td, .details-list th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.details-list tr:nth-child(even){background-color: #f2f2f2;}
+
+.details-list tr:hover {background-color: #ddd;}
+
+.details-list th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.geocoding-details{
+	margin: 5vh 5vw;
+	font-size: 13px;
+	h1{
+		margin-bottom: 2vh;
+    	font-weight: bold;
+	}
+}
+
+.list-action{
+	background-color: #7fb4e2;
+    padding: .5vh .5vw;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.activity-header{
+	background-color: #eccc83;
+    padding: 9px;
+}

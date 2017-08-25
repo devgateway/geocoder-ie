@@ -18,7 +18,19 @@ def save_doc(file_name, file_type, country_iso):
         close(conn)
 
 
-def get_docs(page=1, limit=5, state=None, doc_type=None):
+def delete_doc_from_queue(id):
+    conn = open()
+    sql = """DELETE FROM DOC_QUEUE WHERE ID = %s"""
+    cur = conn.cursor()
+    cur.execute(sql, (id,))
+    rowcount = cur.rowcount
+    conn.commit()
+    cur.close()
+    close(conn)
+    return rowcount > 0
+
+
+def get_docs(page=1, limit=10, state=None, doc_type=None):
     conn = None
     try:
         if page == 0:
@@ -38,9 +50,14 @@ def get_docs(page=1, limit=5, state=None, doc_type=None):
             data = data + (state,)
 
         if doc_type is not None:
-            sql_count = sql_count + " AND TYPE = %s "
-            sql_select = sql_select + """AND TYPE = %s """
-            data = data + (doc_type,)
+            if doc_type == 'PENDING':
+                sql_count = sql_count + " AND TYPE != %s "
+                sql_select = sql_select + """AND TYPE != %s """
+                data = data + ('PROCESSED',)
+            else:
+                sql_count = sql_count + " AND TYPE = %s "
+                sql_select = sql_select + """AND TYPE = %s """
+                data = data + (doc_type,)
 
         cur.execute(sql_count, data)
         count = cur.fetchone()[0]
@@ -61,4 +78,43 @@ def get_docs(page=1, limit=5, state=None, doc_type=None):
 
     finally:
         close(conn)
+
+
+def get_document_by_id(doc_id):
+    conn = None
+    try:
+        conn = open()
+        sql_select = """SELECT * FROM DOC_QUEUE where id = %s """
+        cur = conn.cursor()
+        data = (doc_id,)
+        cur.execute(sql_select, data)
+
+        row = cur.fetchone()
+        cur.close()
+
+        return row
+
+    except Exception as error:
+        print(error)
+        raise
+    finally:
+        close(conn)
+
+
+def update_doc(id, status):
+    conn = None
+    try:
+        conn = open()
+        sql = """UPDATE DOC_QUEUE SET STATE=%s , PROCESSED_DATE=NOW() WHERE ID = %s"""
+        cur = conn.cursor()
+        data = (status, id)
+        cur.execute(sql, data)
+        conn.commit()
+        cur.close()
+    except Exception as error:
+        print(error)
+        raise
+    finally:
+        close(conn)
+
 

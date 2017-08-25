@@ -3,8 +3,8 @@ import './HomeView.scss';
 import {Link} from 'react-router';
 
 export const HomeView = () => (
-  	<div>
-	    <h4>Welcome to Autogeocoder</h4>
+  	<div className="welcome-page">
+	    <h1>Welcome to Autogeocoder</h1>
 	    <div>
 		    <Link to={'/classifier'}>Training Page</Link>
 		</div>

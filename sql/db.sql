@@ -35,18 +35,20 @@ CREATE TABLE doc_queue
 CREATE TABLE activity
 (
   id bigint NOT NULL,
-  name character varying(500),
-  description character varying(500),
+  title text,
+  description text,
   country_iso character varying(250),
   doc_id bigint,
+  identifier character varying(250),
   CONSTRAINT activity_pk PRIMARY KEY (id),
-  CONSTRAINT fk_doc_queue_activity_id FOREIGN KEY (id)
+  CONSTRAINT fk_doc_queue_activity_id FOREIGN KEY (doc_id)
       REFERENCES doc_queue (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 CREATE TABLE geocoding
 (
+  id bigint NOT NULL,
   geoname_id bigint NOT NULL,
   toponym_name character varying(250),
   name character varying(250),
@@ -70,7 +72,7 @@ CREATE TABLE geocoding
   admin_name_4 character varying(250),
   document_id bigint,
   activity_id bigint,
-  CONSTRAINT geocoding_pk PRIMARY KEY (geoname_id),
+  CONSTRAINT geocoding_pk PRIMARY KEY (id),
   CONSTRAINT fk_geocoding_activity FOREIGN KEY (activity_id)
       REFERENCES activity (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -87,7 +89,7 @@ CREATE TABLE "extract"
   geocoding_id bigint,
   CONSTRAINT extract_pk PRIMARY KEY (id),
   CONSTRAINT fk_extract_geocoding FOREIGN KEY (geocoding_id)
-      REFERENCES geocoding (geoname_id) MATCH SIMPLE
+      REFERENCES geocoding (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 

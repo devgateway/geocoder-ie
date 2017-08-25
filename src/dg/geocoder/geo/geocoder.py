@@ -66,10 +66,10 @@ def join(list):
     locs = {}
     for item in list:
         for l in item['locations']:
-            if locs.get(l):
-                locs[l]['texts'].append({'text': item['text'], 'entities': item['entities']})
+            if locs.get(l.lower()):
+                locs[l.lower()]['texts'].append({'text': item['text'], 'entities': item['entities']})
             else:
-                locs[l] = {'texts': [{'text': item['text'], 'entities': item['entities']}]}
+                locs[l.lower()] = {'texts': [{'text': item['text'], 'entities': item['entities']}]}
 
     return [(key, locs[key]) for key in locs]
 

@@ -29,6 +29,20 @@ class ActivityReader:
             return recipient_region_code.get('code')
         return None
 
+    def get_title(self):
+        title = self.root.find('title')[0]
+        if title is not None:
+            return title.text
+        return None
+
+
+    def get_description(self):
+        description = self.root.find('description')[0]
+        if description is not None:
+            return description.text
+        return None
+
+
     def get_recipient_region_name(self):
         return iati_regions[
             int(self.get_recipient_region_code())] if self.get_recipient_region_code() is not None else None

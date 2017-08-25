@@ -3,6 +3,7 @@ import CoreLayout from '../layouts/PageLayout/PageLayout'
 import Home from './welcome'
 import Classifier from './classifier'
 import DocsList from './docsManager'
+import GeocodeDetails from './geocodeDetails'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -12,7 +13,7 @@ export const createRoutes = (store) => ({
   component   : CoreLayout,
   indexRoute  : Home,
   childRoutes : [
-    Classifier(store), DocsList(store)
+    Classifier(store), DocsList(store), GeocodeDetails(store)
   ]
 })
 
