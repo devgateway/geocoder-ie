@@ -19,69 +19,82 @@ export default class Sentences extends Component {
     this.props.onLoadDocs();
   }
 
-    render() {
-      const {rows=[], onPageClick, count, limit, onUpdate, onDelete, onSearchChange, term, onSearch, docs=[], doc, onChangeDocument, onChangeCategory, category}=this.props
-      const pageCount=count/limit
-        return (
-          <div className='corpora' style={{ margin: '0 auto' }} >
-            <h1>Training Data  </h1>
-            <h3>{count} Records  </h3>
+  render() {
+    const {rows=[], onPageClick, count, limit, onUpdate, onDelete, onSearchChange, term, onSearch, docs=[], doc, onChangeDocument, onChangeCategory, category}=this.props
+    const pageCount=count/limit
+    return (
+      <div className='corpora'>
+        <h1>Training Data  </h1>
+        
 
-            <div className="search-form">
-                <div className="search-row">
-                  <select onChange={e=>onChangeDocument(e.target.value)} value={doc}>
-                    <Option value='All' current={doc}/>
-                    {docs.map((d, idx)=><Option key={`doc-${idx}`} value={d.split('/')[d.split('/').length-1]}/>)}
-                  </select>
-                </div>
-                <div className="search-row">
-                  <input type="text" className="input-search" onChange={e => onSearchChange(e.target.value)} value={term}/> 
-                </div>
-                <input type="checkbox" value={category==='geography'? 'on' : 'off'} onChange={e=>onChangeCategory(e.target.value === 'off'? 'geography' : null)}/>
-                <label>Show Only Geography</label>
-                <div className="search-row right">
-                    <input type='button' className='btn-search' value='Search'  onClick={onSearch}/>
-                </div>
-                
+        <div className="search-form">
+            <div className="filter-header"><h2>Filters</h2></div>
+            <div className="search-row">
+              <select onChange={e=>onChangeDocument(e.target.value)} value={doc}>
+                <Option value='All' current={doc}/>
+                {docs.map((d, idx)=><Option key={`doc-${idx}`} value={d.split('/')[d.split('/').length-1]}/>)}
+              </select>
             </div>
+            <div className="search-row">
+              <input type="text" className="input-search" onChange={e => onSearchChange(e.target.value)} value={term}/> 
+              <input type='button' className='btn-search' value='Search'  onClick={onSearch}/>
+            </div>
+            <div className="search-row">
+              <input className="checkbox" type="checkbox" value={category==='geography'? 'on' : 'off'} onChange={e=>onChangeCategory(e.target.value === 'off'? 'geography' : null)}/>
+              <label>Show Only Geography</label>
+            </div>
+            
+        </div>
 
-                <ReactPaginate
-                           previousLabel={"previous"}
-                           nextLabel={"next"}
-                           breakLabel={<a href="">...</a>}
-                           breakClassName={"break-me"}
-                           pageCount={pageCount}
-                           onPageChange={(page,count,limit)=>{onPageClick(page.selected)}}
-                           containerClassName={"pagination"}
-                           subContainerClassName={"pages pagination"}
-                           activeClassName={"active"} />
-            <table>
-            <tbody>
-            {(rows)?rows.map(l=><tr className={l[2]} key={l[0]}>
-                                    <td>{l[0]}</td>
-                                    <td>{l[1]}</td>
-                                    <td><Label value={l[2]}/></td>
-                                    <td><Geo value={l[2]} onClick={e=>onUpdate(l[0],'geography')}/></td>
-                                    <td><None value={l[2]} onClick={e=>onUpdate(l[0],'none')}/></td>
-                                    <td><Null value={l[2]} onClick={e=>onUpdate(l[0],'')}/></td>
-                                    <td><Delete value={l[2]} onClick={e=>onDelete(l[0])}/></td>
-                                    <td><a target='new' href={`${window.API_ROOT}/download/${l[0]}`}>{l[3].split('/').pop()}</a></td>
-                                </tr>):null}
+        <h5>({count} Records)</h5>
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={<a href="">...</a>}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          onPageChange={(page,count,limit)=>{onPageClick(page.selected)}}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"} />
+        <table className="doc-list">
+          <tbody>
+            <tr>
+              <th>ID</th>
+              <th>SENTENCE</th>
+              <th>CATEGORY</th>
+              <th>ACTIONS</th>
+              <th>ORIGIN DOC</th>
+            </tr>
+            {(rows)?rows.map(l=>
+              <tr className={l[2]} key={l[0]}>
+                <td>{l[0]}</td>
+                <td>{l[1]}</td>
+                <td><Label value={l[2]}/></td>
 
+                <td className="actions-column">
+                  <a className="list-action" onClick={e=>onUpdate(l[0],'geography')}>Set Geography </a>
+                  <a className="list-action" onClick={e=>onUpdate(l[0],'None')}>Set None</a>
+                  <a className="list-action" onClick={e=>onUpdate(l[0],'')}>Unset</a>
+                  <a className="list-action" onClick={e=>onDelete(l[0])}>Delete</a>
+                </td>
 
-            </tbody>
-            </table>
-            <ReactPaginate
-                       previousLabel={"previous"}
-                       nextLabel={"next"}
-                       breakLabel={<a href="">...</a>}
-                       breakClassName={"break-me"}
-                       pageCount={pageCount}
-                       onPageChange={(page,count,limit)=>{onPageClick(page.selected)}}
-                       containerClassName={"pagination"}
-                       subContainerClassName={"pages pagination"}
-                       activeClassName={"active"} />
-          </div>
-        );
-    }
+                <td><a target='new' href={`${window.API_ROOT}/download/${l[0]}`}>{l[3].split('/').pop()}</a></td>
+              </tr>)
+            : null}
+          </tbody>
+        </table>
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={<a href="">...</a>}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          onPageChange={(page,count,limit)=>{onPageClick(page.selected)}}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"} />
+      </div>
+    );
+  }
 }
