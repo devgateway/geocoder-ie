@@ -1,5 +1,9 @@
 import json
 import os
+import threading
+import multiprocessing
+import time
+
 from os.path import sep
 from urllib.parse import unquote
 
@@ -13,6 +17,7 @@ from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category,
 from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from dg.geocoder.processor import process_doc
+
 
 import datetime
 
@@ -133,7 +138,8 @@ def upload_doc():
 
 @app.route('/docqueue/process/<id>', methods=['GET'])
 def process_document(id):
-    process_doc(id)
+    a_thread = threading.Thread(target=process_doc, args=(id,))
+    a_thread.start()
     return jsonify({"success": True}), 200
 
 

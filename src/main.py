@@ -21,7 +21,7 @@ def main(args):
         parser.add_argument("-p", "--publisher", type=str, default=None, required=False, dest='organisation',
                             help='Reporting organisation of the data to be download')
 
-        parser.add_argument("-cty", "--countries", type=str, default=None, required=False, dest='countries',
+        parser.add_argument("-t", "--countries", type=str, default=None, required=False, dest='countries',
                             help='Countries codes')
 
         parser.add_argument("-l", "--limit", type=str, default=50, required=False, dest='limit',
