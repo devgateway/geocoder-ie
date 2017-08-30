@@ -1,9 +1,7 @@
+import datetime
 import json
 import os
 import threading
-import multiprocessing
-import time
-
 from os.path import sep
 from urllib.parse import unquote
 
@@ -12,14 +10,12 @@ from flask import Response
 from flask import request
 from flask.helpers import send_from_directory
 from flask_cors import CORS
+
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
 from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from dg.geocoder.processor import process_doc
-
-
-import datetime
 
 app = Flask(__name__, static_url_path="", static_folder="../static")
 
@@ -130,7 +126,7 @@ def upload_doc():
         countryISO = request.form['countryISO']
         filename = f.filename
         filetype = f.content_type
-        docs_path = get_doc_queue_path()+"""\\"""+filename
+        docs_path = os.path.join(get_doc_queue_path(), filename)
         f.save(docs_path)
         save_doc(filename, filetype, countryISO)
     return jsonify({"success": True}), 200
@@ -154,7 +150,7 @@ def geocoding_list():
         document_id = request.args['document_id']
 
     return Response(json.dumps(get_geocoding_list(activity_id=activity_id, document_id=document_id),
-                    default=datetime_handler), mimetype='application/json')
+                               default=datetime_handler), mimetype='application/json')
 
 
 @app.route('/geocoding/download/<id>', methods=['GET'])
@@ -165,7 +161,7 @@ def geocoding_download(id):
     output_ext = '_out.tsv'
     if doc_type == 'text/xml':
         output_ext = '_out.xml'
-    return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0]+output_ext, as_attachment=True)
+    return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)
 
 
 @app.route('/activity', methods=['GET'])
@@ -176,7 +172,7 @@ def activity_list():
         document_id = request.args['document_id']
 
     return Response(json.dumps(get_activity_list(document_id=document_id),
-                    default=datetime_handler), mimetype='application/json')
+                               default=datetime_handler), mimetype='application/json')
 
 
 @app.route('/extracted', methods=['GET'])
@@ -186,7 +182,8 @@ def extracted_list():
         geocoding_id = request.args['geocoding_id']
 
     return Response(json.dumps(get_extracted_list(geocoding_id=geocoding_id),
-                    default=datetime_handler), mimetype='application/json')
+                               default=datetime_handler), mimetype='application/json')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=get_app_port(), debug=True)
