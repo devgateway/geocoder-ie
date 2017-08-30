@@ -44,20 +44,18 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         sql_select = """SELECT * FROM DOC_QUEUE WHERE 1=1 """
         data = ()
 
-        if state is not None:
-            sql_count = sql_count + " AND STATE = %s "
-            sql_select = sql_select + """AND STATE = %s """
-            data = data + (state,)
 
-        if doc_type is not None:
-            if doc_type == 'PENDING':
-                sql_count = sql_count + " AND TYPE != %s "
-                sql_select = sql_select + """AND TYPE != %s """
+        if state is not None:
+            if state == 'PENDING':
+                sql_count = sql_count + " AND STATE != %s "
+                sql_select = sql_select + """AND STATE != %s """
                 data = data + ('PROCESSED',)
             else:
-                sql_count = sql_count + " AND TYPE = %s "
-                sql_select = sql_select + """AND TYPE = %s """
-                data = data + (doc_type,)
+                sql_count = sql_count + " AND STATE = %s "
+                sql_select = sql_select + """AND STATE = %s """
+                data = data + (state,)
+
+
 
         cur.execute(sql_count, data)
         count = cur.fetchone()[0]

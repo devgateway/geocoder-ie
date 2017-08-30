@@ -2,13 +2,13 @@ import csv
 import os
 
 from dg.geocoder.config import get_download_path, get_doc_queue_path
+from dg.geocoder.db.doc_queue import get_docs, update_doc, get_document_by_id
+from dg.geocoder.db.geocode import save_geocoding, save_extract_text, save_activity
 from dg.geocoder.geo.geocoder import geocode
 from dg.geocoder.iati.activities_reader import ActivitiesReader
 from dg.geocoder.iati.iati_downloader import download_activity_data
 from dg.geocoder.iati.iati_validator import is_valid_schema
 from dg.geocoder.util.file_util import is_xml, is_valid
-from dg.geocoder.db.geocode import save_geocoding, save_extract_text, save_activity
-from dg.geocoder.db.doc_queue import get_docs, update_doc, get_document_by_id
 
 
 def process_xml(file, out_file='out.xml', persist=False, path_to_docs='', doc_id=None):
@@ -75,11 +75,11 @@ def process_queue():
         doc_country_code = doc[6]
         update_doc(doc_id, 'PROCESSING')
         if doc_type == 'text/xml':
-            process_xml(get_doc_queue_path()+"""\\"""+doc_name, doc_name.split('.')[0]+"""_out.xml""", True,
-                        get_doc_queue_path()+"""\\""", doc_id)
+            process_xml(get_doc_queue_path() + """\\""" + doc_name, doc_name.split('.')[0] + """_out.xml""", True,
+                        get_doc_queue_path() + """\\""", doc_id)
         else:
-            process_document(get_doc_queue_path()+"""\\"""+doc_name, doc_name.split('.')[0]+"""_out.tsv""",
-                             [doc_country_code], True, get_doc_queue_path()+"""\\""", doc_id)
+            process_document(get_doc_queue_path() + """\\""" + doc_name, doc_name.split('.')[0] + """_out.tsv""",
+                             [doc_country_code], True, get_doc_queue_path() + """\\""", doc_id)
         update_doc(doc_id, 'PROCESSED')
     return None
 
@@ -92,11 +92,20 @@ def process_doc(doc_id):
     doc_country_code = doc[6]
     update_doc(doc_id, 'PROCESSING')
     if doc_type == 'text/xml':
-        process_xml(get_doc_queue_path()+"""\\"""+doc_name, doc_name.split('.')[0]+"""_out.xml""", True,
-                    get_doc_queue_path()+"""\\""", doc_id)
+        process_xml(
+            os.path.join(get_doc_queue_path(), doc_name),
+            "{}_out.xml".format(doc_name.split('.')[0]),
+            True,
+            get_doc_queue_path(),
+            doc_id)
+
     else:
-        process_document(get_doc_queue_path()+"""\\"""+doc_name, doc_name.split('.')[0]+"""_out.tsv""",
-                         [doc_country_code], True, get_doc_queue_path()+"""\\""", doc_id)
+        process_document(os.path.join(get_doc_queue_path(), doc_name),
+                         "{}_out.tsv".format(doc_name.split('.')[0]),
+                         [doc_country_code], True,
+                         get_doc_queue_path(),
+                         doc_id)
+
     update_doc(doc_id, 'PROCESSED')
     return None
 
@@ -116,5 +125,5 @@ def persist_geocoding(geocoding_list, doc_id, activity_id):
     for geocoding in geocoding_list:
         geo_id = save_geocoding(geocoding[0], doc_id, activity_id)
         for text in geocoding[1]:
-            save_extract_text(text.get('text'), geo_id, ', '.join(text.get('entities'))	)
+            save_extract_text(text.get('text'), geo_id, ', '.join(text.get('entities')))
     return None
