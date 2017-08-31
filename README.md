@@ -23,7 +23,7 @@ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9094 -t
   host = localhost
   port = 9094
 ```
-## Use the tool
+## Using the tool
  ```
 geocoder.sh -f example.pdf –countries=
 example.pdf will be geocoded
