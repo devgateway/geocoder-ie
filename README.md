@@ -25,7 +25,8 @@ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9094 -t
 ```
 ## Using the tool
  ```
-geocoder.sh -f example.pdf –countries=
+geocoder.sh -f example.pdf –countries=GN
+
 example.pdf will be geocoded
 Creating pdf reader for file example.pdf
 Detecting document language
