@@ -1,10 +1,14 @@
+import logging
+
 from lxml import etree as ET
 
 from dg.geocoder.iati.iati_codes import iati_regions, iati_countries, iati_publishers
 
+logger = logging.getLogger()
+
 
 def read_activities():
-    print('parse activity lists')
+    logger.info('parse activity lists')
 
 
 class ActivityReader:
@@ -35,13 +39,11 @@ class ActivityReader:
             return title.text
         return None
 
-
     def get_description(self):
         description = self.root.find('description')[0]
         if description is not None:
             return description.text
         return None
-
 
     def get_recipient_region_name(self):
         return iati_regions[
@@ -80,7 +82,7 @@ class ActivityReader:
     def xml(self):
         return self.__str__()
 
-    def add_location(self, loc_data, texts):
+    def add_location(self, loc_data):
         location = ET.SubElement(self.root, "location")
         ET.SubElement(location, "location-reach", code="1")
         ET.SubElement(location, "location-id", vocabulary='G1', code=str(loc_data['geonameId']))
@@ -90,13 +92,13 @@ class ActivityReader:
         # if texts:
         #    activity = '\n'.join([t['text'] for t in texts])
 
-        # print(activity)
+        # logger.info(activity)
         # ET.SubElement(ET.SubElement(location, "activity-description"), "narrative").text = activity
 
         ET.SubElement(location, "administrative",
                       vocabulary="G1", level=loc_data['fcode'], code=str(loc_data['geonameId']))
 
-        location_pos = ET.SubElement(ET.SubElement(location, "point"), "pos").text = "{} {}".format(
+        ET.SubElement(ET.SubElement(location, "point"), "pos").text = "{} {}".format(
             str(loc_data['lat']), str(loc_data['lng']))
 
         ET.SubElement(location, "exactness", code="1")

@@ -3,6 +3,7 @@ from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 
 class TextReader(BaseReader):
     def __init__(self, text):
+        super().__init__()
         self.text = text
         self.paragraphs = []
 

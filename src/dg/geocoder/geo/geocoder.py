@@ -1,3 +1,4 @@
+import logging
 import time
 from os.path import isfile
 
@@ -10,16 +11,7 @@ from dg.geocoder.config import get_ner_host, get_ner_port, get_ignore_entities, 
 from dg.geocoder.geo.geonames import resolve
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
-
-def process_activity(activity):
-    print(activity)
-
-
-def bulk_process(xml, path_to_docs='docs'):
-    if xml is None:
-        print('xml file should be provide')
-    else:
-        print('Process list of activities')
+logger = logging.getLogger()
 
 
 def classify(texts, files, cls_name):
@@ -30,9 +22,9 @@ def classify(texts, files, cls_name):
         reader = get_text_reader(text)
         if reader.is_english_lan():
             sentences += reader.split()
-            reader = None
+
         else:
-            print('Non english text, it will be ignored')
+            logger.warning('Non english text, it will be ignored')
 
     for file in files:
 
@@ -41,22 +33,23 @@ def classify(texts, files, cls_name):
                 raise SystemError("Can't find {}".format(file))
             reader = get_reader(file)
             if reader is None:
-                print("Wasn't able to initialize a reader check file type and extension fro {}".format(file))
+                logger.warning("Wasn't able to initialize a reader check file type and extension fro {}".format(file))
             # split document in sentences
             elif not reader.is_english_lan():
-                print('Non english document it will be ignored')
+                logger.info('Non english document it will be ignored')
             else:
                 sentences += reader.split()
-                reader = None
+
 
     toc = time.clock()
-    print('There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
+    logger.info(
+        'There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
     classifier = load_classifier(cls_name)
     predicted = classifier.predict(sentences)
     indexes = np.where(predicted == 'geography')[0]
-    print('{} geographical sentences found '.format(len(indexes)))
+    logger.info('{} geographical sentences found '.format(len(indexes)))
     geo_sentences = [(sentences[i]) for i in indexes]
-    sentences = None
+
 
     return geo_sentences
 
@@ -75,7 +68,9 @@ def join(list):
 
 
 # query geonames an get geographical information
-def geonames(list, cty_codes=[]):
+def geonames(list, cty_codes=None):
+    if cty_codes is None:
+        cty_codes = []
     for name, metadata in list:
         coding = resolve(name, cty_codes)
         if coding is not None:
@@ -100,7 +95,7 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
             extraction.append(({'text': s, 'entities': locations_found, 'relations': relations}))
 
     tac = time.clock()
-    print('NER extraction took {time}ms'.format(time=tac - tic))
+    logger.info('NER extraction took {time}ms'.format(time=tac - tic))
     return extraction
 
 
@@ -147,15 +142,24 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     return extracted
 
 
-def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), persits=False):
+def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), tracer=None):
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
     # 3) merge names
     # 3) resolve locations using Geo Names
+    if tracer:
+        tracer.trace("Classifying documents")
     texts = classify(texts, documents, cls_name=cls_name)
+
+    if tracer:
+        tracer.trace("Extracting entities")
     entities = merge(extract(texts))
+
     normalized = join(entities)
-    if persits:
-        pass
-        # save to database
-    return geonames(normalized, cty_codes=cty_codes)
+
+    if tracer:
+        tracer.trace("Geocoding entities")
+
+    results = geonames(normalized, cty_codes=cty_codes)
+
+    return results

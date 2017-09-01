@@ -3,16 +3,21 @@ import {
   getDocsList,
   uploadDocToAPI,
   deleteDocById,
-  forceProcessDoc
+  forceProcessDoc,
+  getCountries
 } from 'api'
+
+
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 
-export const DOCS_LIST_LOADED = 'DOCS_LIST_LOADED';
-export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const CLOSE_MESSAGE = 'CLOSE_MESSAGE';
+const DOCS_LIST_LOADED = 'DOCS_LIST_LOADED';
+const ADD_MESSAGE = 'ADD_MESSAGE';
+const CLOSE_MESSAGE = 'CLOSE_MESSAGE';
+const SET_FILES = 'SET_FILES';
+const SET_COUNTRY = 'SET_COUNTRY';
 
 // ------------------------------------
 // Actions
@@ -20,7 +25,10 @@ export const CLOSE_MESSAGE = 'CLOSE_MESSAGE';
 
 export function updateDocsList(page, state) {
   return (dispatch, getState) => {
-    getDocsList({page, state}).then((response) => {
+    getDocsList({
+        page,
+        state
+      }).then((response) => {
         dispatch({
           type: DOCS_LIST_LOADED,
           state,
@@ -40,8 +48,8 @@ export function uploadDoc(data) {
         dispatch(updateDocsList(1, 'PENDING'));
         dispatch(addMessage(`File ${data.file.name} uploaded successfully`, 'success'));
       }).catch((failure) => {
-        dispatch(addMessage(`Error on load file ${data.file.name}`));
-      });
+      dispatch(addMessage(`Error on load file ${data.file.name}`));
+    });
   }
 
 }
@@ -88,6 +96,22 @@ export function closeMessage(id) {
   }
 }
 
+
+export function setCountry(iso) {
+  return {
+    type: SET_COUNTRY,
+    iso
+  }
+}
+
+
+export function setFiles(files) {
+  return {
+    type: SET_FILES,
+    files
+  }
+}
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -102,13 +126,33 @@ const ACTION_HANDLERS = {
   },
   [ADD_MESSAGE]: (state, action) => {
     const newList = state.get('messages');
-    const {id, text, msgType} = action;
-    newList.push({id, text, msgType});
+    const {
+      id,
+      text,
+      msgType
+    } = action;
+    newList.push({
+      id,
+      text,
+      msgType
+    });
     return state.set('messages', newList);
   },
   [CLOSE_MESSAGE]: (state, action) => {
     const newList = state.get('messages');
-    return state.set('messages', newList.filter(msg => {return msg.id !== action.id}));
+    return state.set('messages', newList.filter(msg => {
+      return msg.id !== action.id
+    }));
+  },
+  [SET_FILES]: (state, action) => {
+    debugger;
+    const {files} = action
+    return state.setIn(['files'], files)
+  },
+  [SET_COUNTRY]: (state, action) => {
+    debugger
+    const {iso} = action
+    return state.setIn(['countryISO'], iso)
   }
 }
 
@@ -117,8 +161,13 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = Immutable.Map({
-  'messages': []
+  'messages': [],
+  'files': [],
+  'countryISO':'' ,
+  'countryList':getCountries()
 })
+
+debugger;
 
 export default function counterReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]

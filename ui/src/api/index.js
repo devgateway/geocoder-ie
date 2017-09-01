@@ -1,4 +1,5 @@
 import axios from 'axios';
+import countries from './countries.js'
 const ROOT=window.API_ROOT;
 
 
@@ -67,3 +68,6 @@ export function getExtractList(params) {
   return axios.get(`${ROOT}/extracted`, {params})
 }
 
+export function getCountries() {
+  return countries
+}

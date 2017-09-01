@@ -1,3 +1,4 @@
+import logging
 import os
 import random
 from os import walk
@@ -5,6 +6,8 @@ from random import shuffle
 
 from dg.geocoder.db.corpora import clean, save_sentences
 from dg.geocoder.readers.factory import get_reader
+
+logger = logging.getLogger()
 
 download_path = 'download'
 
@@ -20,22 +23,22 @@ def process_file(dir_path, file):
     try:
         reader = get_reader(os.path.join(dir_path, file))
         if reader.is_english_lan():
-            print('processing %s' % file)
+            logger.info('processing %s' % file)
             save_sentences('%s/%s' % (web_path, file), reader.split())
         else:
-            print('ignoring non english file')
+            logger.info('ignoring non english file')
 
     except Exception as error:
-        print(error)
+        logger.info(error)
 
 
-def generate_docs_list(folder, list):
+def generate_docs_list(folder, doc_list):
     for (dir_path, dir_names, file_names) in walk(folder):
         for f in file_names:
             if is_valid_type(f):
-                list.append((dir_path, f))
+                doc_list.append((dir_path, f))
         for folder in dir_names:
-            generate_docs_list(folder, list)
+            generate_docs_list(folder, doc_list)
 
 
 def generate():
@@ -43,7 +46,7 @@ def generate():
     docs_to_process = []
     generate_docs_list(os.path.abspath(download_path), docs_to_process)
     shuffle(docs_to_process)
-    print('There are %s documents, we will take a random subset of 200 ' % len(docs_to_process))
+    logger.info('There are %s documents, we will take a random subset of 200 ' % len(docs_to_process))
     sample = random.sample(docs_to_process, 200)
     for path, file in sample:
         process_file(path, file)

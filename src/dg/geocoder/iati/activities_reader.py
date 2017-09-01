@@ -1,11 +1,15 @@
+import logging
+
 from lxml import etree
 
 from dg.geocoder.iati.activity_reader import ActivityReader
 from dg.geocoder.iati.iati_validator import is_valid_schema, ValidationError
 
+logger = logging.getLogger()
+
 
 def read_activities():
-    print('parse activity lists')
+    logger.info('parse activity lists')
 
 
 class ActivitiesReader:

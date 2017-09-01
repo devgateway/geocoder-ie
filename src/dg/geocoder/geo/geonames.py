@@ -1,10 +1,13 @@
 import json
+import logging
 from urllib.error import URLError
 from urllib.request import urlopen
 
 from requests.utils import quote
 
 from dg.geocoder.config import get_geonames_base_url, get_geonames_user_name, get_geonames_retry_policy
+
+logger = logging.getLogger()
 
 
 def parse(data):
@@ -54,7 +57,9 @@ def get_by_priority(results):
         return None
 
 
-def resolve(loc, cty_codes, rels=[], query_method='name_equals', fuzzy=.9, retry=get_geonames_retry_policy()):
+def resolve(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, retry=get_geonames_retry_policy()):
+    if rels is None:
+        rels = []
     selected_loc = None
     if len(loc) > 3:
         locations = query(loc, cty_codes, query_method, fuzzy)
@@ -64,22 +69,22 @@ def resolve(loc, cty_codes, rels=[], query_method='name_equals', fuzzy=.9, retry
             selected_loc = locations[0]
 
         if selected_loc:
-            print('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
-                                                                       selected_loc['lng']))
+            logger.info(
+                '{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+                                                                     selected_loc['lng']))
         else:
-            print("Wasn't able to geocode  {}".format(loc))
+            logger.info("Wasn't able to geocode  {}".format(loc))
             if retry:
-                print("Let's try using others parameters".format(loc))
+                logger.info("Let's try using others parameters".format(loc))
                 selected_loc = resolve(loc, cty_codes, rels, query_method='q', fuzzy=1, retry=False)
     else:
-        print('{} Too short location name'.format(loc))
+        logger.info('{} Too short location name'.format(loc))
 
     return selected_loc
 
 
 def query(location, cty_codes, query_method, fuzzy):
     results = []
-
     try:
         base_url = get_geonames_base_url()
         username = get_geonames_user_name()
@@ -97,7 +102,7 @@ def query(location, cty_codes, query_method, fuzzy):
                 results.append(parse(item))
 
     except URLError as e:
-        print("Oops!  something didn't go well")
-        print(e)
+        logger.info("Oops!  something didn't go well")
+        logger.info(e)
 
     return results

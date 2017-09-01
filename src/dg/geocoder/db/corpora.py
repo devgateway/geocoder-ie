@@ -1,4 +1,8 @@
+import logging
+
 from dg.geocoder.db.db import open, close
+
+logger = logging.getLogger()
 
 
 def clean():
@@ -24,7 +28,7 @@ def save_sentences(file, sentences):
         conn.commit()
         cur.close()
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -53,7 +57,7 @@ def set_category(id, category):
         conn.commit()
         cur.close()
     except Exception as e:
-        print('error %s', e)
+        logger.info('error %s', e)
         raise
 
     finally:
@@ -76,7 +80,7 @@ def get_sentence_by_id(id):
         return row
 
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -125,7 +129,7 @@ def get_sentences(page=1, limit=50, query=None, category=None, document=None):
         return {'count': count, 'rows': results, 'limit': limit}
 
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -142,7 +146,7 @@ def get_doc_list():
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)

@@ -1,4 +1,8 @@
+import logging
+
 from dg.geocoder.db.db import open, close
+
+logger = logging.getLogger()
 
 
 def save_geocoding(geocoding, doc_id, activity_id):
@@ -39,7 +43,7 @@ def save_geocoding(geocoding, doc_id, activity_id):
         cur.close()
         return result_id
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -60,7 +64,7 @@ def save_extract_text(text, geocoding_id, entities=''):
         cur.close()
         return result_id
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -80,7 +84,7 @@ def save_activity(identifier, title, description, country, doc_id):
         cur.close()
         return result_id
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -108,7 +112,7 @@ def get_geocoding_list(activity_id=None, document_id=None):
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -132,7 +136,7 @@ def get_extracted_list(geocoding_id=None):
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -156,8 +160,7 @@ def get_activity_list(document_id=None):
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
-

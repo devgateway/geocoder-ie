@@ -38,7 +38,7 @@ class Trainer:
         return self.cls
 
     def kfold_train(self, n_splits=3):
-        print('train classifier using kFold')
+        logger.info('train classifier using kFold')
         kf = KFold(n_splits=n_splits, shuffle=True)
         scores = []
         precisions = []
@@ -67,12 +67,12 @@ class Trainer:
         return self.cls
 
     def print_stats(self):
-        print('Total classified:', len(self.data))
-        print('Score:', self.score)
-        print('Precision:', self.precision)
-        print('Recall:', self.recall)
-        print('Confusion matrix:')
-        print(self.confusion)
+        logger.info('Total classified:', len(self.data))
+        logger.info('Score:', self.score)
+        logger.info('Precision:', self.precision)
+        logger.info('Recall:', self.recall)
+        logger.info('Confusion matrix:')
+        logger.info(self.confusion)
 
     def plot_stats(self):
         plot_confusion_matrix(self.confusion, ['geography', 'none'])

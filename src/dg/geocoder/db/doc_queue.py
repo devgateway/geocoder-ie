@@ -1,4 +1,8 @@
+import logging
+
 from dg.geocoder.db.db import open, close
+
+logger = logging.getLogger()
 
 
 def save_doc(file_name, file_type, country_iso):
@@ -12,7 +16,7 @@ def save_doc(file_name, file_type, country_iso):
         conn.commit()
         cur.close()
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -44,7 +48,6 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         sql_select = """SELECT * FROM DOC_QUEUE WHERE 1=1 """
         data = ()
 
-
         if state is not None:
             if state == 'PENDING':
                 sql_count = sql_count + " AND STATE != %s "
@@ -54,8 +57,6 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
                 sql_count = sql_count + " AND STATE = %s "
                 sql_select = sql_select + """AND STATE = %s """
                 data = data + (state,)
-
-
 
         cur.execute(sql_count, data)
         count = cur.fetchone()[0]
@@ -71,7 +72,7 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         return {'count': count, 'rows': results, 'limit': limit}
 
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
 
     finally:
@@ -93,26 +94,24 @@ def get_document_by_id(doc_id):
         return row
 
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
 
 
-def update_doc(id, status):
+def update_doc_status(id, status, message=''):
     conn = None
     try:
         conn = open()
-        sql = """UPDATE DOC_QUEUE SET STATE=%s , PROCESSED_DATE=NOW() WHERE ID = %s"""
+        sql = """UPDATE DOC_QUEUE SET STATE=%s ,MESSAGE=%s, PROCESSED_DATE=NOW() WHERE ID = %s"""
         cur = conn.cursor()
-        data = (status, id)
+        data = (status, message, id)
         cur.execute(sql, data)
         conn.commit()
         cur.close()
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
-
-

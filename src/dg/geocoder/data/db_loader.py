@@ -20,7 +20,7 @@ class DbDataLoader:
         random.shuffle(all_records)
         return all_records
 
-    def build_data_frame(self, remove_entities=False):
+    def build_data_frame(self):
         rows = []
         index = []
         for id, text, classification, file_name in self.read_rows():
