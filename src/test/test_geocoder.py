@@ -17,14 +17,14 @@ class TestGeocoder(unittest.TestCase):
                 Middle Guinea region."""
 
         geo = geocode([text], [], ['GN'])
-        logger.info('Checking Koundara as ADM2')
-        Koundara = [(data) for loc, data in geo if loc == 'Koundara'][0]
+        print('Checking Koundara as ADM2')
+        Koundara = [data for loc, data in geo if loc == 'Koundara'][0]
         self.assertTrue(Koundara.get('geocoding').get('fcode') == 'ADM2')
-        logger.info('Checking Gaoual as ADM2')
-        Gaoual = [(data) for loc, data in geo if loc == 'Gaoual'][0]
+        print('Checking Gaoual as ADM2')
+        Gaoual = [data for loc, data in geo if loc == 'Gaoual'][0]
         self.assertTrue(Gaoual.get('geocoding').get('fcode') == 'ADM2')
-        logger.info('Checking  Fouta Djallon  as ADM2')
-        Fouta_Djallon = [(data) for loc, data in geo if loc == 'Fouta Djallon'][0]
+        print('Checking  Fouta Djallon  as ADM2')
+        Fouta_Djallon = [data for loc, data in geo if loc == 'Fouta Djallon'][0]
         self.assertTrue(Fouta_Djallon.get('geocoding').get('fcode') == 'RGN')
 
     def test_geocode_txt_2(self):
@@ -39,7 +39,7 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Burkina Faso' in found)
 
         geonames_decorated = geonames(normalized, cty_codes=['BF'])
-        locs = [(l) for (l, data) in geonames_decorated if data.get('geocoding')]
+        locs = [l for (l, data) in geonames_decorated if data.get('geocoding')]
         self.assertFalse('Benin' in locs)
         self.assertFalse('Ghana' in locs)
         self.assertFalse('Mozambique' in locs)
@@ -47,7 +47,7 @@ class TestGeocoder(unittest.TestCase):
 
         # geocode without country filter
         geonames_decorated2 = geonames(join(merge_decorated))
-        locs = [(l) for (l, data) in geonames_decorated2 if data.get('geocoding')]
+        locs = [l for (l, data) in geonames_decorated2 if data.get('geocoding')]
 
         self.assertTrue('Benin' in locs)
         self.assertTrue('Ghana' in locs)
@@ -56,7 +56,7 @@ class TestGeocoder(unittest.TestCase):
 
     def test_afdb_sub_national(self):
         geo = geocode([], ['resources/afdb_subnational.pdf'], ['GN'])
-        locs = [(l) for (l, data) in geo if data.get('geocoding')]
+        locs = [l for (l, data) in geo if data.get('geocoding')]
         self.assertTrue('Guinea' in locs)
         self.assertTrue('Conakry' in locs)
         self.assertTrue('Koundara' in locs)
@@ -67,7 +67,8 @@ class TestGeocoder(unittest.TestCase):
 
     def test_geocode_text_3(self):
         geo = geocode([], ['resources/sample_text_3.txt'], [])
-        locs = [(l) for (l, data) in geo if data.get('geocoding')]
+        locs = [l for (l, data) in geo if data.get('geocoding')]
+        self.assertTrue(locs is not  None)
 
     def test_afdb_activities_XML(self):
         process_xml('resources/afdb_2_activities.xml')
@@ -87,7 +88,7 @@ class TestGeocoder(unittest.TestCase):
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
         persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
-            logger.info(l)
+            print(l)
 
     def test_afdb_subnational_simple_document(self):
         results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
@@ -95,7 +96,7 @@ class TestGeocoder(unittest.TestCase):
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
         persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
-            logger.info(l)
+            print(l)
 
 
 if __name__ == '__main__':

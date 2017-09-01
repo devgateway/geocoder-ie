@@ -34,25 +34,25 @@ def save_sentences(file, sentences):
         close(conn)
 
 
-def delete_sentence(id):
+def delete_sentence(corpora_id):
     conn = open()
     sql = """DELETE FROM CORPORA WHERE ID = %s"""
     cur = conn.cursor()
-    cur.execute(sql, (id,))
-    rowcount = cur.rowcount;
+    cur.execute(sql, (corpora_id,))
+    rowcount = cur.rowcount
     conn.commit()
     cur.close()
     close(conn)
     return rowcount > 0
 
 
-def set_category(id, category):
+def set_category(corpora_id, category):
     rowcount = 0
+    conn = open()
     try:
-        conn = open()
         sql = """UPDATE CORPORA SET CATEGORY=%s WHERE ID = %s"""
         cur = conn.cursor()
-        cur.execute(sql, (category, id))
+        cur.execute(sql, (category, corpora_id))
         rowcount = cur.rowcount
         conn.commit()
         cur.close()
@@ -65,13 +65,13 @@ def set_category(id, category):
         return rowcount > 0
 
 
-def get_sentence_by_id(id):
+def get_sentence_by_id(sentence_id):
     conn = None
     try:
         conn = open()
         sql_select = """SELECT * FROM CORPORA where id = %s """
         cur = conn.cursor()
-        data = (id,)
+        data = (sentence_id,)
         cur.execute(sql_select, data)
 
         row = cur.fetchone()
@@ -123,7 +123,7 @@ def get_sentences(page=1, limit=50, query=None, category=None, document=None):
         data = data + (offset, limit)
         cur.execute(sql_select, data)
 
-        results = [(c) for c in cur]
+        results = [c for c in cur]
         cur.close()
 
         return {'count': count, 'rows': results, 'limit': limit}

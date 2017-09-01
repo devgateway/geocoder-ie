@@ -5,17 +5,20 @@ from pandas.core.frame import DataFrame
 from dg.geocoder.db.corpora import get_sentences
 
 
+def get_geography_rows(limit=2000):
+    return get_sentences(category='geography', limit=limit)['rows']
+
+
+def get_none_rows(limit=2000):
+    return get_sentences(category='none', limit=limit)['rows']
+
+
 class DbDataLoader:
-    def get_geography_rows(self, limit=2000):
-        return get_sentences(category='geography', limit=limit)['rows']
-
-    def get_none_rows(self, limit=2000):
-        return get_sentences(category='none', limit=limit)['rows']
-
-    def read_rows(self):
-        geography_records = self.get_geography_rows()
+    @staticmethod
+    def read_rows():
+        geography_records = get_geography_rows()
         # get same amount of none records
-        none_records = self.get_none_rows(limit=len(geography_records))
+        none_records = get_none_rows(limit=len(geography_records))
         all_records = geography_records + none_records
         random.shuffle(all_records)
         return all_records

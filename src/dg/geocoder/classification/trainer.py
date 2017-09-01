@@ -1,3 +1,5 @@
+import logging
+
 import numpy
 from sklearn.metrics.classification import confusion_matrix, f1_score, recall_score, precision_score
 from sklearn.model_selection import KFold, train_test_split
@@ -5,6 +7,8 @@ from sklearn.model_selection import KFold, train_test_split
 from dg.geocoder.classification.classifier import Classifier
 from dg.geocoder.classification.plot import plot_confusion_matrix
 from dg.geocoder.data.db_loader import DbDataLoader
+
+logger = logging.getLogger()
 
 
 class Trainer:
@@ -19,21 +23,21 @@ class Trainer:
         self.confusion = numpy.array([[0, 0], [0, 0]])
 
     def _get_train_test_sets(self):
-        X_train, X_test, Y_train, Y_test = train_test_split(self.raw_texts, self.values, test_size=0.3, random_state=0)
+        x_train, x_test, y_train, y_test = train_test_split(self.raw_texts, self.values, test_size=0.3, random_state=0)
 
-        return X_train, X_test, Y_train, Y_test
+        return x_train, x_test, y_train, y_test
 
     def split_train(self):
-        X_train, X_test, Y_train, Y_test = self._get_train_test_sets()
+        x_train, x_test, y_train, y_test = self._get_train_test_sets()
         # fit classifier with train set and train labels
-        self.cls.train(X_train, Y_train)
+        self.cls.train(x_train, y_train)
 
         # collect prediction for scoring purpose
-        predictions = self.cls.predict(X_test)
-        self.recall = recall_score(Y_test, predictions, pos_label='geography')
-        self.precision = precision_score(Y_test, predictions, pos_label='geography')
-        self.score = f1_score(Y_test, predictions, pos_label='geography')
-        self.confusion += confusion_matrix(Y_test, predictions)
+        predictions = self.cls.predict(x_test)
+        self.recall = recall_score(y_test, predictions, pos_label='geography')
+        self.precision = precision_score(y_test, predictions, pos_label='geography')
+        self.score = f1_score(y_test, predictions, pos_label='geography')
+        self.confusion += confusion_matrix(y_test, predictions)
 
         return self.cls
 

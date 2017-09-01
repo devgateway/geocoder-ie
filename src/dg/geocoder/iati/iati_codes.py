@@ -271,12 +271,6 @@ iati_countries = {'AF': 'AFGHANISTAN',
                   'ZM': 'ZAMBIA',
                   'ZW': 'ZIMBABWE'}
 
-iati_publishers = {''
-                   'GB-GOV-1': 'DIFD',
-                   '46002': 'AFDB',
-                   'XM-DAC-411124': 'UN_WOMEN',
-                   'US-GOV-1': 'USAID'
-                   }
 
 iati_geo_location_class = {
     1: 'Administrative Region	The designated geographic location is an administrative region '

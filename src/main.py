@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
+from dg.geocoder.iati.iati_codes import iati_countries
 from dg.geocoder.processor import process_file
 
 
@@ -44,12 +44,12 @@ def main(args):
                 print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':
-            if args.organisation is None or args.organisation not in iati_publishers:
-                print('Please provide a valid publisher organisation code please look at '
+            if args.organisation is None:
+                print('Please provide a publisher code using -p parameter,  please look at '
                       'https://www.iatiregistry.org/publisher')
                 return
             if args.countries is None or args.countries != 'ALL':
-                print('Provide a recipient country code or set it to ALL, please '
+                print('Provide a recipient country code or set it to ALL by using -t parameter, '
                       'look at http://iatistandard.org/202/codelists/Country/')
                 return
             if args.countries == 'ALL':

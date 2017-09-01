@@ -40,19 +40,19 @@ def get_by_priority(results):
     if len(results) > 0:
         priorities = ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5', 'RGN', 'RGNE', 'RGNH', 'PPL', 'PPLA', 'PPLA2',
                       'PPLA3', 'PPLA4', 'PPLL']
-        list = []
+        locations = []
         for l in results:  # iterate locations
             f_code = l.get('fcode')
             # if f_code is equ to current priority return
             for idx, p in enumerate(priorities):
                 if f_code == p:
-                    list.append((idx, l))
+                    locations.append((idx, l))
                     pass
 
-            list.sort(key=lambda x: x[0])
+            locations.sort(key=lambda x: x[0])
         # return element that got in first order
-        if len(list) > 0:
-            return list[0][1]
+        if len(locations) > 0:
+            return locations[0][1]
     else:
         return None
 
@@ -88,7 +88,8 @@ def query(location, cty_codes, query_method, fuzzy):
     try:
         base_url = get_geonames_base_url()
         username = get_geonames_user_name()
-        query_string = base_url + 'username={user}&{query_method}={name}&style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy={fuzzy}' \
+        query_string = base_url + 'username={user}&{query_method}={name}&' \
+                                  'style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy={fuzzy}' \
             .format(user=username, query_method=query_method, name=quote(location), order='relevance', fuzzy=fuzzy)
         if cty_codes and len(cty_codes) > 0:
             query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in cty_codes])

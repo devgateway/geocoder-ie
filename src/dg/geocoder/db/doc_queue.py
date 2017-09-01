@@ -9,7 +9,8 @@ def save_doc(file_name, file_type, country_iso):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES (NEXTVAL('DOC_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
+        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES 
+        (NEXTVAL('DOC_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
         cur = conn.cursor()
         data = (file_name, file_type, country_iso)
         cur.execute(sql, data)
@@ -22,11 +23,11 @@ def save_doc(file_name, file_type, country_iso):
         close(conn)
 
 
-def delete_doc_from_queue(id):
+def delete_doc_from_queue(doc_id):
     conn = open()
     sql = """DELETE FROM DOC_QUEUE WHERE ID = %s"""
     cur = conn.cursor()
-    cur.execute(sql, (id,))
+    cur.execute(sql, (doc_id,))
     rowcount = cur.rowcount
     conn.commit()
     cur.close()
@@ -66,7 +67,7 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         data = data + (offset, limit)
         cur.execute(sql_select, data)
 
-        results = [(c) for c in cur]
+        results = [c for c in cur]
         cur.close()
 
         return {'count': count, 'rows': results, 'limit': limit}
@@ -100,13 +101,13 @@ def get_document_by_id(doc_id):
         close(conn)
 
 
-def update_doc_status(id, status, message=''):
+def update_doc_status(doc_id, status, message=''):
     conn = None
     try:
         conn = open()
         sql = """UPDATE DOC_QUEUE SET STATE=%s ,MESSAGE=%s, PROCESSED_DATE=NOW() WHERE ID = %s"""
         cur = conn.cursor()
-        data = (status, message, id)
+        data = (status, message, doc_id)
         cur.execute(sql, data)
         conn.commit()
         cur.close()

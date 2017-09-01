@@ -44,8 +44,8 @@ def upload_file():
 
 
 @app.route('/download/<id>', methods=['GET'])
-def doc_download(id):
-    sentence = get_sentence_by_id(id)
+def doc_download(doc_id):
+    sentence = get_sentence_by_id(doc_id)
     path = sentence[3]
     full_path = os.path.realpath(os.path.realpath(os.path.join('', path)))
     parts = full_path.split(os.path.sep)
@@ -81,16 +81,16 @@ def corpora_docs_list():
 
 
 @app.route('/corpora/<id>', methods=['DELETE'])
-def corpora_delete(id):
-    if delete_sentence(id):
+def corpora_delete(corpora_id):
+    if delete_sentence(corpora_id):
         return jsonify({"success": True}), 200
     else:
         return jsonify({"success": False}), 500
 
 
 @app.route('/corpora/<id>', methods=['POST'])
-def corpora_set_category(id):
-    if set_category(id, request.json['category']):
+def corpora_set_category(corpora_id):
+    if set_category(corpora_id, request.json['category']):
         return jsonify({"success": True}), 200
     else:
         return jsonify({"success": False}), 500
@@ -115,8 +115,8 @@ def docs_list():
 
 
 @app.route('/docqueue/<id>', methods=['DELETE'])
-def docqueue_delete(id):
-    if delete_doc_from_queue(id):
+def docqueue_delete(corpora_id):
+    if delete_doc_from_queue(corpora_id):
         return jsonify({"success": True}), 200
     else:
         return jsonify({"success": False}), 500
@@ -126,19 +126,19 @@ def docqueue_delete(id):
 def upload_doc():
     if request.method == 'POST':
         f = request.files['file']
-        countryISO = request.form['countryISO']
-        filename = f.filename
-        filetype = f.content_type
-        docs_path = os.path.join(get_doc_queue_path(), filename)
+        country_code = request.form['countryISO']
+        file_name = f.filename
+        file_type = f.content_type
+        docs_path = os.path.join(get_doc_queue_path(), file_name)
         f.save(docs_path)
-        save_doc(filename, filetype, countryISO)
+        save_doc(file_name, file_type, country_code)
     return jsonify({"success": True}), 200
 
 
 @app.route('/docqueue/process/<id>', methods=['GET'])
-def process_document(id):
+def process_document(corpora_id):
     logger.info('starting process thread')
-    a_thread = threading.Thread(target=process_by_id, args=(id,))
+    a_thread = threading.Thread(target=process_by_id, args=(corpora_id,))
     a_thread.start()
     return jsonify({"success": True}), 200
 
@@ -158,8 +158,8 @@ def geocoding_list():
 
 
 @app.route('/geocoding/download/<id>', methods=['GET'])
-def geocoding_download(id):
-    document = get_document_by_id(id)
+def geocoding_download(corpora_id):
+    document = get_document_by_id(corpora_id)
     doc_name = document[1]
     doc_type = document[2]
     output_ext = '_out.tsv'

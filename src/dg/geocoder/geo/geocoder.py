@@ -40,7 +40,6 @@ def classify(texts, files, cls_name):
             else:
                 sentences += reader.split()
 
-
     toc = time.clock()
     logger.info(
         'There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
@@ -50,14 +49,13 @@ def classify(texts, files, cls_name):
     logger.info('{} geographical sentences found '.format(len(indexes)))
     geo_sentences = [(sentences[i]) for i in indexes]
 
-
     return geo_sentences
 
 
 # merge equals names and join texts
-def join(list):
+def join(item_list):
     locs = {}
-    for item in list:
+    for item in item_list:
         for l in item['locations']:
             if locs.get(l.lower()):
                 locs[l.lower()]['texts'].append({'text': item['text'], 'entities': item['entities']})
@@ -68,15 +66,15 @@ def join(list):
 
 
 # query geonames an get geographical information
-def geonames(list, cty_codes=None):
+def geonames(entity_list, cty_codes=None):
     if cty_codes is None:
         cty_codes = []
-    for name, metadata in list:
+    for name, metadata in entity_list:
         coding = resolve(name, cty_codes)
         if coding is not None:
             metadata['geocoding'] = coding
 
-    return list
+    return entity_list
 
 
 # Perform natural language processing to text, get annotated entities and entities relations
@@ -111,7 +109,6 @@ def gap_length(word1, word2, text):
 
 
 def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
-    ret_val = []
     for row in extracted:
         text = ' '.join(row['text'].replace('\n\n', ', ').split())
         entities = row['entities']

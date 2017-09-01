@@ -1,7 +1,10 @@
 import itertools
+import logging
 
 import matplotlib.pyplot as plt
 import numpy as np
+
+logger = logging.getLogger()
 
 
 def plot_confusion_matrix(cm, classes,

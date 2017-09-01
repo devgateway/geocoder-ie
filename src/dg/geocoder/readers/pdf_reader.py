@@ -13,6 +13,10 @@ from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 logger = logging.getLogger()
 
 
+def read_page(page):
+    return page.extractText()
+
+
 class PdfReader(BaseReader):
     def __init__(self, file):
         super().__init__()
@@ -52,7 +56,6 @@ class PdfReader(BaseReader):
         if verbose:
             print('\n')
 
-
         text = retstr.getvalue()
 
         fp.close()
@@ -72,14 +75,9 @@ class PdfReader(BaseReader):
         return self.paragraphs
 
     # Extract raw text from page
-    def read_page(self, page):
-        return page.extractText()
 
     def get_paragraphs(self):
         return self.paragraphs
-
-    def get_pages_text(self):
-        return self.texts
 
     def get_sample(self):
         return self.convert_pdf_to_txt(pagenos=[2], verbose=False)

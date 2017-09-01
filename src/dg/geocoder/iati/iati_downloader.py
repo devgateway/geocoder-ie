@@ -5,7 +5,7 @@ import uuid
 from urllib.parse import unquote_plus
 from urllib.request import urlopen
 
-from lxml import etree as ET
+from lxml import etree as et
 
 from dg.geocoder.config import get_download_path
 from dg.geocoder.iati.activity_reader import ActivityReader
@@ -37,7 +37,7 @@ def download(dest_path, url):
             logger.info("Wasn't able to find the file....!")
             return None
     except Exception as error:
-        logger.info('download error %s', error)
+        logger.error('download error %s', error)
 
 
 def download_activity_data(activity_reader, download_path, dump_activity=False):
@@ -57,7 +57,8 @@ def download_activity_data(activity_reader, download_path, dump_activity=False):
             folder_path = get_folder_name(region)
 
         path = create_folder(
-            os.path.join(download_path, activity_reader.get_reporting_organisation_name(), folder_path))
+            os.path.join(download_path, get_folder_name(activity_reader.get_reporting_organisation_name()),
+                         folder_path))
         path = create_folder(os.path.join(path, identifier))
 
         if dump_activity:
@@ -89,7 +90,7 @@ def bulk_data_download(org, countries=None, download_path=get_download_path(), o
         url = 'http://datastore.iatistandard.org/api/1/access/activity.xml' \
               '?reporting-org=%s&recipient-country=%s&offset=%s&limit=%s' % (org, country, offset, activities_limit)
 
-        root = ET.parse(urlopen(url)).getroot()
+        root = et.parse(urlopen(url)).getroot()
         activity_list = root.findall('iati-activities/iati-activity')
         logger.info('Found %d activities ' % (len(activity_list)))
         for activity in activity_list:
@@ -98,4 +99,7 @@ def bulk_data_download(org, countries=None, download_path=get_download_path(), o
 
 
 if __name__ == '__main__':
+
     bulk_data_download('46002', iati_countries, activities_limit=10)
+
+    bulk_data_download('XI-IATI-IADB', iati_countries, activities_limit=10)
