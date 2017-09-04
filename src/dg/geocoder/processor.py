@@ -34,7 +34,7 @@ def process_queue():
         process_doc(doc)
 
 
-# File processor
+# Process any input file
 def process_file(file, cty_codes=None):
     if cty_codes is None:
         cty_codes = []
@@ -48,6 +48,7 @@ def process_file(file, cty_codes=None):
             return process_document(file, cty_codes=cty_codes)
 
 
+# Process a database document record
 def process_doc(doc):
     logger.info('processing doc {}'.format(doc[0]))
     doc_id = doc[0]
@@ -76,6 +77,22 @@ def process_doc(doc):
         update_doc_status(doc_id, ST_ERROR, message=error.__str__())
 
 
+# Process document file
+def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, tracer=None):
+    if cty_codes is None:
+        cty_codes = []
+    results = geocode([], [document], cty_codes=cty_codes, tracer=tracer)
+    geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+
+    # save results to db
+    if persist:
+        persist_geocoding(geocoding, doc_id, None)
+
+    # save results to disk
+    return save_to_tsv(out_file, geocoding)
+
+
+# Process a IATI activities xml
 def process_xml(file, out_file='out.xml', persist=False, doc_id=None):
     if not is_valid_schema(file, version='202'):
         logger.error('Invalid xml file supplied please check IATI standard')
@@ -95,29 +112,18 @@ def process_xml(file, out_file='out.xml', persist=False, doc_id=None):
             # full results
             results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
             [activity.add_location(data['geocoding']) for (l, data) in results if data.get('geocoding')]
-
+            # save to db    
             if persist:
                 persist_activity(results, activity, doc_id)
 
-        reader.save(os.path.realpath(out_file))
+            # save xml file
+            save_to_xml(out_file, reader)
+
         logger.info('File {} saved '.format(out_file))
         return out_file
 
 
-def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, tracer=None):
-    if cty_codes is None:
-        cty_codes = []
-    results = geocode([], [document], cty_codes=cty_codes, tracer=tracer)
-    geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-
-    # save results to db
-    if persist:
-        persist_geocoding(geocoding, doc_id, None)
-
-    # save results to disk
-    return save_to_tsv(out_file, geocoding)
-
-
+# Save results to TSV
 def save_to_tsv(out_file, geocoding):
     try:
         with open(os.path.realpath(os.path.join(out_file)), 'w+', newline='') as csvfile:
@@ -135,6 +141,10 @@ def save_to_tsv(out_file, geocoding):
         return out_file
     except:
         raise
+
+
+def save_to_xml(out_file, activity_reader):
+    activity_reader.save(os.path.realpath(out_file))
 
 
 def persist_activity(results, activity, doc_id):
