@@ -35,7 +35,7 @@ def process_by_id(doc_id):
 
 
 def process_queue():
-    pending_docs = get_docs(1, 10, ST_PENDING).get('rows')
+    pending_docs = get_docs(1, 10, [ST_PENDING]).get('rows')
     for doc in pending_docs:
         process_doc(doc, out_path=get_doc_queue_path())
 
@@ -73,7 +73,7 @@ def process_doc(doc, out_path=''):
 
         else:
             process_document(os.path.join(get_doc_queue_path(), doc_name),
-                             out_file="{}_out.{}.tsv".format(doc_name.split('.')[0],doc_name.split('.')[1]),
+                             out_file="{}_out.{}.tsv".format(doc_name.split('.')[0], doc_name.split('.')[1]),
                              cty_codes=[doc_country_code],
                              persist=True,
                              doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path)

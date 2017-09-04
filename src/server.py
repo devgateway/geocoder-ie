@@ -102,8 +102,12 @@ def docs_list():
 
     if 'state' in request.args:
         state = request.args['state']
+        states=[state]
+        if state=='PENDING':
+            states.append('PROCESSING')
 
-    return Response(json.dumps(get_docs(page=page, doc_type=doc_type, state=state), default=datetime_handler),
+
+    return Response(json.dumps(get_docs(page=page, doc_type=doc_type, states=states), default=datetime_handler),
                     mimetype='application/json')
 
 
