@@ -158,17 +158,17 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     return extracted
 
 
-def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), tracer=None):
+def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step_log=None):
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
     # 3) merge names
     # 3) resolve locations using Geo Names
-    if tracer:
-        tracer.trace("Classifying documents")
+    if step_log:
+        step_log("Classifying documents")
     texts = classify(texts, documents, cls_name=cls_name)
 
-    if tracer:
-        tracer.trace("Extracting entities")
+    if step_log:
+        step_log("Extracting entities")
 
     if get_standford_server_type() == 'CORE':
         entities = merge(extract(texts))
@@ -179,8 +179,8 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), trac
 
     normalized = join(entities)
 
-    if tracer:
-        tracer.trace("Geocoding entities")
+    if step_log:
+        step_log("Geocoding entities")
 
     results = geonames(normalized, cty_codes=cty_codes)
 

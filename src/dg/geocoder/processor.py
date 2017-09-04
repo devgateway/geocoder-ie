@@ -21,6 +21,12 @@ logger = logging.getLogger()
 
 
 # DB processors
+def step_log(doc_id):
+    def log(step):
+        update_doc_status(doc_id, ST_PROCESSED, message=step)
+
+    return log
+
 
 def process_by_id(doc_id):
     logger.info('Getting doc record')
@@ -62,14 +68,14 @@ def process_doc(doc):
             process_xml(os.path.join(get_doc_queue_path(), doc_name),
                         out_file="{}_out.xml".format(doc_name.split('.')[0]),
                         persist=True,
-                        doc_id=doc_id)
+                        doc_id=doc_id, step_log=step_log(doc_id))
 
         else:
             process_document(os.path.join(get_doc_queue_path(), doc_name),
                              out_file="{}_out.tsv".format(doc_name.split('.')[0]),
                              cty_codes=[doc_country_code],
                              persist=True,
-                             doc_id=doc_id)
+                             doc_id=doc_id, step_log=step_log(doc_id))
 
         update_doc_status(doc_id, ST_PROCESSED)
     except Exception as error:
@@ -78,10 +84,10 @@ def process_doc(doc):
 
 
 # Process document file
-def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, tracer=None):
+def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, step_log=None):
     if cty_codes is None:
         cty_codes = []
-    results = geocode([], [document], cty_codes=cty_codes, tracer=tracer)
+    results = geocode([], [document], cty_codes=cty_codes, step_log=step_log)
     geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
 
     # save results to db
@@ -93,7 +99,7 @@ def process_document(document, out_file='out.tsv', cty_codes=None, persist=False
 
 
 # Process a IATI activities xml
-def process_xml(file, out_file='out.xml', persist=False, doc_id=None):
+def process_xml(file, out_file='out.xml', persist=False, doc_id=None, step_log=None):
     if not is_valid_schema(file, version='202'):
         logger.error('Invalid xml file supplied please check IATI standard')
         raise Exception("Invalid xml file")
@@ -110,9 +116,9 @@ def process_xml(file, out_file='out.xml', persist=False, doc_id=None):
             # call full geocode workflow
             # TODO CHECK if country code can be an array
             # full results
-            results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
+            results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()], step_log=step_log)
             [activity.add_location(data['geocoding']) for (l, data) in results if data.get('geocoding')]
-            # save to db    
+            # save to db
             if persist:
                 persist_activity(results, activity, doc_id)
 
