@@ -25,13 +25,13 @@ logger = logging.getLogger()
 def process_by_id(doc_id):
     logger.info('Getting doc record')
     doc = get_document_by_id(doc_id)
-    _process_doc(doc)
+    process_doc(doc)
 
 
 def process_queue():
     pending_docs = get_docs(1, 10, ST_PENDING).get('rows')
     for doc in pending_docs:
-        _process_doc(doc)
+        process_doc(doc)
 
 
 # File processor
@@ -48,7 +48,7 @@ def process_file(file, cty_codes=None):
             return process_document(file, cty_codes=cty_codes)
 
 
-def _process_doc(doc):
+def process_doc(doc):
     logger.info('processing doc {}'.format(doc[0]))
     doc_id = doc[0]
     doc_name = doc[1]
@@ -97,7 +97,7 @@ def process_xml(file, out_file='out.xml', persist=False, doc_id=None):
             [activity.add_location(data['geocoding']) for (l, data) in results if data.get('geocoding')]
 
             if persist:
-                _persist_activity(results, activity, doc_id)
+                persist_activity(results, activity, doc_id)
 
         reader.save(os.path.realpath(out_file))
         logger.info('File {} saved '.format(out_file))
@@ -112,13 +112,13 @@ def process_document(document, out_file='out.tsv', cty_codes=None, persist=False
 
     # save results to db
     if persist:
-        _persist_geocoding(geocoding, doc_id, None)
+        persist_geocoding(geocoding, doc_id, None)
 
     # save results to disk
-    return _save_to_tsv(out_file, geocoding)
+    return save_to_tsv(out_file, geocoding)
 
 
-def _save_to_tsv(out_file, geocoding):
+def save_to_tsv(out_file, geocoding):
     try:
         with open(os.path.realpath(os.path.join(out_file)), 'w+', newline='') as csvfile:
             fieldnames = ['geonameId', 'name', 'toponymName', 'fcl', 'fcode', 'fcodeName', 'fclName', 'lat', 'lng',
@@ -137,17 +137,17 @@ def _save_to_tsv(out_file, geocoding):
         raise
 
 
-def _persist_activity(results, activity, doc_id):
+def persist_activity(results, activity, doc_id):
     identifier = activity.get_identifier()
     title = activity.get_title()
     description = activity.get_description()
     country = activity.get_recipient_country_code()
     activity_id = save_activity(identifier, title, description, country, doc_id)
     geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-    _persist_geocoding(geocoding, doc_id, activity_id)
+    persist_geocoding(geocoding, doc_id, activity_id)
 
 
-def _persist_geocoding(geocoding_list, doc_id, activity_id):
+def persist_geocoding(geocoding_list, doc_id, activity_id):
     for geocoding in geocoding_list:
         geo_id = save_geocoding(geocoding[0], doc_id, activity_id)
         for text in geocoding[1]:

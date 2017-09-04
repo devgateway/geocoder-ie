@@ -2,7 +2,7 @@ import unittest
 
 from dg.geocoder.db.geocode import save_activity
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
-from dg.geocoder.processor import process_xml, process_queue, _persist_geocoding
+from dg.geocoder.processor import process_xml, process_queue, persist_geocoding
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 
@@ -86,7 +86,7 @@ class TestGeocoder(unittest.TestCase):
         results = geocode([], ['resources/dfid_4182791.odt'], cty_codes=[])
 
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        _persist_geocoding(geocoding, None, None)
+        persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
 
@@ -94,7 +94,7 @@ class TestGeocoder(unittest.TestCase):
         results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
 
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        _persist_geocoding(geocoding, None, None)
+        persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
 
