@@ -1,3 +1,5 @@
+import os
+
 import numpy
 from pandas.core.frame import DataFrame
 
@@ -6,7 +8,6 @@ class FileDataLoader:
     def __init__(self, path=''):
         self.path = path
         self.confusion = numpy.array([[0, 0], [0, 0]])
-        self.tagger = Ner(host='localhost', port=1234)
 
     def read_files(self, encoding="utf-8"):
         for root, dir_names, file_names in os.walk(self.path):
@@ -20,18 +21,12 @@ class FileDataLoader:
                     classification = file_path.split(os.path.sep)[-2]
                     yield file_path, content, classification
 
-    def build_data_frame(self, remove_entities=False):
+    def build_data_frame(self):
         rows = []
         index = []
         for file_name, text, classification in self.read_files():
             index.append(file_name)
-            if remove_entities:
-                tagged = self.tagger.get_entities(text)
-                entities = [a for a, b in tagged if b in ['LOCATION']]
-                stripped_text = ' '.join([(t) for t in text.split(' ') if t not in entities])
-                rows.append({'text': stripped_text, 'class': classification})
-            else:
-                rows.append({'text': text, 'class': classification})
+            rows.append({'text': text, 'class': classification})
 
         data_frame = DataFrame(rows, index=index)
         data_frame = data_frame.reindex(numpy.random.permutation(data_frame.index))

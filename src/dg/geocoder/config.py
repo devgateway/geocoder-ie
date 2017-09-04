@@ -12,11 +12,15 @@ parser.read(app_config_file_path)
 
 
 def get_app_port():
-    return int( parser.get('web', 'port'))
+    return int(parser.get('web', 'port'))
 
 
 def get_ner_host():
     return parser.get('standford', 'host')
+
+
+def get_standford_server_type():
+    return parser.get('standford', 'server_type')
 
 
 def get_ner_port():
@@ -77,6 +81,10 @@ def get_default_classifier():
 
 def get_doc_queue_path():
     return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'docs_queue_path')))
+
+
+def get_log_config_path():
+    return os.path.realpath(os.path.join(app_root_path, 'logging.ini'))
 
 
 def get_geonames_retry_policy():

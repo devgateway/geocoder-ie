@@ -1,3 +1,5 @@
+import logging
+
 import numpy
 from sklearn.metrics.classification import confusion_matrix, f1_score, recall_score, precision_score
 from sklearn.model_selection import KFold, train_test_split
@@ -5,6 +7,8 @@ from sklearn.model_selection import KFold, train_test_split
 from dg.geocoder.classification.classifier import Classifier
 from dg.geocoder.classification.plot import plot_confusion_matrix
 from dg.geocoder.data.db_loader import DbDataLoader
+
+logger = logging.getLogger()
 
 
 class Trainer:
@@ -19,26 +23,26 @@ class Trainer:
         self.confusion = numpy.array([[0, 0], [0, 0]])
 
     def _get_train_test_sets(self):
-        X_train, X_test, Y_train, Y_test = train_test_split(self.raw_texts, self.values, test_size=0.3, random_state=0)
+        x_train, x_test, y_train, y_test = train_test_split(self.raw_texts, self.values, test_size=0.3, random_state=0)
 
-        return X_train, X_test, Y_train, Y_test
+        return x_train, x_test, y_train, y_test
 
     def split_train(self):
-        X_train, X_test, Y_train, Y_test = self._get_train_test_sets()
+        x_train, x_test, y_train, y_test = self._get_train_test_sets()
         # fit classifier with train set and train labels
-        self.cls.train(X_train, Y_train)
+        self.cls.train(x_train, y_train)
 
         # collect prediction for scoring purpose
-        predictions = self.cls.predict(X_test)
-        self.recall = recall_score(Y_test, predictions, pos_label='geography')
-        self.precision = precision_score(Y_test, predictions, pos_label='geography')
-        self.score = f1_score(Y_test, predictions, pos_label='geography')
-        self.confusion += confusion_matrix(Y_test, predictions)
+        predictions = self.cls.predict(x_test)
+        self.recall = recall_score(y_test, predictions, pos_label='geography')
+        self.precision = precision_score(y_test, predictions, pos_label='geography')
+        self.score = f1_score(y_test, predictions, pos_label='geography')
+        self.confusion += confusion_matrix(y_test, predictions)
 
         return self.cls
 
     def kfold_train(self, n_splits=3):
-        print('train classifier using kFold')
+        logger.info('train classifier using kFold')
         kf = KFold(n_splits=n_splits, shuffle=True)
         scores = []
         precisions = []
@@ -67,12 +71,12 @@ class Trainer:
         return self.cls
 
     def print_stats(self):
-        print('Total classified:', len(self.data))
-        print('Score:', self.score)
-        print('Precision:', self.precision)
-        print('Recall:', self.recall)
-        print('Confusion matrix:')
-        print(self.confusion)
+        logger.info('Total classified: {}'.format(len(self.data)))
+        logger.info('Score: {}'.format(self.score))
+        logger.info('Precision: {}'.format(self.precision))
+        logger.info('Recall: {}'.format(self.recall))
+        logger.info('Confusion matrix:')
+        logger.info(self.confusion)
 
     def plot_stats(self):
         plot_confusion_matrix(self.confusion, ['geography', 'none'])
@@ -80,7 +84,7 @@ class Trainer:
 
 def train_classifier(loader=DbDataLoader(), plot_results=False):
     cls_trainer = Trainer(loader.build_data_frame())
-    cls_trainer.kfold_train()
+    cls_trainer.split_train()
     cls_trainer.print_stats()
     if plot_results:
         cls_trainer.plot_stats()
@@ -88,5 +92,5 @@ def train_classifier(loader=DbDataLoader(), plot_results=False):
 
 
 if __name__ == '__main__':
-    cls = train_classifier()
-    cls.save('default')
+    cls = train_classifier(plot_results=True)
+    cls.save('new')

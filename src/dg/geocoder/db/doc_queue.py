@@ -1,29 +1,42 @@
+import logging
+
 from dg.geocoder.db.db import open, close
+
+logger = logging.getLogger()
 
 
 def save_doc(file_name, file_type, country_iso):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES (NEXTVAL('DOC_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
+        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES 
+        (NEXTVAL('GLOBAL_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
         cur = conn.cursor()
         data = (file_name, file_type, country_iso)
         cur.execute(sql, data)
         conn.commit()
         cur.close()
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
 
 
-def delete_doc_from_queue(id):
+def delete_doc_from_queue(doc_id):
     conn = open()
-    sql = """DELETE FROM DOC_QUEUE WHERE ID = %s"""
+    sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID=%s)"
+    sql_2 = "DELETE FROM GEOCODING WHERE DOCUMENT_ID=%s"
+    sql_3 = "DELETE FROM ACTIVITY WHERE DOCUMENT_ID=%s"
+    sql_4 = "DELETE FROM DOC_QUEUE WHERE ID = %s"
     cur = conn.cursor()
-    cur.execute(sql, (id,))
+    cur.execute(sql_1, (doc_id,))
+    cur.execute(sql_2, (doc_id,))
+    cur.execute(sql_3, (doc_id,))
+    cur.execute(sql_4, (doc_id,))
     rowcount = cur.rowcount
+
+
     conn.commit()
     cur.close()
     close(conn)
@@ -44,7 +57,6 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         sql_select = """SELECT * FROM DOC_QUEUE WHERE 1=1 """
         data = ()
 
-
         if state is not None:
             if state == 'PENDING':
                 sql_count = sql_count + " AND STATE != %s "
@@ -55,8 +67,6 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
                 sql_select = sql_select + """AND STATE = %s """
                 data = data + (state,)
 
-
-
         cur.execute(sql_count, data)
         count = cur.fetchone()[0]
 
@@ -65,13 +75,22 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         data = data + (offset, limit)
         cur.execute(sql_select, data)
 
-        results = [(c) for c in cur]
+        results = [{'id': c[0],
+                    'file_name': c[1],
+                    'type': c[2],
+                    'state': c[3],
+                    'create_date': c[4],
+                    'processed_date': c[5],
+                    'country_iso': c[6],
+                    'message': c[7]
+
+                    } for c in cur]
         cur.close()
 
         return {'count': count, 'rows': results, 'limit': limit}
 
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
 
     finally:
@@ -93,26 +112,24 @@ def get_document_by_id(doc_id):
         return row
 
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
 
 
-def update_doc(id, status):
+def update_doc_status(doc_id, status, message=''):
     conn = None
     try:
         conn = open()
-        sql = """UPDATE DOC_QUEUE SET STATE=%s , PROCESSED_DATE=NOW() WHERE ID = %s"""
+        sql = """UPDATE DOC_QUEUE SET STATE=%s ,MESSAGE=%s, PROCESSED_DATE=NOW() WHERE ID = %s"""
         cur = conn.cursor()
-        data = (status, id)
+        data = (status, message, doc_id)
         cur.execute(sql, data)
         conn.commit()
         cur.close()
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
-
-

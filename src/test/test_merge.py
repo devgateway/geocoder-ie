@@ -1,7 +1,7 @@
 import unittest
 
-from dg.geocoder.geo.geocoder import merge, extract, join, geonames
-from dg.geocoder.readers.factory import get_reader, get_text_reader
+from dg.geocoder.geo.geocoder import merge, join
+from dg.geocoder.readers.factory import get_reader
 
 
 class TestMerge(unittest.TestCase):
@@ -39,7 +39,7 @@ class TestMerge(unittest.TestCase):
         self.assertTrue('Burkina Faso' in found)
 
     def test_merge_new_lines(self):
-        text="""Dadieso Forest
+        text = """Dadieso Forest
 Reserves
 
 Kakum National Park area, Central Region"""
@@ -47,7 +47,8 @@ Kakum National Park area, Central Region"""
         entities = ['Dadieso', 'Forest', 'Reserves', 'Kakum', 'National', 'Park']
         ner_decorated = [{'text': text, 'entities': entities, 'relations': []}]
         merge_decorated = merge(ner_decorated, ignored_gap_chars=[','])
-        print(merge_decorated)
+        logger.info(merge_decorated)
+
 
 if __name__ == '__main__':
     unittest.main()

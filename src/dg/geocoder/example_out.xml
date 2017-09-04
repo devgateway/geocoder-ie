@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T11:36:26">
+        <iati-identifier>46002-P-UG-AAD-001</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">Uganda - Farm Income Enhancement and Forestry Conservation Programme - Project 2
+            </narrative>
+            <narrative xml:lang="fr">Ouganda - Programme d'am�lioration du revenu agricole et de conservation des for�ts
+                : Projet 2
+            </narrative>
+        </title>
+        <description type="2">
+            <narrative xml:lang="en">The project objective is to improve household incomes, food security, and climate
+                resilience through sustainable natural resources management and agricultural enterprise development
+            </narrative>
+        </description>
+        <participating-org role="1" ref="46002" type="40">
+            <narrative>African Development Bank</narrative>
+        </participating-org>
+        <participating-org role="3" ref="" type="10">
+            <narrative>Government Of Uganda</narrative>
+        </participating-org>
+        <participating-org role="4" ref="" type="10">
+            <narrative>Ministry of Water &amp; Environment</narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2016-02-17" type="1"/>
+        <activity-date iso-date="2016-05-31" type="2"/>
+        <activity-date iso-date="2020-12-31" type="3"/>
+        <activity-date iso-date="2021-06-30" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Agriculture and Agro Industry North, East and South Regions/ Agriculture et Agro Industrie,
+                    R�gions de l'Afrique du Nord, de l'Est et du Sud
+                </narrative>
+            </department>
+            <person-name>
+                <narrative>LOULSEGED Mekonnen Kifle</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Senior Water Ressources Engineer</narrative>
+            </job-title>
+            <telephone>+225 2020 2293</telephone>
+            <email>m.loulseged@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
+                    d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="UG"/>
+        <sector vocabulary="DAC" code="31220">
+            <narrative>Forestry / Plantations</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2000130014931">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-02-17"/>
+            <value value-date="2016-02-17">54831145.81</value>
+            <provider-org>
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOVERNMENT OF UGANDA</narrative>
+            </receiver-org>
+            <flow-type code="20"/>
+            <finance-type code="410"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-06-30"/>
+            <value value-date="2016-06-30">814125.18</value>
+            <description>
+                <narrative>Total Disbursement in Second Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-02-17"/>
+            <value value-date="2016-02-17">6527023.16</value>
+            <provider-org>
+                <narrative>Government Of Uganda</narrative>
+            </provider-org>
+        </transaction>
+        <document-link url="http://www.afdb.org/en/projects-and-operations/project-portfolio/project/p-ug-aad-001/" format="WebPage">
+            <title>
+                <narrative>Activity Web Site</narrative>
+            </title>
+            <category code="A12"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Environmental-and-Social-Assessments/FIEFOC_ESMP_Summary_final_2015.pdf" format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Ouganda-_Programme_d-am%C3%A9lioration_du_revenu_agricole_et_de_conservation_....pdf" format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Uganda-_AR_Farm_Income_Enhancement_and_Forest_Conservation_Project.pdf" format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    <location><location-reach code="1"/><location-id code="226074" vocabulary="G1"/><name><narrative>Uganda</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="226074" level="PCLI" vocabulary="G1"/><point><pos>1.25 32.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="443360" vocabulary="G1"/><name><narrative>Nebbi District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="443360" level="ADM2" vocabulary="G1"/><point><pos>2.46732 31.26293</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="7056295" vocabulary="G1"/><name><narrative>Oyam District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="7056295" level="ADM2" vocabulary="G1"/><point><pos>2.38129 32.50071</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="7056282" vocabulary="G1"/><name><narrative>Butaleja District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="7056282" level="ADM2" vocabulary="G1"/><point><pos>0.89076 33.94497</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="8030574" vocabulary="G1"/><name><narrative>Kween District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="8030574" level="ADM2" vocabulary="G1"/><point><pos>1.37732 34.57456</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="443342" vocabulary="G1"/><name><narrative>Kasese District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="443342" level="ADM2" vocabulary="G1"/><point><pos>0.121 30.00777</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="226074" vocabulary="G1"/><name><narrative>Uganda</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="226074" level="PCLI" vocabulary="G1"/><point><pos>1.25 32.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="226074" vocabulary="G1"/><name><narrative>Uganda</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="226074" level="PCLI" vocabulary="G1"/><point><pos>1.25 32.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="8261584" vocabulary="G1"/><name><narrative>Wadelai</narrative></name><description><narrative>fourth-order administrative division</narrative></description><administrative code="8261584" level="ADM4" vocabulary="G1"/><point><pos>2.6406 31.35469</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM4"/></location><location><location-reach code="1"/><location-id code="228964" vocabulary="G1"/><name><narrative>Mubuku</narrative></name><description><narrative>populated place</narrative></description><administrative code="228964" level="PPL" vocabulary="G1"/><point><pos>0.26944 30.1025</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPL"/></location><location><location-reach code="1"/><location-id code="8197268" vocabulary="G1"/><name><narrative>Tochi</narrative></name><description><narrative>locality</narrative></description><administrative code="8197268" level="LCTY" vocabulary="G1"/><point><pos>2.76178 32.20571</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="LCTY"/></location><location><location-reach code="1"/><location-id code="228828" vocabulary="G1"/><name><narrative>Mulago</narrative></name><description><narrative>section of populated place</narrative></description><administrative code="228828" level="PPLX" vocabulary="G1"/><point><pos>0.3417 32.57727</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPLX"/></location><location><location-reach code="1"/><location-id code="8658022" vocabulary="G1"/><name><narrative>Southern Division</narrative></name><description><narrative>fourth-order administrative division</narrative></description><administrative code="8658022" level="ADM4" vocabulary="G1"/><point><pos>0.63506 30.26957</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM4"/></location><location><location-reach code="1"/><location-id code="443357" vocabulary="G1"/><name><narrative>Moyo District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="443357" level="ADM2" vocabulary="G1"/><point><pos>3.65 31.72</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="448225" vocabulary="G1"/><name><narrative>Yumbe District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="448225" level="ADM2" vocabulary="G1"/><point><pos>3.52354 31.28243</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="443328" vocabulary="G1"/><name><narrative>Arua District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="443328" level="ADM2" vocabulary="G1"/><point><pos>2.96667 31.16667</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="7056289" vocabulary="G1"/><name><narrative>Koboko District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="7056289" level="ADM2" vocabulary="G1"/><point><pos>3.5 31</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="7056292" vocabulary="G1"/><name><narrative>Maracha District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="7056292" level="ADM2" vocabulary="G1"/><point><pos>3.25091 30.92516</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="11153873" vocabulary="G1"/><name><narrative>South Ward</narrative></name><description><narrative>fifth-order administrative division</narrative></description><administrative code="11153873" level="ADM5" vocabulary="G1"/><point><pos>-1.28844 29.6882</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM5"/></location><location><location-reach code="1"/><location-id code="226074" vocabulary="G1"/><name><narrative>Uganda</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="226074" level="PCLI" vocabulary="G1"/><point><pos>1.25 32.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="8260675" vocabulary="G1"/><name><narrative>Western Region</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="8260675" level="ADM1" vocabulary="G1"/><point><pos>-0.61179 30.55573</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="11259461" vocabulary="G1"/><name><narrative>North West Sigulu Point</narrative></name><description><narrative>point</narrative></description><administrative code="11259461" level="PT" vocabulary="G1"/><point><pos>0.13742 33.8024</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PT"/></location><location><location-reach code="1"/><location-id code="8644133" vocabulary="G1"/><name><narrative>East Moyo</narrative></name><description><narrative>third-order administrative division</narrative></description><administrative code="8644133" level="ADM3" vocabulary="G1"/><point><pos>3.22561 31.76944</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM3"/></location><location><location-reach code="1"/><location-id code="226410" vocabulary="G1"/><name><narrative>Sambiyu</narrative></name><description><narrative>stream</narrative></description><administrative code="226410" level="STM" vocabulary="G1"/><point><pos>2.16069 31.66595</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="STM"/></location></iati-activity>
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T11:31:19">
+        <iati-identifier>46002-P-ZM-AA0-024</iati-identifier>
+        <reporting-org ref="46002" type="40">
+            <narrative>African Development Bank Group</narrative>
+        </reporting-org>
+        <title>
+            <narrative xml:lang="en">Zambia - Cashew infrastructure development project</narrative>
+        </title>
+        <description type="2">
+            <narrative xml:lang="en">The development objective is to contribute to economic growth and food security.
+                The Project objective is to contribute to the country's poverty reduction and improved household incomes
+                through improved cashew production,
+                processing and marketing. Enhanced household incomes will lead to improved household food security. The
+                Project will (i) increase cashew tree productivity and production, (ii) contribute to improved household
+                income and food security, (iii) increase
+                foreign exchange earnings from cashew products, and (iii) improve rural employment for men, women and
+                youths.
+            </narrative>
+        </description>
+        <participating-org role="1" ref="46002" type="40">
+            <narrative>African Development Bank</narrative>
+        </participating-org>
+        <participating-org role="3" ref="" type="10">
+            <narrative>Government Of Zambia</narrative>
+        </participating-org>
+        <participating-org role="4" ref="" type="10">
+            <narrative>MINISTRY OF AGRICULTURE - WATER DEVELOPMENT</narrative>
+        </participating-org>
+        <activity-status code="2"/>
+        <activity-date iso-date="2016-03-29" type="1"/>
+        <activity-date iso-date="2016-08-25" type="2"/>
+        <activity-date iso-date="2021-12-31" type="3"/>
+        <activity-date iso-date="2022-06-30" type="4"/>
+        <contact-info>
+            <organisation>
+                <narrative>African Development Bank Group</narrative>
+            </organisation>
+            <department>
+                <narrative>Agriculture and Agro Industry North, East and South Regions/ Agriculture et Agro Industrie,
+                    R�gions de l'Afrique du Nord, de l'Est et du Sud
+                </narrative>
+            </department>
+            <person-name>
+                <narrative>BANGWE Lewis Mupeta</narrative>
+            </person-name>
+            <job-title>
+                <narrative>Agrcuiltural Expert</narrative>
+            </job-title>
+            <telephone/>
+            <email>l.bangwe@afdb.org</email>
+            <website>www.afdb.org</website>
+            <mailing-address>
+                <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
+                    d'Ivoire
+                </narrative>
+            </mailing-address>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="ZM"/>
+        <sector vocabulary="DAC" code="31110">
+            <narrative>Agriculture</narrative>
+        </sector>
+        <collaboration-type code="2"/>
+        <transaction ref="2000130014431">
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-03-29"/>
+            <value value-date="2016-03-29">32239344.90</value>
+            <provider-org>
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+            <receiver-org>
+                <narrative>GOVERNMENT OF ZAMBIA</narrative>
+            </receiver-org>
+            <flow-type code="20"/>
+            <finance-type code="410"/>
+            <aid-type code="C01"/>
+            <tied-status code="5"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-09-30"/>
+            <value value-date="2016-09-30">534547.50</value>
+            <description>
+                <narrative>Total Disbursement in Third Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Bank</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2016-03-29"/>
+            <value value-date="2016-03-29">5953575.01</value>
+            <provider-org>
+                <narrative>Government Of Zambia</narrative>
+            </provider-org>
+        </transaction>
+        <document-link url="http://www.afdb.org/en/projects-and-operations/project-portfolio/project/p-zm-aa0-024/" format="WebPage">
+            <title>
+                <narrative>Activity Web Site</narrative>
+            </title>
+            <category code="A12"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Environmental-and-Social-Assessments/Zambia_-_Cashew_Infrastructure_Development_Project__CIDP__%E2%80%93_SESA_Summary_%E2%80%93_06_2015.pdf" format="application/pdf">
+            <title>
+                <narrative>Appraisal Report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Procurement/Project-related-Procurement/GPN_-_Zambia_-_Cashew_Infrastructure_Development_Project_-_CIDP.pdf" format="application/pdf">
+            <title>
+                <narrative>Tender</narrative>
+            </title>
+            <category code="A10"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambia-AR-Cashew_Infrastructure_Development_Project__CIDP_.pdf" format="application/pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambia-AR-Cashew_Infrastructure_Development_Project__CIDP_.pdf" format="application/pdf">
+            <title>
+                <narrative>Memorandum of Understanding</narrative>
+            </title>
+            <category code="A09"/>
+            <language code="en"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambie-Re-_Projet_de_d%C3%A9veloppement_de_linfrastructure_danacarde__CIDP_.pdf" format="application/pdf">
+            <title>
+                <narrative>Appraisal report</narrative>
+            </title>
+            <category code="A01"/>
+            <category code="A02"/>
+            <category code="A03"/>
+            <category code="A04"/>
+            <category code="A05"/>
+            <category code="A08"/>
+            <language code="fr"/>
+        </document-link>
+        <document-link url="http://www.afdb.org/fileadmin/uploads/afdb/Documents/Project-and-Operations/Zambie-Re-_Projet_de_d%C3%A9veloppement_de_linfrastructure_danacarde__CIDP_.pdf" format="application/pdf">
+            <title>
+                <narrative>Memorandum of Understanding</narrative>
+            </title>
+            <category code="A09"/>
+            <language code="fr"/>
+        </document-link>
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    <location><location-reach code="1"/><location-id code="895949" vocabulary="G1"/><name><narrative>Zambia</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="895949" level="PCLI" vocabulary="G1"/><point><pos>-14.33333 28.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="896140" vocabulary="G1"/><name><narrative>Western Province</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="896140" level="ADM1" vocabulary="G1"/><point><pos>-15 24</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="10815320" vocabulary="G1"/><name><narrative>Limulunga District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="10815320" level="ADM2" vocabulary="G1"/><point><pos>-14.98032 23.35706</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="10815323" vocabulary="G1"/><name><narrative>Nalolo District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="10815323" level="ADM2" vocabulary="G1"/><point><pos>-15.77385 22.99538</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="906052" vocabulary="G1"/><name><narrative>Mongu District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="906052" level="ADM2" vocabulary="G1"/><point><pos>-15.37439 23.5325</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="898945" vocabulary="G1"/><name><narrative>Senanga District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="898945" level="ADM2" vocabulary="G1"/><point><pos>-16.08965 23.76732</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="915468" vocabulary="G1"/><name><narrative>Kalabo District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="915468" level="ADM2" vocabulary="G1"/><point><pos>-14.83997 22.71197</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="10815319" vocabulary="G1"/><name><narrative>Sikongo District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="10815319" level="ADM2" vocabulary="G1"/><point><pos>-15.23673 22.17756</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="10801800" vocabulary="G1"/><name><narrative>Shangombo</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="10801800" level="ADM2" vocabulary="G1"/><point><pos>-16.30827 22.45556</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="10815324" vocabulary="G1"/><name><narrative>Sioma District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="10815324" level="ADM2" vocabulary="G1"/><point><pos>-16.75362 23.2221</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="909482" vocabulary="G1"/><name><narrative>Lukulu District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="909482" level="ADM2" vocabulary="G1"/><point><pos>-14.22997 23.8294</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="906052" vocabulary="G1"/><name><narrative>Mongu District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="906052" level="ADM2" vocabulary="G1"/><point><pos>-15.37439 23.5325</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="901339" vocabulary="G1"/><name><narrative>Ndola Rural District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="901339" level="ADM2" vocabulary="G1"/><point><pos>-13.26792 27.72519</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="910874" vocabulary="G1"/><name><narrative>Kuta</narrative></name><description><narrative>populated place</narrative></description><administrative code="910874" level="PPL" vocabulary="G1"/><point><pos>-10.3 33.16667</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPL"/></location><location><location-reach code="1"/><location-id code="895949" vocabulary="G1"/><name><narrative>Zambia</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="895949" level="PCLI" vocabulary="G1"/><point><pos>-14.33333 28.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="895949" vocabulary="G1"/><name><narrative>Zambia</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="895949" level="PCLI" vocabulary="G1"/><point><pos>-14.33333 28.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="906219" vocabulary="G1"/><name><narrative>Mkushi District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="906219" level="ADM2" vocabulary="G1"/><point><pos>-13.6996 29.49748</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="916077" vocabulary="G1"/><name><narrative>Kapiri Mposhi</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="916077" level="ADM2" vocabulary="G1"/><point><pos>-14.07747 28.51501</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="8285557" vocabulary="G1"/><name><narrative>Masaiti District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="8285557" level="ADM2" vocabulary="G1"/><point><pos>-13.409 28.719</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="915883" vocabulary="G1"/><name><narrative>Kafue</narrative></name><description><narrative>populated place</narrative></description><administrative code="915883" level="PPL" vocabulary="G1"/><point><pos>-15.76911 28.18136</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPL"/></location><location><location-reach code="1"/><location-id code="909129" vocabulary="G1"/><name><narrative>Lusaka Province</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="909129" level="ADM1" vocabulary="G1"/><point><pos>-15.41667 29</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="917688" vocabulary="G1"/><name><narrative>Chongwe</narrative></name><description><narrative>populated place</narrative></description><administrative code="917688" level="PPL" vocabulary="G1"/><point><pos>-15.32916 28.68204</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPL"/></location><location><location-reach code="1"/><location-id code="907108" vocabulary="G1"/><name><narrative>Mazabuka District</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="907108" level="ADM2" vocabulary="G1"/><point><pos>-15.85212 27.71608</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="909845" vocabulary="G1"/><name><narrative>Luapula Province</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="909845" level="ADM1" vocabulary="G1"/><point><pos>-11 29</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="11154503" vocabulary="G1"/><name><narrative>Muchinga</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="11154503" level="ADM1" vocabulary="G1"/><point><pos>-10.54393 32.07725</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="917524" vocabulary="G1"/><name><narrative>Copperbelt</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="917524" level="ADM1" vocabulary="G1"/><point><pos>-13 28</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="177400" vocabulary="G1"/><name><narrative>Chituta</narrative></name><description><narrative>populated place</narrative></description><administrative code="177400" level="PPL" vocabulary="G1"/><point><pos>-8.46667 30.2</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPL"/></location></iati-activity>
+</iati-activities>

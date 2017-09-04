@@ -1,7 +1,10 @@
 import itertools
+import logging
 
 import matplotlib.pyplot as plt
 import numpy as np
+
+logger = logging.getLogger()
 
 
 def plot_confusion_matrix(cm, classes,
@@ -24,11 +27,11 @@ def plot_confusion_matrix(cm, classes,
 
     if normalize:
         cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print("Normalized confusion matrix")
+        logger.info("Normalized confusion matrix")
     else:
-        print('Confusion matrix, without normalization')
+        logger.info('Confusion matrix, without normalization')
 
-    print(cm)
+    logger.info(cm)
 
     thresh = cm.max() / 2.
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
@@ -40,7 +43,3 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.show()
-
-
-
-

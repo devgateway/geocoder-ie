@@ -8,17 +8,17 @@ class TestGeocoder(unittest.TestCase):
         reader = get_reader('src\\test\\tonkenize.pdf')
         tokens = reader.split(pagenos=[5, 6, 7, 8, 9, 10, 11, 12])
         for s in tokens:
-            print(s)
-            print('.' * 120)
-            print('|' * 120)
+            logger.info(s)
+            logger.info('.' * 120)
+            logger.info('|' * 120)
 
     def test_tokenizer_odt(self):
         reader = get_reader('src\\test\\tokenize.odt')
         tokens = reader.split(pagenos=[5, 6, 7, 8, 9, 10, 11, 12])
         for s in tokens:
-            print(s)
-            print('.' * 120)
-            print('|' * 120)
+            logger.info(s)
+            logger.info('.' * 120)
+            logger.info('|' * 120)
 
 
 if __name__ == '__main__':

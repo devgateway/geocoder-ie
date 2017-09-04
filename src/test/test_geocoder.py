@@ -1,9 +1,10 @@
 import unittest
-import json
-from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames
-from dg.geocoder.processor import process_xml, process_queue
-from dg.geocoder.processor import persist_geocoding
+
 from dg.geocoder.db.geocode import save_activity
+from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
+from dg.geocoder.processor import process_xml, process_queue, persist_geocoding
+from dg.geocoder.readers.factory import get_reader, get_text_reader
+
 
 class TestGeocoder(unittest.TestCase):
     def test_geocode_string(self):
@@ -17,13 +18,13 @@ class TestGeocoder(unittest.TestCase):
 
         geo = geocode([text], [], ['GN'])
         print('Checking Koundara as ADM2')
-        Koundara = [(data) for loc, data in geo if loc == 'Koundara'][0]
+        Koundara = [data for loc, data in geo if loc == 'Koundara'][0]
         self.assertTrue(Koundara.get('geocoding').get('fcode') == 'ADM2')
         print('Checking Gaoual as ADM2')
-        Gaoual = [(data) for loc, data in geo if loc == 'Gaoual'][0]
+        Gaoual = [data for loc, data in geo if loc == 'Gaoual'][0]
         self.assertTrue(Gaoual.get('geocoding').get('fcode') == 'ADM2')
         print('Checking  Fouta Djallon  as ADM2')
-        Fouta_Djallon = [(data) for loc, data in geo if loc == 'Fouta Djallon'][0]
+        Fouta_Djallon = [data for loc, data in geo if loc == 'Fouta Djallon'][0]
         self.assertTrue(Fouta_Djallon.get('geocoding').get('fcode') == 'RGN')
 
     def test_geocode_txt_2(self):
@@ -38,7 +39,7 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Burkina Faso' in found)
 
         geonames_decorated = geonames(normalized, cty_codes=['BF'])
-        locs = [(l) for (l, data) in geonames_decorated if data.get('geocoding')]
+        locs = [l for (l, data) in geonames_decorated if data.get('geocoding')]
         self.assertFalse('Benin' in locs)
         self.assertFalse('Ghana' in locs)
         self.assertFalse('Mozambique' in locs)
@@ -46,7 +47,7 @@ class TestGeocoder(unittest.TestCase):
 
         # geocode without country filter
         geonames_decorated2 = geonames(join(merge_decorated))
-        locs = [(l) for (l, data) in geonames_decorated2 if data.get('geocoding')]
+        locs = [l for (l, data) in geonames_decorated2 if data.get('geocoding')]
 
         self.assertTrue('Benin' in locs)
         self.assertTrue('Ghana' in locs)
@@ -55,7 +56,7 @@ class TestGeocoder(unittest.TestCase):
 
     def test_afdb_sub_national(self):
         geo = geocode([], ['resources/afdb_subnational.pdf'], ['GN'])
-        locs = [(l) for (l, data) in geo if data.get('geocoding')]
+        locs = [l for (l, data) in geo if data.get('geocoding')]
         self.assertTrue('Guinea' in locs)
         self.assertTrue('Conakry' in locs)
         self.assertTrue('Koundara' in locs)
@@ -66,14 +67,14 @@ class TestGeocoder(unittest.TestCase):
 
     def test_geocode_text_3(self):
         geo = geocode([], ['resources/sample_text_3.txt'], [])
-        locs = [(l) for (l, data) in geo if data.get('geocoding')]
+        locs = [l for (l, data) in geo if data.get('geocoding')]
+        self.assertTrue(locs is not None)
 
     def test_afdb_activities_XML(self):
         process_xml('resources/afdb_2_activities.xml')
 
     def test_afdb_activities_XML_1(self):
         process_xml('resources/afdb_1_no_docs_activities.xml')
-
 
     def test_process_queue(self):
         process_queue()
@@ -96,6 +97,17 @@ class TestGeocoder(unittest.TestCase):
         persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
+
+    def test_ner(self):
+        text = """The project aims to improve the road connections om the North-West Fouta Djallon area.
+                In order to further support this political will towards poverty reduction, the
+                African Development Bank (ADB) granted the Guinean Government’s request for the
+                financing of the preparation of the feasibility study on a rural development support project in
+                the North-West Fouta Djallon area, in particular Gaoual and Koundara prefectures in the
+                
+                Middle Guinea region."""
+
+        extract_ner([text])
 
 
 if __name__ == '__main__':

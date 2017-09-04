@@ -2,7 +2,8 @@ class CodingResults(object):
     def __init__(self, tagged):
         self.tagged = tagged
 
-    def gap_length(self, word1, word2, text):
+    @staticmethod
+    def gap_length(word1, word2, text):
         """Returns the number of characters after the end of word1 and
         before the start of word2 in text. Also returns the "trimmed"
         text with whitespace through word1's position and the
@@ -45,7 +46,7 @@ class CodingResults(object):
         while idx <= last_idx:
             # loc is a tuple of (location name , relations[])
             loc = locs[idx][0]
-            while not idx is last_idx:
+            while idx is not last_idx:
                 # "Trims" the text after looking at each location to prevent
                 # indexing the wrong occurence of the location word if it
                 # occurs multiple times in the text.

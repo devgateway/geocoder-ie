@@ -1,16 +1,20 @@
-from lxml import etree as ET
+import logging
 
-from dg.geocoder.iati.iati_codes import iati_regions, iati_countries, iati_publishers
+from lxml import etree as et
+
+from dg.geocoder.iati.iati_codes import iati_regions, iati_countries
+
+logger = logging.getLogger()
 
 
 def read_activities():
-    print('parse activity lists')
+    logger.info('parse activity lists')
 
 
 class ActivityReader:
     def __init__(self, path=None, root=None):
         if path is not None:
-            self.root = ET.parse(path).getroot()
+            self.root = et.parse(path).getroot()
         elif root is not None:
             self.root = root
 
@@ -35,13 +39,11 @@ class ActivityReader:
             return title.text
         return None
 
-
     def get_description(self):
         description = self.root.find('description')[0]
         if description is not None:
             return description.text
         return None
-
 
     def get_recipient_region_name(self):
         return iati_regions[
@@ -64,10 +66,19 @@ class ActivityReader:
         return None
 
     def get_reporting_organisation_name(self):
-        return iati_publishers[self.get_reporting_organisation_code()]
+        element = self.root.find('reporting-org')
+        if element is not None:
+            if element.find('narrative') is not None:
+                return element.find('narrative').text
+            elif element.text is not None:
+                return element.text
+            else:
+                return self.get_reporting_organisation_code()
+        else:
+            return None
 
     def get_document_links(self):
-        return [(doc) for doc in self.root.findall("document-link") if
+        return [doc for doc in self.root.findall("document-link") if
                 len(doc.findall("category[@code='A02']")) > 0 or len(doc.findall("category[@code='A07']")) > 0]
 
     def has_documents(self):
@@ -75,30 +86,30 @@ class ActivityReader:
             "document-link/category[@code='A07']")) > 0
 
     def __str__(self):
-        return ET.tostring(self.root).decode('utf-8')
+        return et.tostring(self.root).decode('utf-8')
 
     def xml(self):
         return self.__str__()
 
-    def add_location(self, loc_data, texts):
-        location = ET.SubElement(self.root, "location")
-        ET.SubElement(location, "location-reach", code="1")
-        ET.SubElement(location, "location-id", vocabulary='G1', code=str(loc_data['geonameId']))
-        ET.SubElement(ET.SubElement(location, "name"), "narrative").text = loc_data['name']
-        ET.SubElement(ET.SubElement(location, "description"), "narrative").text = loc_data['fcodeName']
+    def add_location(self, loc_data):
+        location = et.SubElement(self.root, "location")
+        et.SubElement(location, "location-reach", code="1")
+        et.SubElement(location, "location-id", vocabulary='G1', code=str(loc_data['geonameId']))
+        et.SubElement(et.SubElement(location, "name"), "narrative").text = loc_data['name']
+        et.SubElement(et.SubElement(location, "description"), "narrative").text = loc_data['fcodeName']
         # activity = ''
         # if texts:
         #    activity = '\n'.join([t['text'] for t in texts])
 
-        # print(activity)
+        # logger.info(activity)
         # ET.SubElement(ET.SubElement(location, "activity-description"), "narrative").text = activity
 
-        ET.SubElement(location, "administrative",
+        et.SubElement(location, "administrative",
                       vocabulary="G1", level=loc_data['fcode'], code=str(loc_data['geonameId']))
 
-        location_pos = ET.SubElement(ET.SubElement(location, "point"), "pos").text = "{} {}".format(
+        et.SubElement(et.SubElement(location, "point"), "pos").text = "{} {}".format(
             str(loc_data['lat']), str(loc_data['lng']))
 
-        ET.SubElement(location, "exactness", code="1")
-        ET.SubElement(location, "location-class", code="2")
-        ET.SubElement(location, "feature-designation", code=loc_data['fcode'])
+        et.SubElement(location, "exactness", code="1")
+        et.SubElement(location, "location-class", code="2")
+        et.SubElement(location, "feature-designation", code=loc_data['fcode'])

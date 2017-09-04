@@ -1,4 +1,8 @@
+import logging
+
 from dg.geocoder.db.db import open, close
+
+logger = logging.getLogger()
 
 
 def save_geocoding(geocoding, doc_id, activity_id):
@@ -6,8 +10,11 @@ def save_geocoding(geocoding, doc_id, activity_id):
     try:
         conn = open()
         sql = """INSERT INTO GEOCODING 
-              (id, geoname_id, toponym_name, name, lat, lng, country_code, country_name, fcl, fcode, fclname, fcodename, population, continentcode, admin_code_1, admin_name_1, admin_code_2, admin_name_2, admin_code_3, admin_name_3, admin_code_4, admin_name_4, document_id, activity_id) 
-              VALUES (NEXTVAL('GLOBAL_ID_SEQ'), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
+              (id, geoname_id, toponym_name, name, lat, lng, country_code, country_name, fcl, fcode, fclname, 
+              fcodename, population, continentcode, admin_code_1, admin_name_1, admin_code_2, admin_name_2,
+               admin_code_3, admin_name_3, admin_code_4, admin_name_4, document_id, activity_id) 
+              VALUES (NEXTVAL('GLOBAL_ID_SEQ'), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+               %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
         cur = conn.cursor()
         data = (geocoding.get('geonameId'),
                 geocoding.get('toponymName'),
@@ -39,7 +46,7 @@ def save_geocoding(geocoding, doc_id, activity_id):
         cur.close()
         return result_id
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -60,7 +67,7 @@ def save_extract_text(text, geocoding_id, entities=''):
         cur.close()
         return result_id
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -70,7 +77,7 @@ def save_activity(identifier, title, description, country, doc_id):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO ACTIVITY (ID, IDENTIFIER, TITLE, DESCRIPTION, COUNTRY_ISO, DOC_ID) 
+        sql = """INSERT INTO ACTIVITY (ID, IDENTIFIER, TITLE, DESCRIPTION, COUNTRY_ISO, DOCUMENT_ID) 
               VALUES (NEXTVAL('GLOBAL_ID_SEQ'), %s, %s, %s, %s, %s) RETURNING id"""
         cur = conn.cursor()
         data = (identifier, title, description, country, doc_id,)
@@ -80,7 +87,7 @@ def save_activity(identifier, title, description, country, doc_id):
         cur.close()
         return result_id
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -104,11 +111,11 @@ def get_geocoding_list(activity_id=None, document_id=None):
 
         sql_select = sql_select + " ORDER BY ID"
         cur.execute(sql_select, data)
-        results = [(c) for c in cur]
+        results = [c for c in cur]
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -128,11 +135,11 @@ def get_extracted_list(geocoding_id=None):
 
         sql_select = sql_select + " ORDER BY ID"
         cur.execute(sql_select, data)
-        results = [(c) for c in cur]
+        results = [c for c in cur]
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
@@ -147,17 +154,16 @@ def get_activity_list(document_id=None):
         data = ()
 
         if document_id is not None:
-            sql_select = sql_select + """AND DOC_ID = %s """
+            sql_select = sql_select + """AND DOCUMENT_ID = %s """
             data = data + (document_id,)
 
         sql_select = sql_select + " ORDER BY ID"
         cur.execute(sql_select, data)
-        results = [(c) for c in cur]
+        results = [c for c in cur]
         cur.close()
         return results
     except Exception as error:
-        print(error)
+        logger.info(error)
         raise
     finally:
         close(conn)
-

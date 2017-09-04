@@ -6,6 +6,7 @@ from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
 
 class OdtReader(BaseReader):
     def __init__(self, file):
+        super().__init__()
         self.file = file
         self.paragraphs = []
         zip_archive = zipfile.ZipFile(file, "r")
@@ -14,7 +15,7 @@ class OdtReader(BaseReader):
         for part in self.doc.getroot().itertext():
             self.text = self.text + '\n' + part
 
-    def split(self, n=None):
+    def split(self):
         if len(self.paragraphs) == 0:
             self.paragraphs = [e for e in get_sentence_tokenizer().tokenize(self.text)]
         return self.paragraphs

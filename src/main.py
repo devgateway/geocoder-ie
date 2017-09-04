@@ -1,13 +1,13 @@
 import argparse
 import sys
 
-from dg.geocoder.iati.iati_codes import iati_publishers, iati_countries
-from dg.geocoder.processor import process
+from dg.geocoder.iati.iati_codes import iati_countries
+from dg.geocoder.processor import process_file
 
 
 def main(args):
     try:
-        parser = argparse.ArgumentParser(description="Utility to auto-geocode IATI projects")
+        parser = argparse.ArgumentParser(description="Auto-geocode activity projects")
 
         parser.add_argument("-c", "--command", type=str, default='geocode', choices=['geocode', 'download', 'generate',
                                                                                      'train'],
@@ -16,13 +16,14 @@ def main(args):
                             help='use geocode to auto-geocode projects in file provided, or download to get raw '
                                  'data from IATI registry')
 
-        parser.add_argument("-f", "--file", type=str, default=None, nargs='+', help='IATI XML activities')
+        parser.add_argument("-f", "--file", type=str, default=None, nargs='+',
+                            help='Can be a IATI activities file, a pdf document, an odt document or a txt')
 
         parser.add_argument("-p", "--publisher", type=str, default=None, required=False, dest='organisation',
-                            help='Reporting organisation of the data to be download')
+                            help='Publisher organisation of the data to be download')
 
         parser.add_argument("-t", "--countries", type=str, default=None, required=False, dest='countries',
-                            help='Countries codes')
+                            help='Comma separate countries codes')
 
         parser.add_argument("-l", "--limit", type=str, default=50, required=False, dest='limit',
                             help='Number of activities to download')
@@ -38,17 +39,17 @@ def main(args):
             if file is None:
                 print('Please provide an input file using -f')
             else:
-                cty_codes = args.countries if args.countries else None
-                out = process(file, cty_codes)
+                cty_codes = args.countries.split(',') if args.countries else None
+                out = process_file(file, cty_codes)
                 print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':
-            if args.organisation is None or args.organisation not in iati_publishers:
-                print('Please provide a valid reporting organisation code please look at '
+            if args.organisation is None:
+                print('Please provide a publisher code using -p parameter,  please look at '
                       'https://www.iatiregistry.org/publisher')
                 return
             if args.countries is None or args.countries != 'ALL':
-                print('Provide a recipient country code or set it to ALL, please '
+                print('Provide a recipient country code or set it to ALL by using -t parameter, '
                       'look at http://iatistandard.org/202/codelists/Country/')
                 return
             if args.countries == 'ALL':
@@ -71,12 +72,12 @@ def main(args):
         elif args.command == 'generate':
             print('Corpora database will be erased, Are you sure to continue?')
             if input('[y/n]').lower() == 'y':
-                from corpora_generator import generate
+                from dg.geocoder.data.corpora_generator import generate
                 generate()
                 print('done!')
 
     except (KeyboardInterrupt, SystemExit):
-        print('adios!')
+        print('Chau!')
 
 
 # report error and proceed
