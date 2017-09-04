@@ -10,7 +10,7 @@ def save_doc(file_name, file_type, country_iso):
     try:
         conn = open()
         sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES 
-        (NEXTVAL('DOC_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
+        (NEXTVAL('GLOBAL_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
         cur = conn.cursor()
         data = (file_name, file_type, country_iso)
         cur.execute(sql, data)
@@ -25,10 +25,18 @@ def save_doc(file_name, file_type, country_iso):
 
 def delete_doc_from_queue(doc_id):
     conn = open()
-    sql = """DELETE FROM DOC_QUEUE WHERE ID = %s"""
+    sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID=%s)"
+    sql_2 = "DELETE FROM GEOCODING WHERE DOCUMENT_ID=%s"
+    sql_3 = "DELETE FROM ACTIVITY WHERE DOCUMENT_ID=%s"
+    sql_4 = "DELETE FROM DOC_QUEUE WHERE ID = %s"
     cur = conn.cursor()
-    cur.execute(sql, (doc_id,))
+    cur.execute(sql_1, (doc_id,))
+    cur.execute(sql_2, (doc_id,))
+    cur.execute(sql_3, (doc_id,))
+    cur.execute(sql_4, (doc_id,))
     rowcount = cur.rowcount
+
+
     conn.commit()
     cur.close()
     close(conn)
@@ -67,7 +75,16 @@ def get_docs(page=1, limit=10, state=None, doc_type=None):
         data = data + (offset, limit)
         cur.execute(sql_select, data)
 
-        results = [c for c in cur]
+        results = [{'id': c[0],
+                    'file_name': c[1],
+                    'type': c[2],
+                    'state': c[3],
+                    'create_date': c[4],
+                    'processed_date': c[5],
+                    'country_iso': c[6],
+                    'message': c[7]
+
+                    } for c in cur]
         cur.close()
 
         return {'count': count, 'rows': results, 'limit': limit}

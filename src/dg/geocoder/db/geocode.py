@@ -77,7 +77,7 @@ def save_activity(identifier, title, description, country, doc_id):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO ACTIVITY (ID, IDENTIFIER, TITLE, DESCRIPTION, COUNTRY_ISO, DOC_ID) 
+        sql = """INSERT INTO ACTIVITY (ID, IDENTIFIER, TITLE, DESCRIPTION, COUNTRY_ISO, DOCUMENT_ID) 
               VALUES (NEXTVAL('GLOBAL_ID_SEQ'), %s, %s, %s, %s, %s) RETURNING id"""
         cur = conn.cursor()
         data = (identifier, title, description, country, doc_id,)
@@ -154,7 +154,7 @@ def get_activity_list(document_id=None):
         data = ()
 
         if document_id is not None:
-            sql_select = sql_select + """AND DOC_ID = %s """
+            sql_select = sql_select + """AND DOCUMENT_ID = %s """
             data = data + (document_id,)
 
         sql_select = sql_select + " ORDER BY ID"

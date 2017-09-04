@@ -22,6 +22,60 @@ const djsConfig = {
 }
 
 
+function DocsTable(props){
+  const {rows,actions,countryList,docFilter,pageCount,onUpdateDocsList}=props
+  return (
+    <div>
+      <div className="list-paginator">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={<a href="">...</a>}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          initialPage={0}
+          onPageChange={(page, count, limit) => {
+            onUpdateDocsList(page.selected + 1, docFilter);
+          }}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"} />
+      </div>
+
+      <table className="doc-list">
+      <tbody>
+        <tr>
+          <th>DATE</th>
+          <th>ID</th>
+          <th>FILE NAME</th>
+          <th>STATUS</th>
+          <th>MESSAGE</th>
+          <th>COUNTRY</th>
+          <th>ACTIONS</th>
+        </tr>
+        {(rows)?rows.map(l =>
+          <tr className={l.id} key={l.id}>
+            <td>{l.id}</td>
+            <td>{new Date(l.create_date).toLocaleString() }</td>
+            <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l.file_name}`}>{l.file_name}</a></td>
+            <td>{l.state}</td>
+            <td>{l.message}</td>
+            <td>{countryList.find(country => {return country.code === l.country_iso})? countryList.find(country => {return country.code === l.country_iso}).name : 'N/A'}</td>
+            <td>
+              {actions.indexOf('DELETE')>-1?l.state=='PROCESSING'?null:<a key='delete' className="list-action" onClick={e=>props.onDeleteDoc(l.id)}> Delete </a>:null}
+              {actions.indexOf('FORCE')>-1?l.state=='PROCESSING'?'':<a key='force' className="list-action" onClick={e=>props.onProcessDoc(l.id)}>Process </a>:null}
+              {actions.indexOf('DOWNLOAD')>-1?<a className="list-action" key='download' target='new' href={`${window.API_ROOT}/geocoding/download/${l.id}`}>Result</a>:null}
+              {actions.indexOf('DETAILS')>-1? <Link className="list-action" key='details' to={`/geocodeDetails?documentId=${l.id}&isXML=${l.type=='text/xml'}`}>Details</Link>:null}
+            </td>
+          </tr>)
+        : null}
+      </tbody>
+    </table>
+    </div>)
+}
+
+
+
 
 export default class DocsList extends Component {
 
@@ -40,7 +94,6 @@ export default class DocsList extends Component {
         dzComp.dropzone.removeFile(file);
       } else {
         filesToLoad = dzComp.dropzone.files.slice();
-        print('Set files to load');
         this.props.onFilesLoaded(filesToLoad)
 
       }
@@ -65,24 +118,9 @@ export default class DocsList extends Component {
     })
   }
 
-  handleCountryChange(event) {
-    this.props.onCountryChanged(event.target.value);
-  }
-
-  closeMessage(id) {
-    this.props.onCloseMessage(id);
-  }
-
-  deleteDoc(id) {
-    this.props.onDeleteDoc(id);
-  }
-
-  processDoc(id) {
-    this.props.onProcessDoc(id);
-  }
-
   render() {
-    const {countryList,filesToLoad, countryISO, pendingRows, pendingCount = 0, pendingLimit, processedRows, processedLimit, processedCount = 0, onUpdateDocsList, messages} = this.props;
+    const {countryList,filesToLoad, countryISO, pendingRows, pendingCount = 0,
+      pendingLimit, processedRows, processedLimit, processedCount = 0, onUpdateDocsList, messages,onProcessDoc,onDeleteDoc,onCloseMessage,onCountryChanged} = this.props;
     const pendingPageCount = pendingCount / pendingLimit;
     const processedPageCount = processedCount / processedLimit;
     const eventHandlers = {addedfile: this.handleFileAdded.bind(this), removedfile: this.handleFileRemoved.bind(this)}
@@ -99,124 +137,50 @@ export default class DocsList extends Component {
     }
     return (
       <div className="docs-manager">
-
-        <h1>Documents Manager</h1>
+        <h1>Autogeocoder</h1>
         <div className="doc-loader">
-          <DropzoneComponent ref="dzComp"
-            config={dropzoneConfig}
-            eventHandlers={eventHandlers}
-            djsConfig={djsConfig}
-          />
+          <DropzoneComponent ref="dzComp" config={dropzoneConfig} eventHandlers={eventHandlers} djsConfig={djsConfig}/>
 
           {showCountrySelector ?
-            <select value={countryISO} onChange={this.handleCountryChange.bind(this)}>
+            <select value={countryISO} onChange={e=> onCountryChanged(e.target.value)}>
               <option value='none'>Select a country</option>
               {countryList.map(country => {
                 return <option key={country.code} value={country.code}>{country.name}</option>
               })}
             </select>
           : null}
-
           <button className={sendDisabled? 'send-button-disabled' : 'send-button'} disabled={sendDisabled} onClick={this.uploadFile.bind(this)}>Send File</button>
         </div>
+
         <div className="documents-lists">
           <div className="pending-list">
-            <h3>List of Pending Docs</h3>
-            <h5>({pendingCount} Records)  </h5>
-            <div className="list-paginator">
-              <ReactPaginate
-                previousLabel={"previous"}
-                nextLabel={"next"}
-                breakLabel={<a href="">...</a>}
-                breakClassName={"break-me"}
-                pageCount={pendingPageCount}
-                initialPage={0}
-                onPageChange={(page, count, limit) => {
-                  onUpdateDocsList(page.selected + 1, 'PENDING');
-                }}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"} />
-            </div>
-            <table className="doc-list">
-              <tbody>
-                <tr>
-                  <th>ID</th>
-                  <th>FILE NAME</th>
-                  <th>STATUS</th>
-                  <th>COUNTRY</th>
-                  <th>LOAD DATE</th>
-                  <th>ACTIONS</th>
-                </tr>
-                {(pendingRows)?pendingRows.map(l =>
-                  <tr className={l[2]} key={l[0]}>
-                    <td>{l[0]}</td>
-                    <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l[0]}`}>{l[1]}</a></td>
-                    <td>{l[3]}</td>
-                    <td>{countryList.find(country => {return country.code === l[6]})? countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
-                    <td>{new Date(l[4]).toLocaleString() }</td>
-                    <td>
-                    {l[3]=='PROCESSING'?'':<a className="list-action" onClick={this.deleteDoc.bind(this, l[0])}> Delete Document </a>}
-                    {l[3]=='PROCESSING'?'':<a className="list-action" onClick={this.processDoc.bind(this, l[0])}> Force Process </a>}
-
-
-                    </td>
-                  </tr>)
-                : null}
-              </tbody>
-            </table>
-          </div>
-          <div className="processed-list">
-            <h3>List of Processed Docs</h3>
-            <h5>({processedCount} Records)  </h5>
-
-            <div className="list-paginator">
-              <ReactPaginate
-                previousLabel={"previous"}
-                nextLabel={"next"}
-                breakLabel={<a href="">...</a>}
-                breakClassName={"break-me"}
-                pageCount={processedPageCount}
-                initialPage={0}
-                onPageChange={(page, count, limit) => {
-                  onUpdateDocsList(page.selected + 1, 'PROCESSED');
-                }}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"} />
-            </div>
-            <table className="doc-list">
-              <tbody>
-                <tr>
-                  <th>ID</th>
-                  <th>FILE NAME</th>
-                  <th>STATUS</th>
-                  <th>COUNTRY</th>
-                  <th>PROCESSED DATE</th>
-                  <th>ACTIONS</th>
-                </tr>
-                {(processedRows)?processedRows.map(l =>
-                  <tr className={l[2]} key={l[0]}>
-                    <td>{l[0]}</td>
-                    <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l[0]}`}>{l[1]}</a></td>
-                    <td>{l[3]}</td>
-                    <td>{countryList.find(country => {return country.code === l[6]})? countryList.find(country => {return country.code === l[6]}).name : 'N/A'}</td>
-                    <td>{new Date(l[5]).toLocaleString() }</td>
-                    <td>
-                      <a className="list-action" target='new' href={`${window.API_ROOT}/geocoding/download/${l[0]}`}>Download result</a>
-                      <Link className="list-action" to={`/geocodeDetails?documentId=${l[0]}&isXML=${l[2]=='text/xml'}`}>Geocode Details</Link>
-                    </td>
-                  </tr>)
-                : null}
-              </tbody>
-            </table>
-          </div>
+          <h3>List of Pending Docs</h3>
+          <h5>({pendingCount} Records)</h5>
+            <DocsTable key='pending-docs' rows={pendingRows}
+            onDeleteDoc={onDeleteDoc}
+            onProcessDoc={onProcessDoc}
+            actions={['DELETE','FORCE']}
+            countryList={countryList}
+            docFilter='PENDING' pageCount={pendingPageCount}
+            onUpdateDocsList={onUpdateDocsList}/>
+        </div>
+        <div className="processed-list">
+          <h3>List of Processed Docs</h3>
+          <h5>({processedCount} Records)  </h5>
+          <DocsTable key='processed-docs' rows={processedRows}
+          onDeleteDoc={onDeleteDoc}
+          onProcessDoc={onProcessDoc}
+          actions={['DELETE','DETAILS','DOWNLOAD']} countryList={countryList}
+          docFilter='PROCESSED'
+          pageCount={processedPageCount}
+          onUpdateDocsList={onUpdateDocsList}/>
+        </div>
         </div>
         <div className='messages-container'>
           {messages.map(message => {
             return(<div className={`message-${message.msgType}`}>
                 <div className="message-text">{message.text}</div>
-                <div className="message-close" onClick={this.closeMessage.bind(this, message.id)}>X</div>
+                <div className="message-close" onClick={e=>onCloseMessage(message.id)}>X</div>
               </div>)
             })
           }

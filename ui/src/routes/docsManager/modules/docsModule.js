@@ -48,7 +48,7 @@ export function uploadDoc(data) {
         dispatch(updateDocsList(1, 'PENDING'));
         dispatch(addMessage(`File ${data.file.name} uploaded successfully`, 'success'));
       }).catch((failure) => {
-      dispatch(addMessage(`Error on load file ${data.file.name}`));
+      dispatch(addMessage(`Error on load file`));
     });
   }
 
@@ -61,7 +61,7 @@ export function deleteDoc(id) {
         dispatch(addMessage(`File ${data.file.name} deleted successfully`, 'success'));
       })
       .catch((error) => {
-        dispatch(addMessage(`Error deleting file ${data.file.name}`));
+        dispatch(addMessage(`Error deleting file`));
       })
   }
 }
@@ -72,10 +72,10 @@ export function processDoc(id) {
     forceProcessDoc(id).then((response) => {
         dispatch(updateDocsList(1, 'PENDING'));
         dispatch(updateDocsList(1, 'PROCESSED'));
-        dispatch(addMessage(`File ${data.file.name} processed successfully`, 'success'));
+        dispatch(addMessage(`File ${data.file.name} will be processed`, 'success'));
       })
       .catch((error) => {
-        dispatch(addMessage(`Error processing file ${data.file.name}`));
+        dispatch(addMessage(`Error processing file`));
       })
   }
 }

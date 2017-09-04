@@ -107,12 +107,22 @@ def docs_list():
                     mimetype='application/json')
 
 
-@app.route('/docqueue/<corpora_id>', methods=['DELETE'])
-def docqueue_delete(corpora_id):
-    if delete_doc_from_queue(corpora_id):
-        return jsonify({"success": True}), 200
+@app.route('/docqueue/download/<file>', methods=['GET'])
+def file_download(file):
+    return send_from_directory(get_doc_queue_path(), file, as_attachment=True)
+
+
+@app.route('/docqueue/<document_id>', methods=['DELETE'])
+def docqueue_delete(document_id):
+    threads = [t for t in threading.enumerate() if t.name == document_id]
+    if len(threads) > 0:
+        logger.warning('Warning thread still alive')
+        return jsonify({"success": False}), 200
     else:
-        return jsonify({"success": False}), 500
+        if delete_doc_from_queue(document_id):
+            return jsonify({"success": True}), 200
+        else:
+            return jsonify({"success": False}), 500
 
 
 @app.route('/docqueue/upload', methods=['GET', 'POST'])
@@ -128,10 +138,10 @@ def upload_doc():
     return jsonify({"success": True}), 200
 
 
-@app.route('/docqueue/process/<corpora_id>', methods=['GET'])
-def process_document(corpora_id):
+@app.route('/docqueue/process/<document_id>', methods=['GET'])
+def process_document(document_id):
     logger.info('starting process thread')
-    a_thread = threading.Thread(target=process_by_id, args=(corpora_id,))
+    a_thread = threading.Thread(name=document_id, target=process_by_id, args=(document_id,))
     a_thread.start()
     return jsonify({"success": True}), 200
 
@@ -150,12 +160,12 @@ def geocoding_list():
                                default=datetime_handler), mimetype='application/json')
 
 
-@app.route('/geocoding/download/<corpora_id>', methods=['GET'])
-def geocoding_download(corpora_id):
-    document = get_document_by_id(corpora_id)
+@app.route('/geocoding/download/<document_id>', methods=['GET'])
+def geocoding_download(document_id):
+    document = get_document_by_id(document_id)
     doc_name = document[1]
     doc_type = document[2]
-    output_ext = '_out.tsv'
+    output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
     if doc_type == 'text/xml':
         output_ext = '_out.xml'
     return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)

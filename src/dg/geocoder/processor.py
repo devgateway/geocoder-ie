@@ -23,7 +23,7 @@ logger = logging.getLogger()
 # DB processors
 def step_log(doc_id):
     def log(step):
-        update_doc_status(doc_id, ST_PROCESSED, message=step)
+        update_doc_status(doc_id, ST_PROCESSING, message=step)
 
     return log
 
@@ -31,13 +31,13 @@ def step_log(doc_id):
 def process_by_id(doc_id):
     logger.info('Getting doc record')
     doc = get_document_by_id(doc_id)
-    process_doc(doc)
+    process_doc(doc, out_path=get_doc_queue_path())
 
 
 def process_queue():
     pending_docs = get_docs(1, 10, ST_PENDING).get('rows')
     for doc in pending_docs:
-        process_doc(doc)
+        process_doc(doc, out_path=get_doc_queue_path())
 
 
 # Process any input file
@@ -55,12 +55,13 @@ def process_file(file, cty_codes=None):
 
 
 # Process a database document record
-def process_doc(doc):
-    logger.info('processing doc {}'.format(doc[0]))
-    doc_id = doc[0]
-    doc_name = doc[1]
-    doc_type = doc[2]
-    doc_country_code = doc[6]
+def process_doc(doc, out_path=''):
+    logger.info('processing doc {}'.format(doc.get('id')))
+    doc_id = doc.get('id')
+    doc_name = doc.get('file_name')
+    doc_type = doc.get('type')
+    doc_country_code = doc.get('country_iso')
+
     update_doc_status(doc_id, ST_PROCESSING)
 
     try:
@@ -68,14 +69,14 @@ def process_doc(doc):
             process_xml(os.path.join(get_doc_queue_path(), doc_name),
                         out_file="{}_out.xml".format(doc_name.split('.')[0]),
                         persist=True,
-                        doc_id=doc_id, step_log=step_log(doc_id))
+                        doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path)
 
         else:
             process_document(os.path.join(get_doc_queue_path(), doc_name),
-                             out_file="{}_out.tsv".format(doc_name.split('.')[0]),
+                             out_file="{}_out.{}.tsv".format(doc_name.split('.')[0],doc_name.split('.')[1]),
                              cty_codes=[doc_country_code],
                              persist=True,
-                             doc_id=doc_id, step_log=step_log(doc_id))
+                             doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path)
 
         update_doc_status(doc_id, ST_PROCESSED)
     except Exception as error:
@@ -84,7 +85,8 @@ def process_doc(doc):
 
 
 # Process document file
-def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, step_log=None):
+def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, step_log=None,
+                     out_path=''):
     if cty_codes is None:
         cty_codes = []
     results = geocode([], [document], cty_codes=cty_codes, step_log=step_log)
@@ -95,11 +97,11 @@ def process_document(document, out_file='out.tsv', cty_codes=None, persist=False
         persist_geocoding(geocoding, doc_id, None)
 
     # save results to disk
-    return save_to_tsv(out_file, geocoding)
+    return save_to_tsv(out_file, geocoding, out_path=out_path)
 
 
 # Process a IATI activities xml
-def process_xml(file, out_file='out.xml', persist=False, doc_id=None, step_log=None):
+def process_xml(file, out_file='out.xml', persist=False, doc_id=None, step_log=None, out_path=''):
     if not is_valid_schema(file, version='202'):
         logger.error('Invalid xml file supplied please check IATI standard')
         raise Exception("Invalid xml file")
@@ -123,16 +125,16 @@ def process_xml(file, out_file='out.xml', persist=False, doc_id=None, step_log=N
                 persist_activity(results, activity, doc_id)
 
             # save xml file
-            save_to_xml(out_file, reader)
+            save_to_xml(out_file, reader, out_path=out_path)
 
         logger.info('File {} saved '.format(out_file))
         return out_file
 
 
 # Save results to TSV
-def save_to_tsv(out_file, geocoding):
+def save_to_tsv(out_file, geocoding, out_path=''):
     try:
-        with open(os.path.realpath(os.path.join(out_file)), 'w+', newline='') as csvfile:
+        with open(os.path.realpath(os.path.join(out_path, out_file)), 'w+', newline='') as csvfile:
             fieldnames = ['geonameId', 'name', 'toponymName', 'fcl', 'fcode', 'fcodeName', 'fclName', 'lat', 'lng',
                           'adminCode1', 'adminName1', 'adminCode2', 'adminName2', 'adminCode3', 'adminName3',
                           'adminCode4',
@@ -149,8 +151,8 @@ def save_to_tsv(out_file, geocoding):
         raise
 
 
-def save_to_xml(out_file, activity_reader):
-    activity_reader.save(os.path.realpath(out_file))
+def save_to_xml(out_file, activity_reader, out_path=''):
+    activity_reader.save(os.path.realpath(os.path.join(out_path, out_file)))
 
 
 def persist_activity(results, activity, doc_id):
@@ -169,3 +171,7 @@ def persist_geocoding(geocoding_list, doc_id, activity_id):
         for text in geocoding[1]:
             save_extract_text(text.get('text'), geo_id, ', '.join(text.get('entities')))
     return None
+
+
+if __name__ == '__main__':
+    process_queue()
