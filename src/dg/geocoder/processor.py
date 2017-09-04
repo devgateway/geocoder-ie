@@ -110,12 +110,12 @@ def process_document(document, out_file='out.tsv', cty_codes=None, persist=False
     results = geocode([], [document], cty_codes=cty_codes, tracer=tracer)
     geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
 
-    # save results to disk
-    _save_to_tsv(out_file, geocoding)
-
     # save results to db
     if persist:
         _persist_geocoding(geocoding, doc_id, None)
+
+    # save results to disk
+    return _save_to_tsv(out_file, geocoding)
 
 
 def _save_to_tsv(out_file, geocoding):
