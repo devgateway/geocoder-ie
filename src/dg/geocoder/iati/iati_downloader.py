@@ -27,7 +27,6 @@ def download(dest_path, url):
                 file_name = '{}.html'.format(uuid.uuid1())
             else:
                 md = 'wb'
-
                 with open(path, md) as local_file:
                     local_file.write(f.read())
 
@@ -99,7 +98,5 @@ def bulk_data_download(org, countries=None, download_path=get_download_path(), o
 
 
 if __name__ == '__main__':
-
     bulk_data_download('46002', iati_countries, activities_limit=10)
-
     bulk_data_download('XI-IATI-IADB', iati_countries, activities_limit=10)

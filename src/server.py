@@ -36,14 +36,7 @@ def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        f = request.files['the_file']
-        f.save('/var/www/uploads/uploaded_file.txt')
-
-
-@app.route('/download/<id>', methods=['GET'])
+@app.route('/download/<doc_id>', methods=['GET'])
 def doc_download(doc_id):
     sentence = get_sentence_by_id(doc_id)
     path = sentence[3]
@@ -80,7 +73,7 @@ def corpora_docs_list():
     return Response(json.dumps(get_doc_list()), mimetype='application/json')
 
 
-@app.route('/corpora/<id>', methods=['DELETE'])
+@app.route('/corpora/<corpora_id>', methods=['DELETE'])
 def corpora_delete(corpora_id):
     if delete_sentence(corpora_id):
         return jsonify({"success": True}), 200
@@ -88,7 +81,7 @@ def corpora_delete(corpora_id):
         return jsonify({"success": False}), 500
 
 
-@app.route('/corpora/<id>', methods=['POST'])
+@app.route('/corpora/<corpora_id>', methods=['POST'])
 def corpora_set_category(corpora_id):
     if set_category(corpora_id, request.json['category']):
         return jsonify({"success": True}), 200
@@ -114,7 +107,7 @@ def docs_list():
                     mimetype='application/json')
 
 
-@app.route('/docqueue/<id>', methods=['DELETE'])
+@app.route('/docqueue/<corpora_id>', methods=['DELETE'])
 def docqueue_delete(corpora_id):
     if delete_doc_from_queue(corpora_id):
         return jsonify({"success": True}), 200
@@ -135,7 +128,7 @@ def upload_doc():
     return jsonify({"success": True}), 200
 
 
-@app.route('/docqueue/process/<id>', methods=['GET'])
+@app.route('/docqueue/process/<corpora_id>', methods=['GET'])
 def process_document(corpora_id):
     logger.info('starting process thread')
     a_thread = threading.Thread(target=process_by_id, args=(corpora_id,))
@@ -157,7 +150,7 @@ def geocoding_list():
                                default=datetime_handler), mimetype='application/json')
 
 
-@app.route('/geocoding/download/<id>', methods=['GET'])
+@app.route('/geocoding/download/<corpora_id>', methods=['GET'])
 def geocoding_download(corpora_id):
     document = get_document_by_id(corpora_id)
     doc_name = document[1]

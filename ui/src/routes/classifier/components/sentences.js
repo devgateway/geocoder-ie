@@ -25,7 +25,7 @@ export default class Sentences extends Component {
     return (
       <div className='corpora'>
         <h1>Training Data  </h1>
-        
+
 
         <div className="search-form">
             <div className="filter-header"><h2>Filters</h2></div>
@@ -36,14 +36,18 @@ export default class Sentences extends Component {
               </select>
             </div>
             <div className="search-row">
-              <input type="text" className="input-search" onChange={e => onSearchChange(e.target.value)} value={term}/> 
+              <input type="text" className="input-search" onChange={e => onSearchChange(e.target.value)} value={term}/>
               <input type='button' className='btn-search' value='Search'  onClick={onSearch}/>
             </div>
             <div className="search-row">
               <input className="checkbox" type="checkbox" value={category==='geography'? 'on' : 'off'} onChange={e=>onChangeCategory(e.target.value === 'off'? 'geography' : null)}/>
-              <label>Show Only Geography</label>
+              <label>Show  Geography</label>
             </div>
-            
+            <div className="search-row">
+              <input className="checkbox" type="checkbox" value={category==='none'? 'on' : 'off'} onChange={e=>onChangeCategory(e.target.value === 'off'? 'none' : null)}/>
+              <label>Show Non Geography</label>
+            </div>
+
         </div>
 
         <h5>({count} Records)</h5>
@@ -74,7 +78,7 @@ export default class Sentences extends Component {
 
                 <td className="actions-column">
                   <a className="list-action" onClick={e=>onUpdate(l[0],'geography')}>Set Geography </a>
-                  <a className="list-action" onClick={e=>onUpdate(l[0],'None')}>Set None</a>
+                  <a className="list-action" onClick={e=>onUpdate(l[0],'none')}>Set None</a>
                   <a className="list-action" onClick={e=>onUpdate(l[0],'')}>Unset</a>
                   <a className="list-action" onClick={e=>onDelete(l[0])}>Delete</a>
                 </td>

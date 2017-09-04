@@ -16,3 +16,4 @@ pycorenlp
 flask
 lxlm
 flask_cors
+sner

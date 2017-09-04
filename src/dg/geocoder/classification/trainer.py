@@ -71,10 +71,10 @@ class Trainer:
         return self.cls
 
     def print_stats(self):
-        logger.info('Total classified:', len(self.data))
-        logger.info('Score:', self.score)
-        logger.info('Precision:', self.precision)
-        logger.info('Recall:', self.recall)
+        logger.info('Total classified: {}'.format(len(self.data)))
+        logger.info('Score: {}'.format(self.score))
+        logger.info('Precision: {}'.format(self.precision))
+        logger.info('Recall: {}'.format(self.recall))
         logger.info('Confusion matrix:')
         logger.info(self.confusion)
 
@@ -84,7 +84,7 @@ class Trainer:
 
 def train_classifier(loader=DbDataLoader(), plot_results=False):
     cls_trainer = Trainer(loader.build_data_frame())
-    cls_trainer.kfold_train()
+    cls_trainer.split_train()
     cls_trainer.print_stats()
     if plot_results:
         cls_trainer.plot_stats()
@@ -92,5 +92,5 @@ def train_classifier(loader=DbDataLoader(), plot_results=False):
 
 
 if __name__ == '__main__':
-    cls = train_classifier()
-    cls.save('default')
+    cls = train_classifier(plot_results=True)
+    cls.save('new')

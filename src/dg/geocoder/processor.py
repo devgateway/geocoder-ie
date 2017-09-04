@@ -2,7 +2,7 @@ import csv
 import logging.config
 import os
 
-from dg.geocoder.config import get_download_path, get_doc_queue_path
+from dg.geocoder.config import get_download_path, get_doc_queue_path, get_log_config_path
 from dg.geocoder.db.doc_queue import get_docs, update_doc_status, get_document_by_id
 from dg.geocoder.db.geocode import save_geocoding, save_extract_text, save_activity
 from dg.geocoder.geo.geocoder import geocode
@@ -16,7 +16,7 @@ ST_PROCESSED = "PROCESSED"
 ST_PENDING = "PENDING"
 ST_ERROR = "ERROR"
 
-logging.config.fileConfig('logging.ini')
+logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
 
 
@@ -43,9 +43,9 @@ def process_file(file, cty_codes=None):
         return None
     else:
         if is_xml(file):
-            return _process_xml(file)
+            return process_xml(file)
         else:
-            return _process_document(file, cty_codes=cty_codes)
+            return process_document(file, cty_codes=cty_codes)
 
 
 def _process_doc(doc):
@@ -58,24 +58,25 @@ def _process_doc(doc):
 
     try:
         if doc_type == 'text/xml':
-            _process_xml(os.path.join(get_doc_queue_path(), doc_name), "{}_out.xml".format(doc_name.split('.')[0]),
-                         True,
-                         get_doc_queue_path(), doc_id)
+            process_xml(os.path.join(get_doc_queue_path(), doc_name),
+                        out_file="{}_out.xml".format(doc_name.split('.')[0]),
+                        persist=True,
+                        doc_id=doc_id)
 
         else:
-            _process_document(os.path.join(get_doc_queue_path(), doc_name),
-                              "{}_out.tsv".format(doc_name.split('.')[0]),
-                              [doc_country_code], True,
-                              get_doc_queue_path(),
-                              doc_id)
+            process_document(os.path.join(get_doc_queue_path(), doc_name),
+                             out_file="{}_out.tsv".format(doc_name.split('.')[0]),
+                             cty_codes=[doc_country_code],
+                             persist=True,
+                             doc_id=doc_id)
 
         update_doc_status(doc_id, ST_PROCESSED)
-    except RuntimeError as error:
-        logger.info("Oops!  something didn't go well")
-        update_doc_status(doc_id, ST_ERROR, message=error)
+    except Exception as error:
+        logger.info("Oops!  something didn't go well", error)
+        update_doc_status(doc_id, ST_ERROR, message=error.__str__())
 
 
-def _process_xml(file, out_file='out.xml', persist=False, path_to_docs='', doc_id=None):
+def process_xml(file, out_file='out.xml', persist=False, doc_id=None):
     if not is_valid_schema(file, version='202'):
         logger.error('Invalid xml file supplied please check IATI standard')
         raise Exception("Invalid xml file")
@@ -93,17 +94,17 @@ def _process_xml(file, out_file='out.xml', persist=False, path_to_docs='', doc_i
             # TODO CHECK if country code can be an array
             # full results
             results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()])
-            [activity.add_location(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+            [activity.add_location(data['geocoding']) for (l, data) in results if data.get('geocoding')]
 
             if persist:
                 _persist_activity(results, activity, doc_id)
 
-        reader.save(os.path.realpath(os.path.join(path_to_docs, out_file)))
+        reader.save(os.path.realpath(out_file))
         logger.info('File {} saved '.format(out_file))
         return out_file
 
 
-def _process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, tracer=None):
+def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, tracer=None):
     if cty_codes is None:
         cty_codes = []
     results = geocode([], [document], cty_codes=cty_codes, tracer=tracer)

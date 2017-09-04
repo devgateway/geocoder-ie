@@ -4,10 +4,11 @@ from os.path import isfile
 
 import numpy as np
 import pycorenlp.corenlp
+from sner.client import Ner
 
 from dg.geocoder.classification.classifier import load_classifier
 from dg.geocoder.config import get_ner_host, get_ner_port, get_ignore_entities, get_ignore_gap_chars, \
-    get_default_classifier
+    get_default_classifier, get_standford_server_type
 from dg.geocoder.geo.geonames import resolve
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
@@ -84,13 +85,31 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
     extraction = []
 
     for s in sentences:
-        output = nlp.annotate(s, properties={"annotators": "openie,ner", "outputFormat": "json"})
-        relations = [output["sentences"][0]["openie"] for item in output]
+        output = nlp.annotate(s, properties={"annotators": "ner", "outputFormat": "json"})
         locations_found = [(t['originalText']) for t in output["sentences"][0]["tokens"] for item in output if
                            t['ner'] in ['LOCATION', 'PERSON'] and t[
                                'originalText'].lower() not in ignore_entities]
         if len(locations_found) > 0:
-            extraction.append(({'text': s, 'entities': locations_found, 'relations': relations}))
+            extraction.append(({'text': s, 'entities': locations_found}))
+
+    tac = time.clock()
+    logger.info('NER extraction took {time}ms'.format(time=tac - tic))
+    return extraction
+
+
+# Perform natural language processing to text, get annotated entities and entities relations
+def extract_ner(sentences, ignore_entities=get_ignore_entities()):
+    tagger = Ner(host=get_ner_host(), port=get_ner_port())
+    tic = time.clock()
+    extraction = []
+
+    for s in sentences:
+        output = tagger.get_entities(s.replace('\n', ' '))
+        locations_found = [text for text, tag in output if
+                           tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
+
+        if len(locations_found) > 0:
+            extraction.append(({'text': s, 'entities': locations_found}))
 
     tac = time.clock()
     logger.info('NER extraction took {time}ms'.format(time=tac - tic))
@@ -150,7 +169,13 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), trac
 
     if tracer:
         tracer.trace("Extracting entities")
-    entities = merge(extract(texts))
+
+    if get_standford_server_type() == 'CORE':
+        entities = merge(extract(texts))
+    elif get_standford_server_type() == 'NER':
+        entities = merge(extract_ner(texts))
+    else:
+        raise ValueError('Wrong standford server type')
 
     normalized = join(entities)
 

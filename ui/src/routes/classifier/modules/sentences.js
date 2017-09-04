@@ -134,8 +134,6 @@ function getParams(getState, page) {
 }
 export function updateSentence(id, category) {
   return (dispatch, getState) => {
-
-
     updateSentenceById(id, category).then((response) => {
         dispatch(loadSentences(getParams(getState)))
       })

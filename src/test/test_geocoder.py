@@ -1,9 +1,9 @@
 import unittest
 
 from dg.geocoder.db.geocode import save_activity
-from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames
-from dg.geocoder.processor import persist_geocoding
-from dg.geocoder.processor import process_xml, process_queue
+from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
+from dg.geocoder.processor import process_xml, process_queue, _persist_geocoding
+from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 
 class TestGeocoder(unittest.TestCase):
@@ -68,7 +68,7 @@ class TestGeocoder(unittest.TestCase):
     def test_geocode_text_3(self):
         geo = geocode([], ['resources/sample_text_3.txt'], [])
         locs = [l for (l, data) in geo if data.get('geocoding')]
-        self.assertTrue(locs is not  None)
+        self.assertTrue(locs is not None)
 
     def test_afdb_activities_XML(self):
         process_xml('resources/afdb_2_activities.xml')
@@ -86,7 +86,7 @@ class TestGeocoder(unittest.TestCase):
         results = geocode([], ['resources/dfid_4182791.odt'], cty_codes=[])
 
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        persist_geocoding(geocoding, None, None)
+        _persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
 
@@ -94,9 +94,20 @@ class TestGeocoder(unittest.TestCase):
         results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
 
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        persist_geocoding(geocoding, None, None)
+        _persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
+
+    def test_ner(self):
+        text = """The project aims to improve the road connections om the North-West Fouta Djallon area.
+                In order to further support this political will towards poverty reduction, the
+                African Development Bank (ADB) granted the Guinean Government’s request for the
+                financing of the preparation of the feasibility study on a rural development support project in
+                the North-West Fouta Djallon area, in particular Gaoual and Koundara prefectures in the
+                
+                Middle Guinea region."""
+
+        extract_ner([text])
 
 
 if __name__ == '__main__':
