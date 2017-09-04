@@ -72,7 +72,7 @@ def main(args):
         elif args.command == 'generate':
             print('Corpora database will be erased, Are you sure to continue?')
             if input('[y/n]').lower() == 'y':
-                from corpora_generator import generate
+                from dg.geocoder.data.corpora_generator import generate
                 generate()
                 print('done!')
 
