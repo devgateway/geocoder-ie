@@ -24,11 +24,9 @@ const SET_COUNTRY = 'SET_COUNTRY';
 // ------------------------------------
 
 export function updateDocsList(page, state) {
+
   return (dispatch, getState) => {
-    getDocsList({
-        page,
-        state
-      }).then((response) => {
+    getDocsList({page,state}).then((response) => {
         dispatch({
           type: DOCS_LIST_LOADED,
           state,
@@ -46,7 +44,7 @@ export function uploadDoc(data) {
     uploadDocToAPI(data).then(
       (results) => {
         dispatch(updateDocsList(1, 'PENDING'));
-        dispatch(addMessage(`File ${data.file.name} uploaded successfully`, 'success'));
+        dispatch(addMessage(`File uploaded successfully`, 'success'));
       }).catch((failure) => {
       dispatch(addMessage(`Error on load file`));
     });
@@ -55,10 +53,13 @@ export function uploadDoc(data) {
 }
 
 export function deleteDoc(id) {
+
   return (dispatch, getState) => {
     deleteDocById(id).then((response) => {
         dispatch(updateDocsList(1, 'PENDING'));
-        dispatch(addMessage(`File ${data.file.name} deleted successfully`, 'success'));
+        dispatch(updateDocsList(1, 'PROCESSED'));
+
+        dispatch(addMessage(`File deleted successfully`, 'success'));
       })
       .catch((error) => {
         dispatch(addMessage(`Error deleting file`));
@@ -68,11 +69,8 @@ export function deleteDoc(id) {
 
 export function processDoc(id) {
   return (dispatch, getState) => {
-    dispatch(updateDocsList(1, 'PENDING'));
     forceProcessDoc(id).then((response) => {
-        dispatch(updateDocsList(1, 'PENDING'));
-        dispatch(updateDocsList(1, 'PROCESSED'));
-        dispatch(addMessage(`File ${data.file.name} will be processed`, 'success'));
+        dispatch(addMessage(`File  will be processed`, 'success'));
       })
       .catch((error) => {
         dispatch(addMessage(`Error processing file`));
@@ -145,12 +143,12 @@ const ACTION_HANDLERS = {
     }));
   },
   [SET_FILES]: (state, action) => {
-    debugger;
+
     const {files} = action
     return state.setIn(['files'], files)
   },
   [SET_COUNTRY]: (state, action) => {
-    debugger
+
     const {iso} = action
     return state.setIn(['countryISO'], iso)
   }
@@ -167,7 +165,7 @@ const initialState = Immutable.Map({
   'countryList':getCountries()
 })
 
-debugger;
+
 
 export default function counterReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]

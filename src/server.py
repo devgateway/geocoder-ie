@@ -14,7 +14,8 @@ from flask_cors import CORS
 
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
-from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue
+from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue, \
+    delete_all_docs_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from dg.geocoder.processor import process_by_id, ST_PROCESSED, ST_ERROR, ST_PROCESSING, ST_PENDING
 
@@ -169,8 +170,8 @@ def geocoding_list():
 @app.route('/geocoding/download/<document_id>', methods=['GET'])
 def geocoding_download(document_id):
     document = get_document_by_id(document_id)
-    doc_name = document[1]
-    doc_type = document[2]
+    doc_name = document.get('file_name')
+    doc_type = document.get('type')
     output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
     if doc_type == 'text/xml':
         output_ext = '_out.xml'
@@ -196,6 +197,12 @@ def extracted_list():
 
     return Response(json.dumps(get_extracted_list(geocoding_id=geocoding_id),
                                default=datetime_handler), mimetype='application/json')
+
+
+@app.route('/docqueue/purge', methods=['GET'])
+def purge():
+    delete_all_docs_from_queue()
+    return jsonify({"insane": True}), 200
 
 
 if __name__ == '__main__':

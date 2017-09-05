@@ -118,6 +118,19 @@ export default class DocsList extends Component {
     })
   }
 
+  componentDidMount() {
+
+    const {onUpdateDocsList}=this.props
+    this.timer = setInterval(()=>{
+        console.log('Updating')
+        onUpdateDocsList(1,'PENDING')
+        onUpdateDocsList(1,'PROCESSED')
+    }, 10000);
+  }
+componentWillUnmount() {
+  clearInterval(this.timer);
+  }
+
   render() {
     const {countryList,filesToLoad, countryISO, pendingRows, pendingCount = 0,
       pendingLimit, processedRows, processedLimit, processedCount = 0, onUpdateDocsList, messages,onProcessDoc,onDeleteDoc,onCloseMessage,onCountryChanged} = this.props;
@@ -159,7 +172,7 @@ export default class DocsList extends Component {
             <DocsTable key='pending-docs' rows={pendingRows}
             onDeleteDoc={onDeleteDoc}
             onProcessDoc={onProcessDoc}
-            actions={['DELETE','FORCE']}
+            actions={['DELETE']}
             countryList={countryList}
             docFilter='PENDING' pageCount={pendingPageCount}
             onUpdateDocsList={onUpdateDocsList}/>

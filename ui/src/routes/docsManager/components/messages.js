@@ -6,7 +6,7 @@ export default class Messages extends Component {
 
   constructor() {
     super(); 
-    debugger;
+    
     
     this.state = {};
   }
@@ -17,7 +17,7 @@ export default class Messages extends Component {
 
   render() {
     const {messageList} = this.props;
-    debugger;
+    
     return (
       <div className='messages-container'>
         {messageList.map(message => {

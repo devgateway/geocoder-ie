@@ -23,6 +23,25 @@ def save_doc(file_name, file_type, country_iso):
         close(conn)
 
 
+def delete_all_docs_from_queue():
+    conn = open()
+    sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID in (SELECT ID FROM DOC_QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING')))"
+    sql_2 = "DELETE FROM GEOCODING WHERE DOCUMENT_ID IN (SELECT ID FROM DOC_QUEUE)"
+    sql_3 = "DELETE FROM ACTIVITY WHERE DOCUMENT_ID IN (SELECT ID FROM DOC_QUEUE)"
+    sql_4 = "DELETE FROM DOC_QUEUE"
+    cur = conn.cursor()
+    cur.execute(sql_1)
+    cur.execute(sql_2)
+    cur.execute(sql_3)
+    cur.execute(sql_4)
+    rowcount = cur.rowcount
+
+    conn.commit()
+    cur.close()
+    close(conn)
+    return rowcount > 0
+
+
 def delete_doc_from_queue(doc_id):
     conn = open()
     sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID=%s)"

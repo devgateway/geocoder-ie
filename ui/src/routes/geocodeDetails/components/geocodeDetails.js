@@ -13,7 +13,7 @@ export default class GeocodeDetails extends Component {
   componentWillMount() {
     const documentId = this.props.location.query.documentId;
     const isXML = this.props.location.query.isXML;
-    debugger;
+    
     if (isXML === 'true') {
       this.props.onLoadActivityList(documentId);  
     }
