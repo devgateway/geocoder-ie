@@ -16,7 +16,7 @@ from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
 from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
-from dg.geocoder.processor import process_by_id
+from dg.geocoder.processor import process_by_id, ST_PROCESSED, ST_ERROR, ST_PROCESSING, ST_PENDING
 
 logger = logging.getLogger()
 
@@ -102,10 +102,12 @@ def docs_list():
 
     if 'state' in request.args:
         state = request.args['state']
-        states=[state]
-        if state=='PENDING':
-            states.append('PROCESSING')
+        states = [state]
+        if state == ST_PENDING:
+            states.append(ST_PROCESSING)
 
+        if state == ST_PROCESSED:
+            states.append(ST_ERROR)
 
     return Response(json.dumps(get_docs(page=page, doc_type=doc_type, states=states), default=datetime_handler),
                     mimetype='application/json')

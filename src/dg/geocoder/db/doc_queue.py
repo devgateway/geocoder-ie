@@ -103,7 +103,16 @@ def get_document_by_id(doc_id):
         row = cur.fetchone()
         cur.close()
 
-        return row
+        return {'id': row[0],
+                    'file_name': row[1],
+                    'type': row[2],
+                    'state': row[3],
+                    'create_date': row[4],
+                    'processed_date': row[5],
+                    'country_iso': row[6],
+                    'message': row[7]
+
+                    }
 
     except Exception as error:
         logger.info(error)
