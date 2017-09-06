@@ -58,7 +58,7 @@ function DocsTable(props){
           <tr className={l.id} key={l.id}>
             <td>{l.id}</td>
             <td>{new Date(l.create_date).toLocaleString() }</td>
-             <td>{new Date(l.processed_date).toLocaleString() }</td>
+             <td>{l.processed_date?new Date(l.processed_date).toLocaleString():null}</td>
 
             <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l.file_name}`}>{l.file_name}</a></td>
             <td>{l.state}</td>
