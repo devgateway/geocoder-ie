@@ -45,8 +45,9 @@ function DocsTable(props){
       <table className="doc-list">
       <tbody>
         <tr>
-          <th>DATE</th>
           <th>ID</th>
+          <th>DATE</th>
+          <th>PROCESSED</th>
           <th>FILE NAME</th>
           <th>STATUS</th>
           <th>MESSAGE</th>
@@ -57,6 +58,8 @@ function DocsTable(props){
           <tr className={l.id} key={l.id}>
             <td>{l.id}</td>
             <td>{new Date(l.create_date).toLocaleString() }</td>
+             <td>{new Date(l.processed_date).toLocaleString() }</td>
+
             <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l.file_name}`}>{l.file_name}</a></td>
             <td>{l.state}</td>
             <td>{l.message}</td>

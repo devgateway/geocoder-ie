@@ -1,5 +1,6 @@
 import logging
 
+from dg.geocoder.constants import ST_PROCESSED
 from dg.geocoder.db.db import open, close
 
 logger = logging.getLogger()
@@ -123,15 +124,15 @@ def get_document_by_id(doc_id):
         cur.close()
 
         return {'id': row[0],
-                    'file_name': row[1],
-                    'type': row[2],
-                    'state': row[3],
-                    'create_date': row[4],
-                    'processed_date': row[5],
-                    'country_iso': row[6],
-                    'message': row[7]
+                'file_name': row[1],
+                'type': row[2],
+                'state': row[3],
+                'create_date': row[4],
+                'processed_date': row[5],
+                'country_iso': row[6],
+                'message': row[7]
 
-                    }
+                }
 
     except Exception as error:
         logger.info(error)
@@ -144,7 +145,12 @@ def update_doc_status(doc_id, status, message=''):
     conn = None
     try:
         conn = open()
-        sql = """UPDATE DOC_QUEUE SET STATE=%s ,MESSAGE=%s, PROCESSED_DATE=NOW() WHERE ID = %s"""
+        sql = "UPDATE DOC_QUEUE SET STATE=%s ,MESSAGE=%s "
+
+        if status == ST_PROCESSED:
+            sql = sql + ",PROCESSED_DATE=NOW() "
+
+        sql = sql + "WHERE ID = %s "
         cur = conn.cursor()
         data = (status, message, doc_id)
         cur.execute(sql, data)
