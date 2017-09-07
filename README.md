@@ -5,23 +5,22 @@
 - Anaconda or pyhton-devel for Linux with pip.
 
 ### Installation steps
-
 1. Install dependencies usin pip or anaconda
 ```
 (Linux pip) 
 pip install -r requirements
+
 (Anaconda)
 conda install --yes --file requirements.txt
 ```
 2. Download Stanford NER from https://nlp.stanford.edu/software/CRF-NER.shtml#Download
-3.  Start Standford NER Server
+3. Start Standford NER Server
 
 ```
 java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
 
 ```
 3. Run python setup.py to get NLKT data.
-
 4. Update Stanford setting in geocoder.ini
 	```
 		[standford]
@@ -30,38 +29,36 @@ java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier 
 ```
 ## Using the tool
  ```
-
 geocoder.sh -f example.pdf -tGN
-
 example.pdf will be geocoded
-
  ```
 
 ## Web interface
-
 The auto geocoder tool provides a simple user interface to upload , geocode documents, review and see the geocoding results and its related texts. 
 The web interface also gives support to classifier training module
 
 ### Setup
-1.	Install PostgresSQL
-2.	Create the geocoder database  database
-createdb -Upostgres autogeocoder
-3.	Run sql script
+1.Install PostgresSQL
+2.Create the geocoder database  database
  ```
- psql -Upostgres -dautogeocoder -f sql/geocoder.sql
+	createdb -Upostgres autogeocoder
+ ```
+3.Run sql script
+ ```
+ 	psql -Upostgres -dautogeocoder -f sql/geocoder.sql
  
  ```
-4.	Update geocoder.ini set web port and database configuration
+4.Update geocoder.ini set web port and database configuration
  ```
-[postgres]
-user_name=postgres
-password=postgres
-port=5432
-host=localhost
-db_name=geocoder
+	[postgres]
+	user_name=postgres
+	password=postgres
+	port=5432
+	host=localhost
+	db_name=geocoder
 
-[web]
-port=9095
+	[web]
+	port=9095
  ```
 5. Run python server.py and open http://localhost:9095
 
@@ -69,16 +66,15 @@ port=9095
 The text classifier attempts to reduce the number of false positives by eliminating those paragraph that shouldn’t be passed to the  named entity extraction phase, you can train your own classifier and make it learn about your documents.
 
 ## Classifier Training (Database configuration required please see web interface steps)
-
 1. Download iati data from IATI registry
 ```
-African Development Bank publisher code is 46002
-geocoder.sh –c download --publisher=46002 --countries=ALL
+	African Development Bank publisher code is 46002
+	geocoder.sh –c download --publisher=46002 --countries=ALL
 
 ```
 1. Generate corpora table
  ```
-geocoder.sh –c generate
+	geocoder.sh –c generate
 
 ```
 2. Go to web interface and open training data manager link
@@ -86,23 +82,23 @@ geocoder.sh –c generate
 4. Look for other sentences and flag it as None
 5. Train a new classifier
  ```
-geocoder.sh -c train -n my_classifier
+	geocoder.sh -c train -n my_classifier
  ```
 6. Eedit geocoder.ini and change default classifier name
   ```
- [ie]
-default_classifier= my_classifier
+	 [ie]
+	 default_classifier= my_classifier
  ```
 7. Geocode your documents
 
 ## Geocoding IATI activities
 If a iati xml file is provided as input, the system will geocoded each activity by following the next steps:
 
-2)	Extract activity description
-3)	Download all documents tagged with code 02 or 07
-4)	Extract all sentences from documents
-5)	Geocode all sentences
-6)	Generate a new XML file containing activities and locations information.
+2. Extract activity description
+3. Download all documents tagged with code 02 or 07
+4. Extract all sentences from documents
+5. Geocode all sentences
+6. Generate a new XML file containing activities and locations information.
 
 
 
