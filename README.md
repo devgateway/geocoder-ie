@@ -21,8 +21,8 @@ java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer
 -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
 
 ```
-3. Run python setup.py to get NLKT data.
-4. Update Stanford setting in geocoder.ini
+4. Run python setup.py to get NLKT data.
+5. Update Stanford setting in geocoder.ini
 ```
 [standford]
 host = localhost
@@ -30,6 +30,40 @@ port = 9094
 ```
 
 ## Using the tool
+##Command line help
+
+```
+geocoder.sh --help
+
+sage: main.py [-h] [-c {geocode,download,generate,train}]
+               [-f FILE [FILE ...]] [-p ORGANISATION] [-t COUNTRIES]
+               [-l LIMIT] [-n NAME]
+
+Auto-geocode activity projects
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c {geocode,download,generate,train}, --command {geocode,download,generate,train}
+                        Use geocode to auto-geocode file. Use download to get
+                        raw data from IATI registry. Use generate to generate
+                        a corpora. Use train to train a new classifier
+  -f FILE [FILE ...], --file FILE [FILE ...]
+                        Use together with -c geocode to pass a file to
+                        process, The file can be a IATI activities file, pdf
+                        document, odt document or txt file
+  -p ORGANISATION, --publisher ORGANISATION
+                        Use together with -c download to download data of
+                        specific IATI Publisher
+  -t COUNTRIES, --countries COUNTRIES
+                        Use together with -c geocode to filter geonames search
+                        Use together with -c download to download data of
+                        specific countries
+  -l LIMIT, --limit LIMIT
+                        Use together with -c download to limit the Number of
+                        activities to download for each publisher/country
+  -n NAME, --name NAME  set the new classifier name
+```
+
 ```
 geocoder.sh -f example.pdf -tGN
 example.pdf will be geocoded
