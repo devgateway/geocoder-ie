@@ -102,7 +102,10 @@ port=9095
 ## Training your own text classifier
 The text classifier attempts to reduce the number of false positives by eliminating those paragraph that shouldn’t be passed to the  named entity extraction phase, you can train your own classifier and make it learn about your documents.
 
-## Classifier Training (Database configuration required please see web interface steps)
+## Classifier Training 
+
+(Database configuration required please see web interface steps)
+
 1. Download iati data from IATI registry
 ```
 African Development Bank publisher code is 46002
