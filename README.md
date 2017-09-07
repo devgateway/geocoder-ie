@@ -162,8 +162,9 @@ geocoder.sh -f mydocument.pdf
 ```
 
 
-## Geocoding Documents
+## Geocoding PDF, ODT and TXT Documents
   TBD
+
 ## Geocoding IATI activities
 If a iati xml file is provided as input, the system will geocoded each activity by following the next steps:
 
