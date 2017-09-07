@@ -17,7 +17,8 @@ conda install --yes --file requirements.txt
 3. Start Standford NER Server
 
 ```
-java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
+	java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer 
+	-loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
 
 ```
 3. Run python setup.py to get NLKT data.
@@ -26,9 +27,10 @@ java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier 
 		[standford]
 		host = localhost
 		port = 9094
-```
+	```
+
 ## Using the tool
- ```
+```
 geocoder.sh -f example.pdf -tGN
 example.pdf will be geocoded
  ```
