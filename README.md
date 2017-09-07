@@ -157,6 +157,9 @@ geocoder.sh -c train -n my_classifier
 default_classifier= my_classifier
 ```
 8. Geocode your documents
+```
+geocoder.sh -f mydocument.pdf
+```
 
 
 ## Geocoding Documents
