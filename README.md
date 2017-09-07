@@ -75,17 +75,17 @@ The auto geocoder tool provides a simple user interface to upload , geocode docu
 The web interface also gives support to classifier training module
 
 ### Setup
-1.Install PostgresSQL
-2.Create the geocoder database  database
+1. Install PostgresSQL
+2. Create the geocoder database  database
 ```
 createdb -Upostgres autogeocoder
 ```
-3.Run sql script
+3. Run sql script
 ```
 psql -Upostgres -dautogeocoder -f sql/geocoder.sql
 
 ```
-4.Update geocoder.ini set web port and database configuration
+4. Update geocoder.ini set web port and database configuration
 ```
 [postgres]
 user_name=postgres
@@ -109,33 +109,36 @@ African Development Bank publisher code is 46002
 geocoder.sh –c download --publisher=46002 --countries=ALL
 
 ```
-1. Generate corpora table
+2. Generate corpora table
 ```
 geocoder.sh –c generate
 
 ```
-2. Go to web interface and open training data manager link
-3. Look for sentences that contains your geographical information and flag it as Geography
-4. Look for other sentences and flag it as None
-5. Train a new classifier
+3. Go to web interface and open training data manager link
+4. Look for sentences that contains your geographical information and flag it as Geography
+5. Look for other sentences and flag it as None
+6. Train a new classifier
 ```
 geocoder.sh -c train -n my_classifier
 ```
-6. Eedit geocoder.ini and change default classifier name
+7. Eedit geocoder.ini and change default classifier name
 ```
 [ie]
 default_classifier= my_classifier
 ```
-7. Geocode your documents
+8. Geocode your documents
 
+
+## Geocoding Documents
+  TBD
 ## Geocoding IATI activities
 If a iati xml file is provided as input, the system will geocoded each activity by following the next steps:
 
-2. Extract activity description
-3. Download all documents tagged with code 02 or 07
-4. Extract all sentences from documents
-5. Geocode all sentences
-6. Generate a new XML file containing activities and locations information.
+- Extract activity description
+- Download all documents tagged with code 02 or 07
+- Extract all sentences from documents
+- Geocode all sentences
+- Generate a new XML file containing activities and locations information.
 
 
 
