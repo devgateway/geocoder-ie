@@ -68,6 +68,33 @@ optional arguments:
 ```
 geocoder.sh -f example.pdf -tGN
 example.pdf will be geocoded
+(geocoder) C:\projects\clean_copy>geocoder.sh  -f example.pdf -tGN
+example.pdf will be geocoded
+2017-09-07 10:17:04,637 root         INFO     Detecting document language
+2017-09-07 10:17:05,152 root         INFO     Splitting document in sentences
+
+Reading pdf pages  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+
+2017-09-07 10:17:08,970 root         INFO     There are 380 sentences to process, split took 4.321118570914758ms
+2017-09-07 10:17:08,985 root         INFO     80 geographical sentences found
+2017-09-07 10:17:10,080 root         INFO     NER extraction took 1.0949942523466651ms
+2017-09-07 10:17:11,106 root         INFO     fouta djallon was geocode as RGN with coordinates 11.5,-12.5
+2017-09-07 10:17:11,666 root         INFO     gaoual was geocode as ADM2 with coordinates 11.75,-13.2
+2017-09-07 10:17:12,241 root         INFO     koundara was geocode as ADM2 with coordinates 12.41667,-13.16667
+2017-09-07 10:17:12,921 root         INFO     middle guinea was geocode as RGN with coordinates 11,-12.5
+2017-09-07 10:17:13,469 root         INFO     Wasn't able to geocode  niger
+2017-09-07 10:17:13,470 root         INFO     Let's try using others parameters
+2017-09-07 10:17:14,029 root         INFO     niger was geocode as PRK with coordinates 10.5,-10.2
+2017-09-07 10:17:14,572 root         INFO     guinea was geocode as PCLI with coordinates 10.83333,-10.66667
+2017-09-07 10:17:15,194 root         INFO     republic of guinea was geocode as PCLI with coordinates 10.83333,-10.66667
+2017-09-07 10:17:15,749 root         INFO     conakry was geocode as ADM1 with coordinates 9.60703,-13.597
+2017-09-07 10:17:16,447 root         INFO     koundara prefectures was geocode as ADM2 with coordinates 12.41667,-13.16667
+2017-09-07 10:17:16,447 root         INFO     ua Too short location name
+2017-09-07 10:17:17,034 root         INFO     Wasn't able to geocode  atlantic ocean
+2017-09-07 10:17:17,034 root         INFO     Let's try using others parameters
+2017-09-07 10:17:17,613 root         INFO     Wasn't able to geocode  atlantic ocean
+2017-09-07 10:17:18,174 root         INFO     upper guinea was geocode as RGN with coordinates 10.5,-9.5
+Results were saved in out.tsv
 ```
 
 ## Web interface
