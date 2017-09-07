@@ -2,7 +2,7 @@
 ## Installation steps
 ### Requirements
 - Python3.
-- Anaconda or pyhton-devel for Linux with pip.
+- Anaconda or pip (pyhton-devel is required).
 
 ### Installation steps
 1. Install dependencies usin pip or anaconda
