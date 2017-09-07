@@ -30,7 +30,8 @@ port = 9094
 ```
 
 ## Using the tool
-##Command line help
+
+### Command line help
 
 ```
 geocoder.sh --help
