@@ -1,33 +1,33 @@
 
 ## Installation steps
-	### Requirements
-		Python3.
-		Anaconda or pyhton-devel for Linux with pip.
+### Requirements
+- Python3.
+- Anaconda or pyhton-devel for Linux with pip.
 
-	### Installation steps
+### Installation steps
 
-	1. Install dependencies usin pip or anaconda
-	```
-	(Linux pip) 
-	pip install -r requirements
-	(Anaconda)
-	conda install --yes --file requirements.txt
-	```
-	2. Download Stanford NER from https://nlp.stanford.edu/software/CRF-NER.shtml#Download
-	3.  Start Standford NER Server
+1. Install dependencies usin pip or anaconda
+```
+(Linux pip) 
+pip install -r requirements
+(Anaconda)
+conda install --yes --file requirements.txt
+```
+2. Download Stanford NER from https://nlp.stanford.edu/software/CRF-NER.shtml#Download
+3.  Start Standford NER Server
 
-	```
-	java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
+```
+java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
 
-	```
-	3. Run python setup.py to get NLKT data.
+```
+3. Run python setup.py to get NLKT data.
 
-	4. Update Stanford setting in geocoder.ini
-		```
-			[standford]
-			host = localhost
-			port = 9094
+4. Update Stanford setting in geocoder.ini
 	```
+		[standford]
+		host = localhost
+		port = 9094
+```
 ## Using the tool
  ```
 
