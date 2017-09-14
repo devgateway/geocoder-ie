@@ -104,7 +104,7 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
     extraction = []
 
     for s in sentences:
-        output = tagger.get_entities(s.replace('\n', ' '))
+        output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
         locations_found = [text for text, tag in output if
                            tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
 

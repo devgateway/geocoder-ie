@@ -1,5 +1,4 @@
 apscheduler
-lxml
 requests
 langdetect==1.0.7
 matplotlib==2.0.2
