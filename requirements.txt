@@ -1,5 +1,4 @@
 apscheduler
-pdfminer
 lxml
 requests
 langdetect==1.0.7
