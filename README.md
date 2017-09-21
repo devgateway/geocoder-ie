@@ -102,9 +102,92 @@ Results were saved in out.tsv
 
 Output format (-o)
 
-xml: is only supported when processing a iati xml file, and the output is a copy of the file with the new locations embedded.
-tsv: is only supported when processing documents, and the output will be just the list of the geocoded locations.
-json: is supported in both cases, and the output is like the original specified output.
+xml: is only supported when processing a iati xml file, and the output is a copy of the original xml file  with new locations embedded.
+tsv: is only supported when processing documents, and the output will be the list of the geocoded locations.
+json: is supported in both cases, and the output is like the following example.
+
+```
+
+
+[
+    {
+        "project_id": "46002-P-GH-AAD-002",
+        "locations": [
+            {
+                "name": "Brong-Ahafo",
+                "id": 2302547,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        "-1.5",
+                        "7.75"
+                    ]
+                },
+                "featureDesignation": {
+                    "code": "ADM1",
+                    "name": "first-order administrative division"
+                },
+                "country": {
+                    "code": "GH",
+                    "name": "Ghana"
+                },
+                "admin1": {
+                    "code": "03",
+                    "name": "Brong-Ahafo"
+                },
+                "admin2": {
+                    "code": "",
+                    "name": ""
+                },
+                "admin3": {
+                    "code": "",
+                    "name": ""
+                },
+                "admin4": {
+                    "code": "",
+                    "name": ""
+                }
+            },
+            {
+                "name": "Kumasi",
+                "id": 7649000,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        "-1.61667",
+                        "6.68333"
+                    ]
+                },
+                "featureDesignation": {
+                    "code": "ADM2",
+                    "name": "second-order administrative division"
+                },
+                "country": {
+                    "code": "GH",
+                    "name": "Ghana"
+                },
+                "admin1": {
+                    "code": "02",
+                    "name": "Ashanti"
+                },
+                "admin2": {
+                    "code": "7649000",
+                    "name": "Kumasi"
+                },
+                "admin3": {
+                    "code": "",
+                    "name": ""
+                },
+                "admin4": {
+                    "code": "",
+                    "name": ""
+                }
+            }
+        ]
+    }
+]
+
+```
 
 
 ## Web interface
