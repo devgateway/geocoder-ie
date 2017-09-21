@@ -92,20 +92,20 @@ class TestGeocoder(unittest.TestCase):
 
     def test_afdb_subnational_simple_document(self):
         results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
-
         geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
         persist_geocoding(geocoding, None, None)
         for l, data in geocoding:
             print(l)
 
     def test_ner(self):
-        text = """The project aims to improve the road connections om the North-West Fouta Djallon area.
+        text = """
+                The project aims to improve the road connections om the North-West Fouta Djallon area.
                 In order to further support this political will towards poverty reduction, the
                 African Development Bank (ADB) granted the Guinean Government’s request for the
                 financing of the preparation of the feasibility study on a rural development support project in
                 the North-West Fouta Djallon area, in particular Gaoual and Koundara prefectures in the
-                
-                Middle Guinea region."""
+                Middle Guinea region. 
+                """
 
         extract_ner([text])
 

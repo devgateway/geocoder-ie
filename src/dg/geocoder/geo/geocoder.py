@@ -99,21 +99,25 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
 
 # Perform natural language processing to text, get annotated entities and entities relations
 def extract_ner(sentences, ignore_entities=get_ignore_entities()):
-    tagger = Ner(host=get_ner_host(), port=get_ner_port())
-    tic = time.clock()
-    extraction = []
+    try:
+        tagger = Ner(host=get_ner_host(), port=get_ner_port())
+        tic = time.clock()
+        extraction = []
 
-    for s in sentences:
-        output = tagger.get_entities(s.replace('\n', ' '))
-        locations_found = [text for text, tag in output if
-                           tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
+        for s in sentences:
+            output = tagger.get_entities(s.replace('\n', ' '))
+            locations_found = [text for text, tag in output if
+                               tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
 
-        if len(locations_found) > 0:
-            extraction.append(({'text': s, 'entities': locations_found}))
+            if len(locations_found) > 0:
+                extraction.append(({'text': s, 'entities': locations_found}))
 
-    tac = time.clock()
-    logger.info('NER extraction took {time}ms'.format(time=tac - tic))
-    return extraction
+        tac = time.clock()
+        logger.info('NER extraction took {time}ms'.format(time=tac - tic))
+        return extraction
+    except Exception as detail:
+        logger.error('Error during ner extraction {}'.format(detail))
+        raise
 
 
 def gap_length(word1, word2, text):

@@ -1,4 +1,5 @@
 import csv
+import json
 import logging.config
 import os
 
@@ -9,6 +10,7 @@ from dg.geocoder.geo.geocoder import geocode
 from dg.geocoder.iati.activities_reader import ActivitiesReader
 from dg.geocoder.iati.iati_downloader import download_activity_data
 from dg.geocoder.iati.iati_validator import is_valid_schema
+from dg.geocoder.model.models import get_activity_dict, get_location_dic
 from dg.geocoder.util.file_util import is_xml, is_valid
 
 ST_PROCESSING = "PROCESSING"
@@ -41,7 +43,7 @@ def process_queue():
 
 
 # Process any input file
-def process_file(file, cty_codes=None):
+def process_file(file, cty_codes=None, out_format='json'):
     if cty_codes is None:
         cty_codes = []
     if not is_valid(file):
@@ -49,9 +51,9 @@ def process_file(file, cty_codes=None):
         return None
     else:
         if is_xml(file):
-            return process_xml(file)
+            return process_xml(file, out_format=out_format)
         else:
-            return process_document(file, cty_codes=cty_codes)
+            return process_document(file, cty_codes=cty_codes, out_format=out_format)
 
 
 # Process a database document record
@@ -68,13 +70,15 @@ def process_doc(doc, out_path=''):
         if doc_type == 'text/xml':
             process_xml(os.path.join(get_doc_queue_path(), doc_name),
                         out_file="{}_out.xml".format(doc_name.split('.')[0]),
+                        out_format='xml',
                         persist=True,
-                        doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path)
+                        doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path, format='xml')
 
         else:
             process_document(os.path.join(get_doc_queue_path(), doc_name),
                              out_file="{}_out.{}.tsv".format(doc_name.split('.')[0], doc_name.split('.')[1]),
                              cty_codes=[doc_country_code],
+                             out_format='tsv',
                              persist=True,
                              doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path)
 
@@ -85,32 +89,53 @@ def process_doc(doc, out_path=''):
 
 
 # Process document file
-def process_document(document, out_file='out.tsv', cty_codes=None, persist=False, doc_id=None, step_log=None,
-                     out_path=''):
-    if cty_codes is None:
-        cty_codes = []
-    results = geocode([], [document], cty_codes=cty_codes, step_log=step_log)
-    geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+def process_document(document, out_file=None, cty_codes=None, persist=False, doc_id=None, step_log=None,
+                     out_path='', out_format='json'):
+    if out_file is None and out_format == 'tsv':
+        out_file = 'out.tsv'
+    elif out_file is None and out_format == 'json':
+        out_file = 'out.json'
 
-    # save results to db
-    if persist:
-        persist_geocoding(geocoding, doc_id, None)
+    if out_format == 'xml':
+        logger.error('xml output is not supported when processing documents ')
+        raise Exception("Invalid output format")
+    else:
 
-    # save results to disk
-    return save_to_tsv(out_file, geocoding, out_path=out_path)
+        if cty_codes is None:
+            cty_codes = []
+        results = geocode([], [document], cty_codes=cty_codes, step_log=step_log)
+        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+        # save results to db
+        if persist:
+            persist_geocoding(geocoding, doc_id, None)
+
+        # save results to disk
+        if out_format == 'json':
+            return save_to_json(out_file, [(document, [a[0] for a in geocoding])], out_path)
+        elif out_format == 'tsv':
+            return save_to_tsv(out_file, geocoding, out_path)
 
 
 # Process a IATI activities xml
-def process_xml(file, out_file='out.xml', persist=False, doc_id=None, step_log=None, out_path=''):
+def process_xml(file, out_file=None, persist=False, doc_id=None, step_log=None, out_path='', out_format='json'):
     if not is_valid_schema(file, version='202'):
         logger.error('Invalid xml file supplied please check IATI standard')
         raise Exception("Invalid xml file")
+    elif out_format == 'tsv':
+        logger.error('tsv output is not supported when processing xml files')
+        raise Exception("Invalid output format")
     else:
+
+        if out_file is None and out_format == 'json':
+            out_file = 'out.json'
+        elif out_file is None and out_format == 'xml':
+            out_file = 'out.xml'
+
+        locs = []
         reader = ActivitiesReader(file)
         activities = reader.get_activities()
         for activity in activities:
             logger.info('.......... Coding activity {} ..........'.format(activity.get_identifier()))
-
             # Get activity related documents
             documents = download_activity_data(activity, get_download_path())
             # extract title and descriptions a
@@ -119,15 +144,22 @@ def process_xml(file, out_file='out.xml', persist=False, doc_id=None, step_log=N
             # TODO CHECK if country code can be an array
             # full results
             results = geocode(texts, documents, cty_codes=[activity.get_recipient_country_code()], step_log=step_log)
-            [activity.add_location(data['geocoding']) for (l, data) in results if data.get('geocoding')]
-            # save to db
+
+            if out_format == 'xml':
+                # add location to activity
+                [activity.add_location(data['geocoding']) for (l, data) in results if data.get('geocoding')]
+            elif out_format == 'json' or out_format == 'tsv':
+                # collect location to print them as json
+                locs.append((activity.get_identifier(),
+                             [data['geocoding'] for (l, data) in results if data.get('geocoding')]))
+            # persis current activity result in database o
             if persist:
                 persist_activity(results, activity, doc_id)
 
-            # save xml file
-            save_to_xml(out_file, reader, out_path=out_path)
+        # save all results to geojson file
+        if out_format == 'json':
+            save_to_json(out_file, locs, out_path)
 
-        logger.info('File {} saved '.format(out_file))
         return out_file
 
 
@@ -147,7 +179,24 @@ def save_to_tsv(out_file, geocoding, out_path=''):
                 writer.writerow(data)
         csvfile.close()
         return out_file
-    except:
+    except Exception as e:
+        logger.error('Error while writing tsv file {}'.format(e))
+        raise
+
+
+def save_to_json(out_file, activities_locations, out_path=''):
+    try:
+        json_data = []
+        for id, locations in activities_locations:
+            json_data.append(get_activity_dict(id, get_location_dic(locations)))
+
+        with open(out_file, 'w') as f:
+            json.dump(json_data, f, ensure_ascii=False, indent=4)
+
+        f.close()
+        return out_file
+    except Exception as e:
+        logger.error('Error while writing json file {}'.format(e))
         raise
 
 

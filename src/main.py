@@ -13,34 +13,46 @@ def main(args):
                                                                                      'train'],
                             required=False,
                             dest='command',
-                            help='use geocode to auto-geocode projects in file provided, or download to get raw '
-                                 'data from IATI registry')
+                            help='Use geocode to auto-geocode file. '
+                                 'Use download to get raw  data from IATI registry. '
+                                 'Use generate to generate a corpora. '
+                                 'Use train to train a new classifier ')
 
         parser.add_argument("-f", "--file", type=str, default=None, nargs='+',
-                            help='Can be a IATI activities file, a pdf document, an odt document or a txt')
+
+                            help='Use together with -c geocode to pass a file to process, The file can be a IATI '
+                                 'activities file, pdf document, odt document or txt file')
 
         parser.add_argument("-p", "--publisher", type=str, default=None, required=False, dest='organisation',
-                            help='Publisher organisation of the data to be download')
+                            help='Use together with -c download  to download data of specific IATI Publisher ')
 
         parser.add_argument("-t", "--countries", type=str, default=None, required=False, dest='countries',
-                            help='Comma separate countries codes')
+                            help='Use together with -c geocode to filter geonames search \n '
+                                 'Use together with -c download to download data of specific countries')
 
         parser.add_argument("-l", "--limit", type=str, default=50, required=False, dest='limit',
-                            help='Number of activities to download')
+                            help='Use together with -c download to limit the Number of activities to download '
+                                 'for each publisher/country')
 
         parser.add_argument("-n", "--name", type=str, required=False, dest='name',
-                            help='classifier name')
+                            help='set the new classifier name')
+
+        parser.add_argument("-o", "--output", type=str, required=False, default='json', dest='outputFormat',
+                            help='Set output format, default json', choices=['xml', 'tsv', 'json'])
 
         args = parser.parse_args(args)
 
         if args.command == 'geocode':
             file = args.file[0] if args.file else None
+            format = args.outputFormat
+
             print('{} will be geocoded'.format(file))
             if file is None:
                 print('Please provide an input file using -f')
             else:
                 cty_codes = args.countries.split(',') if args.countries else None
-                out = process_file(file, cty_codes)
+
+                out = process_file(file, cty_codes, out_format=format)
                 print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':
@@ -78,6 +90,8 @@ def main(args):
 
     except (KeyboardInterrupt, SystemExit):
         print('Chau!')
+    except Exception as e:
+        print('Unexpected error')
 
 
 # report error and proceed
