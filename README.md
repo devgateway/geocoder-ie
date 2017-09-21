@@ -7,7 +7,7 @@
 ### Installation steps
 1. Install dependencies usin pip or anaconda
 ```
-(Linux pip) 
+(Linux pip)
 pip install -r requirements
 
 (Anaconda)
@@ -17,7 +17,7 @@ conda install --yes --file requirements.txt
 3. Start Standford NER Server
 
 ```
-java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer 
+java -mx400m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer
 -loadClassifier classifiers/english.all.3class.distsim.crf.ser.gz -port 9094
 
 ```
@@ -63,12 +63,14 @@ optional arguments:
                         Use together with -c download to limit the Number of
                         activities to download for each publisher/country
   -n NAME, --name NAME  set the new classifier name
+  -o {xml,tsv,json}, --output {xml,tsv,json}
+                        Set output format, default json
 ```
 
 ```
 geocoder.sh -f example.pdf -tGN
 example.pdf will be geocoded
-(geocoder) C:\projects\clean_copy>geocoder.sh  -f example.pdf -tGN
+(geocoder) C:\projects\clean_copy>geocoder.sh  -f example.pdf -tGN -otsv
 example.pdf will be geocoded
 2017-09-07 10:17:04,637 root         INFO     Detecting document language
 2017-09-07 10:17:05,152 root         INFO     Splitting document in sentences
@@ -97,8 +99,16 @@ Reading pdf pages  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 2
 Results were saved in out.tsv
 ```
 
+
+##Output formats (-o)
+
+xml: is only supported when processing a iati xml file, and the output is a copy of the file with the new locations embedded.
+tsv: is only supported when processing documents, and the output will be just the list of the geocoded locations.
+json: is supported in both cases, and the output is like the original specified output.
+
+
 ## Web interface
-The auto geocoder tool provides a simple user interface to upload , geocode documents, review and see the geocoding results and its related texts. 
+The auto geocoder tool provides a simple user interface to upload , geocode documents, review and see the geocoding results and its related texts.
 The web interface also gives support to classifier training module
 
 ### Setup
@@ -129,7 +139,7 @@ port=9095
 ## Training your own text classifier
 The text classifier attempts to reduce the number of false positives by eliminating those paragraph that shouldn’t be passed to the  named entity extraction phase, you can train your own classifier and make it learn about your documents.
 
-## Classifier Training 
+## Classifier Training
 
 (Database configuration required please see web interface steps)
 
@@ -173,7 +183,3 @@ If a iati xml file is provided as input, the system will geocoded each activity 
 - Extract all sentences from documents
 - Geocode all sentences
 - Generate a new XML file containing activities and locations information.
-
-
-
-

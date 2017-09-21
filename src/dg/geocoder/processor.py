@@ -72,7 +72,7 @@ def process_doc(doc, out_path=''):
                         out_file="{}_out.xml".format(doc_name.split('.')[0]),
                         out_format='xml',
                         persist=True,
-                        doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path, format='xml')
+                        doc_id=doc_id, step_log=step_log(doc_id), out_path=out_path)
 
         else:
             process_document(os.path.join(get_doc_queue_path(), doc_name),
