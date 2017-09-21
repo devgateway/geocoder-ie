@@ -100,7 +100,7 @@ Results were saved in out.tsv
 ```
 
 
-##Output formats (-o)
+Output format (-o)
 
 xml: is only supported when processing a iati xml file, and the output is a copy of the file with the new locations embedded.
 tsv: is only supported when processing documents, and the output will be just the list of the geocoded locations.
