@@ -159,6 +159,8 @@ def process_xml(file, out_file=None, persist=False, doc_id=None, step_log=None, 
         # save all results to geojson file
         if out_format == 'json':
             save_to_json(out_file, locs, out_path)
+        elif out_format == 'xml':
+            save_to_xml(out_file, reader, out_path=out_path)
 
         return out_file
 
