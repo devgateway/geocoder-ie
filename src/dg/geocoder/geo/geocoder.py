@@ -19,6 +19,7 @@ def classify(texts, files, cls_name):
     # extract sentences from files
     tic = time.clock()
     sentences = []
+    geo_sentences = []
     for text in texts:
         reader = get_text_reader(text)
         if reader.is_english_lan():
@@ -44,11 +45,13 @@ def classify(texts, files, cls_name):
     toc = time.clock()
     logger.info(
         'There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
-    classifier = load_classifier(cls_name)
-    predicted = classifier.predict(sentences)
-    indexes = np.where(predicted == 'geography')[0]
-    logger.info('{} geographical sentences found '.format(len(indexes)))
-    geo_sentences = [(sentences[i]) for i in indexes]
+
+    if len(sentences) > 0:
+        classifier = load_classifier(cls_name)
+        predicted = classifier.predict(sentences)
+        indexes = np.where(predicted == 'geography')[0]
+        logger.info('{} geographical sentences found '.format(len(indexes)))
+        geo_sentences = [(sentences[i]) for i in indexes]
 
     return geo_sentences
 

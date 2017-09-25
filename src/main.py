@@ -3,7 +3,8 @@ import sys
 
 from dg.geocoder.iati.iati_codes import iati_countries
 from dg.geocoder.processor import process_file
-
+import logging
+logger = logging.getLogger()
 
 def main(args):
     try:
@@ -89,9 +90,9 @@ def main(args):
                 print('done!')
 
     except (KeyboardInterrupt, SystemExit):
-        print('Chau!')
+        logger.info('Chau!')
     except Exception as e:
-        print('Unexpected error')
+        logger.error('Unexpected error {}'.format(e))
 
 
 # report error and proceed
