@@ -2,7 +2,8 @@ import unittest
 
 from dg.geocoder.db.geocode import save_activity
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
-from dg.geocoder.processor import process_xml, process_queue, persist_geocoding
+from dg.geocoder.processor.input.document_processor import DocumentProcessor
+from dg.geocoder.processor.input.xml_processor import XMLProcessor
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 
@@ -71,31 +72,24 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue(locs is not None)
 
     def test_afdb_activities_XML(self):
-        process_xml('resources/afdb_2_activities.xml')
+        locations = XMLProcessor('resources/afdb_2_activities.xml').process()
+        self.assertTrue('' in locations)
 
     def test_afdb_activities_XML_1(self):
-        process_xml('resources/afdb_1_no_docs_activities.xml')
+        processor = XMLProcessor('resources/afdb_1_no_docs_activities.xml')
+        processor.process()
+        self.assertTrue('' in processor.get_results())
 
-    def test_process_queue(self):
-        process_queue()
 
     def test_save_activity(self):
         save_activity('identifier', 'title', 'description', 'country', 26)
 
     def test_dfid_simple_document(self):
-        results = geocode([], ['resources/dfid_4182791.odt'], cty_codes=[])
+        processor = DocumentProcessor('resources/dfid_4182791.odt', cty_codes=[])
+        processor.process()
+        processor.get_locations()
+        self.assertTrue('Dhaka North City Corporation' in [a['name'] for (a, b) in processor.get_locations()])
 
-        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        persist_geocoding(geocoding, None, None)
-        for l, data in geocoding:
-            print(l)
-
-    def test_afdb_subnational_simple_document(self):
-        results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
-        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        persist_geocoding(geocoding, None, None)
-        for l, data in geocoding:
-            print(l)
 
     def test_ner(self):
         text = """

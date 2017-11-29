@@ -84,7 +84,7 @@ class Trainer:
 
 def train_classifier(loader=DbDataLoader(), plot_results=False):
     cls_trainer = Trainer(loader.build_data_frame())
-    cls_trainer.split_train()
+    cls_trainer.kfold_train()
     cls_trainer.print_stats()
     if plot_results:
         cls_trainer.plot_stats()

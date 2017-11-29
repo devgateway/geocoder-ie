@@ -149,7 +149,7 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
             while x is not last_idx:
                 current_loc = entities[x]
                 next_loc = entities[x + 1]
-                # get the gap bewteen the two entities
+                # get the gap between  two entities
                 gap, connection_text, text = gap_length(current_loc, next_loc, text)
                 # if gap is < to distance but there are special chars in between we take them as separate
                 # entities ie Congo,Burkina will be taken as ['Congo','Burkina'] and Congo,New Guinea,

@@ -48,7 +48,7 @@ def delete_doc_from_queue(doc_id):
     sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID=%s)"
     sql_2 = "DELETE FROM GEOCODING WHERE DOCUMENT_ID=%s"
     sql_3 = "DELETE FROM ACTIVITY WHERE DOCUMENT_ID=%s"
-    sql_4 = "DELETE FROM DOC_QUEUE WHERE ID = %s"
+    sql_4 = "DELETE FROM QUEUE WHERE ID = %s"
     cur = conn.cursor()
     cur.execute(sql_1, (doc_id,))
     cur.execute(sql_2, (doc_id,))
@@ -62,6 +62,23 @@ def delete_doc_from_queue(doc_id):
     return rowcount > 0
 
 
+def queue_to_dict(row):
+    logger.info("test")
+
+    return {
+        'queue_type': row[0],
+        'id': row[1],
+        'file_name': row[2],
+        'file_type': row[3],
+        'state': row[4],
+        'create_date': row[5],
+        'processed_date': row[6],
+        'country_iso': row[7],
+        'message': row[8],
+        'activity_id': row[8]
+    }
+
+
 def get_docs(page=1, limit=10, states=None, doc_type=None):
     conn = None
     try:
@@ -72,8 +89,8 @@ def get_docs(page=1, limit=10, states=None, doc_type=None):
         offset = (limit * int(page)) - limit
         cur = conn.cursor()
 
-        sql_count = "SELECT COUNT(*) FROM DOC_QUEUE WHERE 1=1 "
-        sql_select = """SELECT * FROM DOC_QUEUE WHERE 1=1 """
+        sql_count = "SELECT COUNT(*) FROM QUEUE WHERE 1=1 "
+        sql_select = """SELECT * FROM QUEUE WHERE 1=1 """
         data = ()
 
         if states is not None:
@@ -89,16 +106,8 @@ def get_docs(page=1, limit=10, states=None, doc_type=None):
         data = data + (offset, limit)
         cur.execute(sql_select, data)
 
-        results = [{'id': c[0],
-                    'file_name': c[1],
-                    'type': c[2],
-                    'state': c[3],
-                    'create_date': c[4],
-                    'processed_date': c[5],
-                    'country_iso': c[6],
-                    'message': c[7]
+        results = [queue_to_dict(c) for c in cur]
 
-                    } for c in cur]
         cur.close()
 
         return {'count': count, 'rows': results, 'limit': limit}
@@ -115,7 +124,7 @@ def get_document_by_id(doc_id):
     conn = None
     try:
         conn = open()
-        sql_select = """SELECT * FROM DOC_QUEUE where id = %s """
+        sql_select = """SELECT * FROM QUEUE where id = %s """
         cur = conn.cursor()
         data = (doc_id,)
         cur.execute(sql_select, data)
@@ -123,16 +132,7 @@ def get_document_by_id(doc_id):
         row = cur.fetchone()
         cur.close()
 
-        return {'id': row[0],
-                'file_name': row[1],
-                'type': row[2],
-                'state': row[3],
-                'create_date': row[4],
-                'processed_date': row[5],
-                'country_iso': row[6],
-                'message': row[7]
-
-                }
+        return queue_to_dict(row)
 
     except Exception as error:
         logger.info(error)
@@ -141,11 +141,12 @@ def get_document_by_id(doc_id):
         close(conn)
 
 
+
 def update_doc_status(doc_id, status, message=''):
     conn = None
     try:
         conn = open()
-        sql = "UPDATE DOC_QUEUE SET STATE=%s ,MESSAGE=%s "
+        sql = "UPDATE QUEUE SET STATE=%s ,MESSAGE=%s "
 
         if status == ST_PROCESSED:
             sql = sql + ",PROCESSED_DATE=NOW() "

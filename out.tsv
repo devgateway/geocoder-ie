@@ -1,0 +1,4 @@
+geonameId	name	toponymName	fcl	fcode	fcodeName	fclName	lat	lng	adminCode1	adminName1	adminCode2	adminName2	adminCode3	adminName3	adminCode4	adminName4	countryName	population	continentCode	countryCode
+1210997	Bangladesh	Bangladesh	A	PCLI	independent political entity	country, state, region,...	24	90	00								Bangladesh	156118464	AS	BD
+9252711	Dhaka North City Corporation	Dhaka North City Corporation	P	PPL	populated place	city, village,...	23.80088	90.35492	81	Dhaka	3026	Dhaka	302640	DCC (Kotwali)	30264007	Badda / Ward - 07	Bangladesh	0	AS	BD
+9257621	Dhaka South City Corporation	Dhaka South City Corporation	P	PPL	populated place	city, village,...	23.72404	90.4081	81	Dhaka	3026	Dhaka	302640	DCC (Kotwali)	30264056	Ward - 56	Bangladesh	0	AS	BD
