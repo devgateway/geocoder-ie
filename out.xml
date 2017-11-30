@@ -147,40 +147,6 @@
                 <narrative xml:lang="en">please refer to the appraisal report below</narrative>
             </condition>
         </conditions>
-        <location>
-            <location-reach code="1"/>
-            <location-id code="2302547" vocabulary="G1"/>
-            <name>
-                <narrative>Brong-Ahafo</narrative>
-            </name>
-            <description>
-                <narrative>first-order administrative division</narrative>
-            </description>
-            <administrative code="2302547" level="ADM1" vocabulary="G1"/>
-            <point>
-                <pos>7.75 -1.5</pos>
-            </point>
-            <exactness code="1"/>
-            <location-class code="2"/>
-            <feature-designation code="ADM1"/>
-        </location>
-        <location>
-            <location-reach code="1"/>
-            <location-id code="7649000" vocabulary="G1"/>
-            <name>
-                <narrative>Kumasi</narrative>
-            </name>
-            <description>
-                <narrative>second-order administrative division</narrative>
-            </description>
-            <administrative code="7649000" level="ADM2" vocabulary="G1"/>
-            <point>
-                <pos>6.68333 -1.61667</pos>
-            </point>
-            <exactness code="1"/>
-            <location-class code="2"/>
-            <feature-designation code="ADM2"/>
-        </location>
-    </iati-activity>
+    <location><location-reach code="1"/><location-id code="2302547" vocabulary="G1"/><name><narrative>Brong-Ahafo</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="2302547" level="ADM1" vocabulary="G1"/><point><pos>7.75 -1.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location><location><location-reach code="1"/><location-id code="7649000" vocabulary="G1"/><name><narrative>Kumasi</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="7649000" level="ADM2" vocabulary="G1"/><point><pos>6.68333 -1.61667</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location></iati-activity>
 
 </iati-activities>

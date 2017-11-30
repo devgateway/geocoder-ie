@@ -3,13 +3,15 @@ import logging
 from dg.geocoder.config import get_log_config_path, get_download_path
 from dg.geocoder.geo.geocoder import geocode
 from dg.geocoder.iati.iati_downloader import download_activity_data
+from dg.geocoder.processor.input.base_processor import BaseProcessor
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
 
 
-class ActivityProcessor():
-    def __init__(self, activity):
+class ActivityProcessor(BaseProcessor):
+    def __init__(self, activity, **kwargs):
+        BaseProcessor.__init__(self, activity, **kwargs)
         self.activity = activity
         self.results = None
         self.locations = []
@@ -31,11 +33,4 @@ class ActivityProcessor():
 
         self.locations.append((self.activity.get_identifier(),
                                [data['geocoding'] for (l, data) in self.results if data.get('geocoding')]))
-
-
-
-    def get_locations(self):
-        return self.locations
-
-    def get_results(self):
-        return self.results
+        return self

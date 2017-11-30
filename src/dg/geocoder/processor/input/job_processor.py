@@ -6,14 +6,16 @@ from dg.geocoder.db.activity import get_activity_by_id
 from dg.geocoder.db.doc_queue import update_doc_status
 from dg.geocoder.iati.activity_reader import ActivityReader
 from dg.geocoder.processor.input.activity_processor import ActivityProcessor
+from dg.geocoder.processor.input.base_processor import BaseProcessor
 from dg.geocoder.processor.output.db import persist_geocoding
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
 
 
-class JobProcessor:
-    def __init__(self, job):
+class JobProcessor(BaseProcessor):
+    def __init__(self, job, **kwargs):
+        BaseProcessor.__init__(self, job, **kwargs)
         self.results = []
         self.locations = []
         self.job_queue_type = job.get('queue_type')
@@ -26,6 +28,7 @@ class JobProcessor:
         self.job_country_iso = job.get('country_iso')
         self.job_message = job.get('message')
         self.job_activity_id = job.get('activity_id')
+
         logger.info('processing job {}'.format(self.job_id))
 
     def process(self):
@@ -46,3 +49,5 @@ class JobProcessor:
         except Exception as error:
             logger.info("Oops!  something didn't go well", error)
             update_doc_status(self.job_id, ST_ERROR, message=error.__str__())
+        finally:
+            return self

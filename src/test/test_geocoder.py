@@ -2,8 +2,7 @@ import unittest
 
 from dg.geocoder.db.geocode import save_activity
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
-from dg.geocoder.processor.input.document_processor import DocumentProcessor
-from dg.geocoder.processor.input.xml_processor import XMLProcessor
+from dg.geocoder.processor.input.file_processor import FileProcessor
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 
@@ -72,24 +71,23 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue(locs is not None)
 
     def test_afdb_activities_XML(self):
-        locations = XMLProcessor('resources/afdb_2_activities.xml').process()
+        locations = FileProcessor('resources/afdb_2_activities.xml').process()
         self.assertTrue('' in locations)
 
     def test_afdb_activities_XML_1(self):
-        processor = XMLProcessor('resources/afdb_1_no_docs_activities.xml')
+        processor = FileProcessor('resources/afdb_1_no_docs_activities.xml')
         processor.process()
         self.assertTrue('' in processor.get_results())
-
 
     def test_save_activity(self):
         save_activity('identifier', 'title', 'description', 'country', 26)
 
     def test_dfid_simple_document(self):
-        processor = DocumentProcessor('resources/dfid_4182791.odt', cty_codes=[])
+        # processor = DocumentProcessor('resources/dfid_4182791.odt', cty_codes=[])
+        processor = FileProcessor('resources/dfid_4182791.odt')
         processor.process()
         processor.get_locations()
         self.assertTrue('Dhaka North City Corporation' in [a['name'] for (a, b) in processor.get_locations()])
-
 
     def test_ner(self):
         text = """

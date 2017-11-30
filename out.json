@@ -1,225 +1,15 @@
 [
     {
-        "project_id": "example.pdf",
+        "project_id": "46002-P-GH-AAD-002",
         "locations": [
             {
-                "name": "Fouta Djallon",
-                "id": 2420896,
+                "name": "Brong-Ahafo",
+                "id": 2302547,
                 "geometry": {
                     "type": "Point",
                     "coordinates": [
-                        "-12.5",
-                        "11.5"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "RGN",
-                    "name": "region"
-                },
-                "country": {
-                    "code": "GN",
-                    "name": "Guinea"
-                },
-                "admin1": {
-                    "code": "00",
-                    "name": ""
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Gaoual Prefecture",
-                "id": 2420825,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-13.2",
-                        "11.75"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "ADM2",
-                    "name": "second-order administrative division"
-                },
-                "country": {
-                    "code": "GN",
-                    "name": "Guinea"
-                },
-                "admin1": {
-                    "code": "B",
-                    "name": "Boke"
-                },
-                "admin2": {
-                    "code": "12",
-                    "name": "Gaoual"
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Koundara Prefecture",
-                "id": 2418595,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-13.16667",
-                        "12.41667"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "ADM2",
-                    "name": "second-order administrative division"
-                },
-                "country": {
-                    "code": "GN",
-                    "name": "Guinea"
-                },
-                "admin1": {
-                    "code": "B",
-                    "name": "Boke"
-                },
-                "admin2": {
-                    "code": "18",
-                    "name": "Koundara"
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Moyenne-Guinée",
-                "id": 2417376,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-12.5",
-                        "11"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "RGN",
-                    "name": "region"
-                },
-                "country": {
-                    "code": "GN",
-                    "name": "Guinea"
-                },
-                "admin1": {
-                    "code": "00",
-                    "name": ""
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Guinea",
-                "id": 2420477,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-10.66667",
-                        "10.83333"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "PCLI",
-                    "name": "independent political entity"
-                },
-                "country": {
-                    "code": "GN",
-                    "name": "Guinea"
-                },
-                "admin1": {
-                    "code": "00",
-                    "name": ""
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Guinea",
-                "id": 2420477,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-10.66667",
-                        "10.83333"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "PCLI",
-                    "name": "independent political entity"
-                },
-                "country": {
-                    "code": "GN",
-                    "name": "Guinea"
-                },
-                "admin1": {
-                    "code": "00",
-                    "name": ""
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Conakry Region",
-                "id": 2422464,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-13.597",
-                        "9.60703"
+                        "-1.5",
+                        "7.75"
                     ]
                 },
                 "featureDesignation": {
@@ -227,12 +17,12 @@
                     "name": "first-order administrative division"
                 },
                 "country": {
-                    "code": "GN",
-                    "name": "Guinea"
+                    "code": "GH",
+                    "name": "Ghana"
                 },
                 "admin1": {
-                    "code": "04",
-                    "name": "Conakry"
+                    "code": "03",
+                    "name": "Brong-Ahafo"
                 },
                 "admin2": {
                     "code": "",
@@ -248,13 +38,13 @@
                 }
             },
             {
-                "name": "Koundara Prefecture",
-                "id": 2418595,
+                "name": "Kumasi",
+                "id": 7649000,
                 "geometry": {
                     "type": "Point",
                     "coordinates": [
-                        "-13.16667",
-                        "12.41667"
+                        "-1.61667",
+                        "6.68333"
                     ]
                 },
                 "featureDesignation": {
@@ -262,121 +52,16 @@
                     "name": "second-order administrative division"
                 },
                 "country": {
-                    "code": "GN",
-                    "name": "Guinea"
+                    "code": "GH",
+                    "name": "Ghana"
                 },
                 "admin1": {
-                    "code": "B",
-                    "name": "Boke"
+                    "code": "02",
+                    "name": "Ashanti"
                 },
                 "admin2": {
-                    "code": "18",
-                    "name": "Koundara"
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Ministry of Finance",
-                "id": 8556343,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "31.30083",
-                        "30.05944"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "BLDO",
-                    "name": "office building"
-                },
-                "country": {
-                    "code": "EG",
-                    "name": "Egypt"
-                },
-                "admin1": {
-                    "code": "11",
-                    "name": "Cairo"
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "South Atlantic Ocean",
-                "id": 3358844,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-15",
-                        "-45"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "OCN",
-                    "name": "ocean"
-                },
-                "country": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin1": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Upper Guinea",
-                "id": 2273381,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-4",
-                        "7"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "RGN",
-                    "name": "region"
-                },
-                "country": {
-                    "code": "LR",
-                    "name": "Liberia"
-                },
-                "admin1": {
-                    "code": "00",
-                    "name": ""
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
+                    "code": "7649000",
+                    "name": "Kumasi"
                 },
                 "admin3": {
                     "code": "",
