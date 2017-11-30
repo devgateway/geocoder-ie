@@ -15,7 +15,7 @@ from flask_cors import CORS
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.constants import ST_PROCESSING, ST_PENDING, ST_PROCESSED, ST_ERROR
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
-from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue, \
+from dg.geocoder.db.doc_queue import save_doc, get_queue_list, get_queue_by_id, delete_doc_from_queue, \
     delete_all_docs_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 
@@ -110,7 +110,7 @@ def docs_list():
         if state == ST_PROCESSED:
             states.append(ST_ERROR)
 
-    return Response(json.dumps(get_docs(page=page, doc_type=doc_type, states=states), default=datetime_handler),
+    return Response(json.dumps(get_queue_list(page=page, doc_type=doc_type, states=states), default=datetime_handler),
                     mimetype='application/json')
 
 
@@ -167,15 +167,17 @@ def geocoding_list():
                                default=datetime_handler), mimetype='application/json')
 
 
-@app.route('/geocoding/download/<document_id>', methods=['GET'])
-def geocoding_download(document_id):
-    document = get_document_by_id(document_id)
-    doc_name = document.get('file_name')
-    doc_type = document.get('type')
-    output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
-    if doc_type == 'text/xml':
-        output_ext = '_out.xml'
-    return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)
+@app.route('/geocoding/download/<queue_id>', methods=['GET'])
+def geocoding_download(queue_id):
+    queue = get_queue_by_id(queue_id)
+    if queue.get('queue_type') != 'ACTIVITY_QUEUE':
+        doc_name = queue.get('file_name')
+        doc_type = queue.get('type')
+        output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
+        if doc_type == 'text/xml':
+            output_ext = '_out.xml'
+
+        return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)
 
 
 @app.route('/activity', methods=['GET'])

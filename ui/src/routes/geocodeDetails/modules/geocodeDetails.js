@@ -17,9 +17,10 @@ export const EXTRACT_LIST_LOADED = 'EXTRACT_LIST_LOADED';
 // Actions
 // ------------------------------------
 
-export function loadGeocodingList(document_id) {
+export function loadGeocodingList(queueId) {
+  debugger;
   return (dispatch, getState) => {
-    getGeocodingList({document_id}).then((response) => {
+    getGeocodingList({queueId}).then((response) => {
         dispatch({
           type: GEOCODING_LIST_LOADED,
           data: response.data
@@ -31,9 +32,9 @@ export function loadGeocodingList(document_id) {
   }
 }
 
-export function loadActivityList(document_id) {
+export function loadActivityList(queueId) {
   return (dispatch, getState) => {
-    getActivityList({document_id}).then((response) => {
+    getActivityList({queueId}).then((response) => {
         dispatch({
           type: ACTIVITY_LIST_LOADED,
           data: response.data

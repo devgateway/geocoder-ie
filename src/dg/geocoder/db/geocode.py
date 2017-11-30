@@ -15,7 +15,7 @@ NEW_AUTO_CODE_STATUS = 0
 def get_iati_code(code, iati_type):
     try:
         conn = open()
-        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         sql = "select * from iati_codes where type=%s and code=%s"
         cur.execute(sql, (iati_type, str(code)))
         data = cur.fetchone()
@@ -233,11 +233,11 @@ def save_activity(identifier, title, description, country, doc_id):
         close(conn)
 
 
-def get_geocoding_list(activity_id=None, document_id=None):
+def get_geocoding_list(activity_id=None, document_id=None, queue_id=None):
     conn = None
     try:
         conn = open()
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         sql_select = """SELECT * FROM GEOCODING WHERE 1=1 """
         data = ()
 
@@ -249,9 +249,13 @@ def get_geocoding_list(activity_id=None, document_id=None):
             sql_select = sql_select + """AND DOCUMENT_ID = %s """
             data = data + (document_id,)
 
+        if queue_id is not None:
+            sql_select = sql_select + """AND QUEUE_ID = %s """
+            data = data + (queue_id,)
+
         sql_select = sql_select + " ORDER BY ID"
         cur.execute(sql_select, data)
-        results = [c for c in cur]
+        results = cur.fetchall()
         cur.close()
         return results
     except Exception as error:
@@ -265,7 +269,7 @@ def get_extracted_list(geocoding_id=None):
     conn = None
     try:
         conn = open()
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         sql_select = """SELECT * FROM EXTRACT WHERE 1=1 """
         data = ()
 
@@ -275,7 +279,7 @@ def get_extracted_list(geocoding_id=None):
 
         sql_select = sql_select + " ORDER BY ID"
         cur.execute(sql_select, data)
-        results = [c for c in cur]
+        results = cur.fetchall()
         cur.close()
         return results
     except Exception as error:
@@ -289,7 +293,7 @@ def get_activity_list(document_id=None):
     conn = None
     try:
         conn = open()
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         sql_select = """SELECT * FROM ACTIVITY WHERE 1=1 """
         data = ()
 
