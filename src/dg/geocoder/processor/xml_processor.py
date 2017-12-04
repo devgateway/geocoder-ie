@@ -1,11 +1,12 @@
 import logging.config
 import os
 
+from dg.geocoder.processor.activity_processor import ActivityProcessor
+
 from dg.geocoder.config import get_log_config_path
 from dg.geocoder.iati.activities_reader import ActivitiesParser
 from dg.geocoder.iati.iati_validator import is_valid_schema
-from dg.geocoder.processor.input.activity_processor import ActivityProcessor
-from dg.geocoder.processor.input.base_processor import BaseProcessor, FORMAT_XML
+from dg.geocoder.processor.base_processor import BaseProcessor, FORMAT_XML
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()

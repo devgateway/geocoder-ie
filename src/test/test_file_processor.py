@@ -1,7 +1,8 @@
 import unittest
 
-from dg.geocoder.processor.input.base_processor import FORMAT_TSV, FORMAT_JSON, FORMAT_XML
-from dg.geocoder.processor.input.file_processor import FileProcessor
+from dg.geocoder.processor.file_processor import FileProcessor
+
+from dg.geocoder.processor.base_processor import FORMAT_TSV, FORMAT_JSON, FORMAT_XML
 
 
 class TestGeocoder(unittest.TestCase):
@@ -21,9 +22,6 @@ class TestGeocoder(unittest.TestCase):
         out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(out_format=FORMAT_JSON, out_file="test")
         self.assertTrue(out_file, 'test.json')
 
-
-
-
     def test_afdb_activities_XML(self):
         locations = FileProcessor('resources/afdb_2_activities.xml').process()
         self.assertTrue('' in locations)
@@ -32,7 +30,6 @@ class TestGeocoder(unittest.TestCase):
         processor = FileProcessor('resources/afdb_1_no_docs_activities.xml')
         processor.process()
         self.assertTrue('' in processor.get_results())
-
 
     def test_dfid_simple_document(self):
         # processor = DocumentProcessor('resources/dfid_4182791.odt', cty_codes=[])

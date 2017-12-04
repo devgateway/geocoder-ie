@@ -8,14 +8,14 @@ from dg.geocoder.db.db import open, close
 logger = logging.getLogger()
 
 
-def save_doc(file_name, file_type, country_iso):
+def add_job_to_queue(file_name, file_type, country_iso, state='PENDING'):
     conn = None
     try:
         conn = open()
         sql = """INSERT INTO QUEUE (QUEUE_TYPE,ID, FILE_NAME, FILE_TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES 
-        ('DOC_QUEUE',NEXTVAL('hibernate_sequence'),%s,%s, 'PENDING', NOW(), %s )"""
+        ('DOC_QUEUE',NEXTVAL('hibernate_sequence'),%s,%s, %s, NOW(), %s )"""
         cur = conn.cursor()
-        data = (file_name, file_type, country_iso)
+        data = (file_name, file_type, state, country_iso)
         cur.execute(sql, data)
         conn.commit()
         cur.close()

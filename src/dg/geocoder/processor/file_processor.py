@@ -1,9 +1,10 @@
 import logging
 
+from dg.geocoder.processor.document_processor import DocumentProcessor
+from dg.geocoder.processor.xml_processor import XMLProcessor
+
 from dg.geocoder.config import get_log_config_path
-from dg.geocoder.processor.input.base_processor import BaseProcessor
-from dg.geocoder.processor.input.document_processor import DocumentProcessor
-from dg.geocoder.processor.input.xml_processor import XMLProcessor
+from dg.geocoder.processor.base_processor import BaseProcessor
 from dg.geocoder.util.file_util import is_valid, is_xml
 
 logging.config.fileConfig(get_log_config_path())

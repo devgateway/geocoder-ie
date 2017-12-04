@@ -2,7 +2,7 @@ import logging.config
 
 from dg.geocoder.config import get_log_config_path
 from dg.geocoder.geo.geocoder import geocode
-from dg.geocoder.processor.input.base_processor import BaseProcessor
+from dg.geocoder.processor.base_processor import BaseProcessor
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()

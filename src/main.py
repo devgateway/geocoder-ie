@@ -3,7 +3,7 @@ import logging
 import sys
 
 from dg.geocoder.iati.iati_codes import iati_countries
-from dg.geocoder.processor.input.file_processor import FileProcessor
+from dg.geocoder.processor.file_processor import FileProcessor
 
 logger = logging.getLogger()
 

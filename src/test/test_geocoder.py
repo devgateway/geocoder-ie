@@ -1,7 +1,7 @@
 import unittest
 
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
-from dg.geocoder.processor.input.xml_processor import XMLProcessor
+from dg.geocoder.processor.xml_processor import XMLProcessor
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 

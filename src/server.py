@@ -15,7 +15,7 @@ from flask_cors import CORS
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.constants import ST_PROCESSING, ST_PENDING, ST_PROCESSED, ST_ERROR
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
-from dg.geocoder.db.doc_queue import save_doc, get_queue_list, get_queue_by_id, delete_doc_from_queue, \
+from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue_by_id, delete_doc_from_queue, \
     delete_all_docs_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 
@@ -141,7 +141,7 @@ def upload_doc():
         file_type = f.content_type
         docs_path = os.path.join(get_doc_queue_path(), file_name)
         f.save(docs_path)
-        save_doc(file_name, file_type, country_code)
+        add_job_to_queue(file_name, file_type, country_code)
     return jsonify({"success": True}), 200
 
 

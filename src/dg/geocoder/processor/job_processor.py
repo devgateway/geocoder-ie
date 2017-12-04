@@ -4,12 +4,13 @@ import os
 from dg.geocoder.config import get_log_config_path, get_doc_queue_path
 from dg.geocoder.constants import ST_PROCESSING, ST_ERROR, ST_PROCESSED
 from dg.geocoder.db.activity import get_activity_by_id
+from dg.geocoder.db.db import close, open
 from dg.geocoder.db.doc_queue import update_queue_status
+from dg.geocoder.db.geocode import save_geocoding, save_extract_text
 from dg.geocoder.iati.activity_reader import ActivityReader
-from dg.geocoder.processor.input.activity_processor import ActivityProcessor
-from dg.geocoder.processor.input.base_processor import BaseProcessor
-from dg.geocoder.processor.input.file_processor import FileProcessor
-from dg.geocoder.processor.output.db import persist_geocoding
+from dg.geocoder.processor.activity_processor import ActivityProcessor
+from dg.geocoder.processor.base_processor import BaseProcessor
+from dg.geocoder.processor.file_processor import FileProcessor
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
@@ -58,7 +59,25 @@ class JobProcessor(BaseProcessor):
 
     def save_output(self):
         try:
-            persist_geocoding(self.get_results(), self.job_activity_id, self.job_id, None)
+            self.persist_geocoding(self.get_results(), self.job_activity_id, self.job_id, None)
             update_queue_status(self.job_id, ST_PROCESSED)
         except Exception as error:
             update_queue_status(self.job_id, ST_ERROR, message=error.__str__())
+
+    def persist_geocoding(self, results, activity_id, job_id, document_id):
+        geocoding_list = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+        for geocoding in geocoding_list:
+            try:
+                conn = open()
+                location_id, geocoding_id = save_geocoding(geocoding[0], job_id, activity_id, document_id, conn=conn)
+                for text in geocoding[1]:
+                    save_extract_text(text.get('text'), geocoding_id, ', '.join(text.get('entities')), conn=conn)
+
+                conn.commit()
+            except Exception as error:
+                conn.cancel()
+                logger.info(error)
+                raise
+            finally:
+                close(conn)
+        return None
