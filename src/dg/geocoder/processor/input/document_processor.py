@@ -16,7 +16,7 @@ class DocumentProcessor(BaseProcessor):
     def process(self):
         logger.info('processing document {}'.format(self.document))
         self.results = geocode([], [self.document], cty_codes=self.cty_codes)
-        self.locations.append((self.document,
-                               [data['geocoding'] for (l, data) in self.results if data.get('geocoding')]))
+        self.locations = [((self.document,
+                            [data['geocoding'] for (l, data) in self.results if data.get('geocoding')]))]
 
         return self

@@ -26,7 +26,7 @@ class ActivityProcessor(BaseProcessor):
         # call full geocode workflow
         # TODO CHECK if country code can be an array
         # full results
-        self.results = geocode(texts, documents, cty_codes=[self.activity.get_recipient_country_code()])
+        self.results = geocode(texts, documents, cty_codes=self.activity.get_recipient_country_code())
 
         # add location to activity
         [self.activity.add_location(data['geocoding']) for (l, data) in self.results if data.get('geocoding')]

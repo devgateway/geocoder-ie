@@ -1,12 +1,14 @@
 import logging
+import os
 
-from dg.geocoder.config import get_log_config_path
+from dg.geocoder.config import get_log_config_path, get_doc_queue_path
 from dg.geocoder.constants import ST_PROCESSING, ST_ERROR, ST_PROCESSED
 from dg.geocoder.db.activity import get_activity_by_id
 from dg.geocoder.db.doc_queue import update_queue_status
 from dg.geocoder.iati.activity_reader import ActivityReader
 from dg.geocoder.processor.input.activity_processor import ActivityProcessor
 from dg.geocoder.processor.input.base_processor import BaseProcessor
+from dg.geocoder.processor.input.file_processor import FileProcessor
 from dg.geocoder.processor.output.db import persist_geocoding
 
 logging.config.fileConfig(get_log_config_path())
@@ -43,14 +45,20 @@ class JobProcessor(BaseProcessor):
                 self.results = self.results + processor.get_results()
                 self.locations = self.locations + processor.get_locations()
             else:
-                pass
+                processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name), )
+                processor.process()
+                self.results = self.results + processor.get_results()
+                self.locations = self.locations + processor.get_locations()
+                return self
+
         except Exception as error:
             logger.info("Oops!  something didn't go well", error)
             update_queue_status(self.job_id, ST_ERROR, message=error.__str__())
-        finally:
-            return self
+            raise
 
     def save_output(self):
-        persist_geocoding(self.get_results(), self.job_activity_id, self.job_id, None)
-        update_queue_status(self.job_id, ST_PROCESSED)
-
+        try:
+            persist_geocoding(self.get_results(), self.job_activity_id, self.job_id, None)
+            update_queue_status(self.job_id, ST_PROCESSED)
+        except Exception as error:
+            update_queue_status(self.job_id, ST_ERROR, message=error.__str__())

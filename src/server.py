@@ -183,7 +183,6 @@ def geocoding_download(queue_id):
 @app.route('/activity', methods=['GET'])
 def activity_list():
     document_id = None
-
     if 'document_id' in request.args:
         document_id = request.args['document_id']
 
@@ -208,4 +207,4 @@ def purge():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=get_app_port(), debug=True)
+    app.run(host='0.0.0.0', port=get_app_port(), debug=False, threaded=True)

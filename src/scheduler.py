@@ -27,8 +27,12 @@ def timed_job():
 def process_jobs():
     pending_jobs = get_queue_list(1, 10, [ST_PENDING]).get('rows')
     for job in pending_jobs:
-        out_path = get_doc_queue_path()
-        JobProcessor(job).process().save_output()
+        try:
+            out_path = get_doc_queue_path()
+            JobProcessor(job).process().save_output()
+        except:
+            logger.error("Job {} did't go well, results were not saved, I THINK ...".format(job.get('id')))
+
 
 
 sched.start()

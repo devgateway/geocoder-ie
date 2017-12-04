@@ -47,7 +47,7 @@ def download_activity_data(activity_reader, download_path, dump_activity=False):
         logger.info('Activity %s has documents we will process it ' % identifier)
 
         region = activity_reader.get_recipient_region_name()
-        country = activity_reader.get_recipient_country_name()
+        country = "_".join(activity_reader.get_recipient_country_name())
         folder_path = 'NA'
 
         if country is not None:

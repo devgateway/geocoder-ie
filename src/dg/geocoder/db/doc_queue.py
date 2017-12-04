@@ -12,8 +12,8 @@ def save_doc(file_name, file_type, country_iso):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO DOC_QUEUE (ID, FILE_NAME, TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES 
-        (NEXTVAL('GLOBAL_ID_SEQ'),%s,%s, 'PENDING', NOW(), %s )"""
+        sql = """INSERT INTO QUEUE (QUEUE_TYPE,ID, FILE_NAME, FILE_TYPE, STATE, CREATE_DATE, COUNTRY_ISO) VALUES 
+        ('DOC_QUEUE',NEXTVAL('hibernate_sequence'),%s,%s, 'PENDING', NOW(), %s )"""
         cur = conn.cursor()
         data = (file_name, file_type, country_iso)
         cur.execute(sql, data)

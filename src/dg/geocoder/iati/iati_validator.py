@@ -9,6 +9,7 @@ def is_valid_schema(xml_path, version='202'):
     xmlschema = etree.XMLSchema(xmlschema_doc)
 
     xml_doc = etree.parse(xml_path)
+
     return xmlschema.validate(xml_doc)
 
 

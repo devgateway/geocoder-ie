@@ -21,7 +21,14 @@ class FileProcessor(BaseProcessor):
             logger.info('Not valid file provided')
             return None
         else:
+            processor = None
             if is_xml(self.file):
-                return XMLProcessor(self.file, step_logger=self.step_logger).process()
+                processor = XMLProcessor(self.file, step_logger=self.step_logger)
+
             else:
-                return DocumentProcessor(self.file, step_logger=self.step_logger, cty_codes=self.cty_codes).process()
+                processor = DocumentProcessor(self.file, step_logger=self.step_logger, cty_codes=self.cty_codes)
+
+            processor.process()
+            self.results = self.results + processor.get_results()
+            self.locations = self.locations + processor.get_locations()
+            return self

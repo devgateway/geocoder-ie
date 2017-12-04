@@ -52,7 +52,7 @@ def save_narrative(text, lan, conn=None):
             close(conn)
 
 
-def save_location(location_status, lng, lat, activity_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
+def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
                   vocabulary_id, conn=None):
     should_close = False
     try:
@@ -61,11 +61,12 @@ def save_location(location_status, lng, lat, activity_id, exactness_id, features
             should_close = True
         cur = conn.cursor()
 
-        sql = "INSERT INTO location(id,  location_status, point, activity_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, " \
-              "precision_id, vocabulary_id) VALUES (NEXTVAL('hibernate_sequence'),%s,ST_MakePoint(%s, %s), %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
+        sql = "INSERT INTO location(id,  location_status, point, activity_id,queue_id, exactness_id, " \
+              "features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, " \
+              "precision_id, vocabulary_id) VALUES (NEXTVAL('hibernate_sequence'),%s,ST_MakePoint(%s, %s), %s, %s,%s, %s, %s, %s, %s, %s, %s) RETURNING id"
 
         cur.execute(sql,
-                    (location_status, lng, lat, activity_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
+                    (location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
                      vocabulary_id))
 
         if should_close:
@@ -165,6 +166,7 @@ def save_geocoding(geocoding, job_id, activity_id, document_id, conn=None):
         location_id = save_location(NEW_AUTO_CODE_STATUS,
                                     lng, lat,
                                     activity_id,
+                                    job_id,
                                     exactness_id,
                                     features_designation_id,
                                     gazetteer_agency_id,

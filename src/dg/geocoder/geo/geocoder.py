@@ -61,10 +61,11 @@ def join(item_list):
     locs = {}
     for item in item_list:
         for l in item['locations']:
-            if locs.get(l.lower()):
-                locs[l.lower()]['texts'].append({'text': item['text'], 'entities': item['entities']})
+            current = l.lower().strip()
+            if locs.get(current):
+                locs[current]['texts'].append({'text': item['text'], 'entities': item['entities']})
             else:
-                locs[l.lower()] = {'texts': [{'text': item['text'], 'entities': item['entities']}]}
+                locs[current] = {'texts': [{'text': item['text'], 'entities': item['entities']}]}
 
     return [(key, locs[key]) for key in locs]
 
@@ -165,6 +166,23 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     return extracted
 
 
+def reduce(results):
+    unique_results = {}
+    for name, metadata in results:
+        geocoding = metadata.get('geocoding')
+        if geocoding is not None:
+            geonameId = geocoding.get('geonameId')
+            existing = unique_results.get(geonameId)
+            if existing:
+                existing[1]['texts'] = existing[1]['texts'] + metadata['texts']
+            else:
+                unique_results[geonameId] = (name, metadata)
+        else:
+            unique_results[name] = (name, metadata)
+
+    return list(unique_results.values())
+
+
 def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step_log=None):
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
@@ -172,6 +190,7 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
     # 3) resolve locations using Geo Names
     if step_log:
         step_log("Classifying documents")
+
     texts = classify(texts, documents, cls_name=cls_name)
 
     if step_log:
@@ -190,5 +209,6 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
         step_log("Geocoding entities")
 
     results = geonames(normalized, cty_codes=cty_codes)
+    reduced = reduce(results)
 
-    return results
+    return reduced
