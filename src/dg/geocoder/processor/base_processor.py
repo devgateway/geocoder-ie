@@ -40,7 +40,9 @@ class BaseProcessor:
         if out_format == FORMAT_JSON:
             return self.save_to_json(out_file, self.locations, out_path=out_path)
         if out_format == FORMAT_XML:
-            logger.error("The output format is not supported fot the provided input file")
+            logger.warning(
+                "The format {} is not supported fot the provided input file, results will be save in JSON format".format(out_format.upper()))
+            return self.save_to_json(out_file, self.locations, out_path=out_path)
 
     def save_output(self):
         pass
