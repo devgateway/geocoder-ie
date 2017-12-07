@@ -52,7 +52,8 @@ def save_narrative(text, lan, conn=None):
             close(conn)
 
 
-def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
+def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id,
+                  gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
                   vocabulary_id, conn=None):
     should_close = False
     try:
@@ -66,7 +67,8 @@ def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, 
               "precision_id, vocabulary_id) VALUES (NEXTVAL('hibernate_sequence'),%s,ST_MakePoint(%s, %s), %s, %s,%s, %s, %s, %s, %s, %s, %s) RETURNING id"
 
         cur.execute(sql,
-                    (location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
+                    (location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id,
+                     gazetteer_agency_id, location_class_id, location_reach_id, precision_id,
                      vocabulary_id))
 
         if should_close:
@@ -103,7 +105,7 @@ def save_loc_name(location_id, name_id, conn=None):
             close(conn)
 
 
-def save_geocoding(geocoding, job_id, activity_id, document_id, conn=None):
+def save_geocoding(geocoding, job_id, activity_id, conn=None):
     should_close = False
 
     try:
@@ -137,16 +139,16 @@ def save_geocoding(geocoding, job_id, activity_id, document_id, conn=None):
         geocoding_sql = """INSERT INTO GEOCODING 
               (id, geoname_id, toponym_name, name, lat, lng, country_code, country_name, fcl, fcode, fclname, 
               fcodename, population, continentcode, admin_code1, admin_name1, admin_code2, admin_name2,
-               admin_code3, admin_name3, admin_code4, admin_name4, document_id, queue_id, activity_id) 
+               admin_code3, admin_name3, admin_code4, admin_name4,  queue_id, activity_id) 
               VALUES (NEXTVAL('hibernate_sequence'),%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-              %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s) RETURNING id"""
+              %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s) RETURNING id"""
         cur = conn.cursor()
         geocoding_data = (
             geonameId, toponymName, name, lat, lng, countryCode, countryName, fcl, fcode, fclName, fcodeName,
             population,
             continentCode, adminCode1, adminName1, adminCode2, adminName2, adminCode3, adminName3, adminCode4,
             adminName4,
-            document_id, job_id, activity_id)
+            job_id, activity_id)
         cur.execute(geocoding_sql, geocoding_data)
 
         geocoding_id = cur.fetchone()[0]
@@ -156,9 +158,12 @@ def save_geocoding(geocoding, job_id, activity_id, document_id, conn=None):
         location_class_id = get_iati_code(location_class.get('code'), location_class.get('type')).get('id')
         exactness_id = get_iati_code(EXACTNESS_EXACT.get('code'), EXACTNESS_EXACT.get('type')).get('id')
         features_designation_id = get_iati_code(fcode, 'FEATURE_DESIGNATION').get('id')
-        location_reach_id = get_iati_code(LOCATION_REACH_ACTIVITY.get('code'), LOCATION_REACH_ACTIVITY.get('type')).get('id')
-        gazetteer_agency_id = get_iati_code(GAZETTEER_AGENCY_GEO_NAMES.get('code'), GAZETTEER_AGENCY_GEO_NAMES.get('type')).get('id')
-        precision_id = get_iati_code(LOCATION_PRECISION_EXACT.get('code'), LOCATION_PRECISION_EXACT.get('type')).get('id')
+        location_reach_id = get_iati_code(LOCATION_REACH_ACTIVITY.get('code'), LOCATION_REACH_ACTIVITY.get('type')).get(
+            'id')
+        gazetteer_agency_id = get_iati_code(GAZETTEER_AGENCY_GEO_NAMES.get('code'),
+                                            GAZETTEER_AGENCY_GEO_NAMES.get('type')).get('id')
+        precision_id = get_iati_code(LOCATION_PRECISION_EXACT.get('code'), LOCATION_PRECISION_EXACT.get('type')).get(
+            'id')
         vocabulary_id = get_iati_code(LOCATION_VOCABULARY_GEO_NAMES.get('code'),
                                       LOCATION_VOCABULARY_GEO_NAMES.get('type')).get('id')
 
@@ -188,7 +193,7 @@ def save_geocoding(geocoding, job_id, activity_id, document_id, conn=None):
             close(conn)
 
 
-def save_extract_text(text, geocoding_id, entities='', conn=None):
+def save_extract_text(text, geocoding_id, location_id, entities='', conn=None):
     should_close = False
     try:
         if conn is None:
@@ -196,10 +201,10 @@ def save_extract_text(text, geocoding_id, entities='', conn=None):
             should_close = True
 
         sql = """INSERT INTO extract 
-              (id, text, entities, geocoding_id) 
-              VALUES (NEXTVAL('hibernate_sequence'), %s, %s, %s) RETURNING id"""
+              (id, text, entities, geocoding_id,location_id,file_name) 
+              VALUES (NEXTVAL('hibernate_sequence'), %s, %s,%s, %s,%s) RETURNING id"""
         cur = conn.cursor()
-        data = (text, entities, geocoding_id)
+        data = (text.get('text'), entities, geocoding_id, location_id, text.get('file'))
         cur.execute(sql, data)
         result_id = cur.fetchone()[0]
         if should_close:

@@ -59,19 +59,20 @@ class JobProcessor(BaseProcessor):
 
     def save_output(self):
         try:
-            self.persist_geocoding(self.get_results(), self.job_activity_id, self.job_id, None)
+            self.persist_geocoding(self.get_results(), self.job_activity_id, self.job_id)
             update_queue_status(self.job_id, ST_PROCESSED)
         except Exception as error:
+            logger.error(error)
             update_queue_status(self.job_id, ST_ERROR, message=error.__str__())
 
-    def persist_geocoding(self, results, activity_id, job_id, document_id):
+    def persist_geocoding(self, results, activity_id, job_id):
         geocoding_list = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
         for geocoding in geocoding_list:
             try:
                 conn = open()
-                location_id, geocoding_id = save_geocoding(geocoding[0], job_id, activity_id, document_id, conn=conn)
+                location_id, geocoding_id = save_geocoding(geocoding[0], job_id, activity_id, conn=conn)
                 for text in geocoding[1]:
-                    save_extract_text(text.get('text'), geocoding_id, ', '.join(text.get('entities')), conn=conn)
+                    save_extract_text(text.get('text'), geocoding_id,location_id, ', '.join(text.get('entities')), conn=conn)
 
                 conn.commit()
             except Exception as error:

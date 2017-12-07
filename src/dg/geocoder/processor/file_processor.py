@@ -23,6 +23,7 @@ class FileProcessor(BaseProcessor):
             return None
         else:
             processor = None
+
             if is_xml(self.file):
                 processor = XMLProcessor(self.file, step_logger=self.step_logger)
 
@@ -30,5 +31,6 @@ class FileProcessor(BaseProcessor):
                 processor = DocumentProcessor(self.file, step_logger=self.step_logger, cty_codes=self.cty_codes)
 
             processor.process()
-
-        return processor
+            self.results = self.results + processor.get_results()
+            self.locations = self.locations + processor.get_locations()
+            return processor

@@ -95,10 +95,10 @@
         </transaction>
 
 
-          <document-link
-                url="C:\projects\geocoder-auto-py\src\test\resources\test_1_B.odt" format="application/odt">
+            <document-link
+                url="file:///home/sdimunzio/projects/geocoder-ie/src/test/resources/test_1_B.odt" format="application/odt">
             <title>
-                <narrative>Appraisal Report</narrative>
+                <narrative>Appraisal Report 2</narrative>
             </title>
             <category code="A01"/>
             <category code="A02"/>
@@ -109,8 +109,9 @@
             <language code="en"/>
         </document-link>
 
+
         <document-link
-                url="C:\projects\geocoder-auto-py\src\test\resources\test_1_A.odt" format="application/odt">
+                url="file:///home/sdimunzio/projects/geocoder-ie/src/test/resources/test_1_A.odt" format="application/odt">
             <title>
                 <narrative>Appraisal Report 2</narrative>
             </title>

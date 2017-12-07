@@ -11,15 +11,18 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue(out_file, 'out.tsv')
 
     def test_xml_to_xml(self):
-        out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(out_format=FORMAT_XML)
+        out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(
+            out_format=FORMAT_XML)
         self.assertTrue(out_file, 'out.xml')
 
     def test_xml_to_tsv(self):
-        out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(out_format=FORMAT_TSV)
+        out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(
+            out_format=FORMAT_TSV)
         self.assertTrue(out_file, 'out.tsv')
 
     def test_xml_to_json(self):
-        out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(out_format=FORMAT_JSON, out_file="test")
+        out_file = FileProcessor("resources/afdb_1_no_docs_activities.xml").process().write_output(
+            out_format=FORMAT_JSON, out_file="test")
         self.assertTrue(out_file, 'test.json')
 
     def test_afdb_activities_XML(self):
@@ -37,3 +40,8 @@ class TestGeocoder(unittest.TestCase):
         processor.process()
         processor.get_locations()
         self.assertTrue('Dhaka North City Corporation' in [a['name'] for (a, b) in processor.get_locations()])
+
+    def test_xml_simple_doc(self):
+        processor = FileProcessor('resources/test_1_activities.xml').process()
+        processor.get_locations()
+        processor.get_results()

@@ -20,13 +20,16 @@ def classify(texts, files, cls_name):
     tic = time.clock()
     sentences = []
     geo_sentences = []
+    doc_names = []
+
     for text in texts:
         reader = get_text_reader(text)
         if reader.is_english_lan():
             sentences += reader.split()
-
         else:
             logger.warning('Non english text, it will be ignored')
+
+    doc_names[len(doc_names):] = ["activity.xml"] * len(sentences)
 
     for file in files:
 
@@ -41,6 +44,7 @@ def classify(texts, files, cls_name):
                 logger.info('Non english document it will be ignored')
             else:
                 sentences += reader.split()
+                doc_names[len(doc_names):] = [file] * (len(sentences) - len(doc_names))
 
     toc = time.clock()
     logger.info(
@@ -51,7 +55,7 @@ def classify(texts, files, cls_name):
         predicted = classifier.predict(sentences)
         indexes = np.where(predicted == 'geography')[0]
         logger.info('{} geographical sentences found '.format(len(indexes)))
-        geo_sentences = [(sentences[i]) for i in indexes]
+        geo_sentences = [(sentences[i], doc_names[i]) for i in indexes]
 
     return geo_sentences
 
@@ -108,13 +112,13 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
         tic = time.clock()
         extraction = []
 
-        for s in sentences:
+        for s, file in sentences:
             output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
             locations_found = [text for text, tag in output if
                                tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
 
             if len(locations_found) > 0:
-                extraction.append(({'text': s, 'entities': locations_found}))
+                extraction.append(({'text': {'text': s, 'file': file}, 'entities': locations_found}))
 
         tac = time.clock()
         logger.info('NER extraction took {time}ms'.format(time=tac - tic))
@@ -137,7 +141,7 @@ def gap_length(word1, word2, text):
 
 def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     for row in extracted:
-        text = ' '.join(row['text'].replace('\n\n', ', ').split())
+        text = ' '.join(row['text']['text'].replace('\n\n', ', ').split())
         entities = row['entities']
         x = 0
         last_idx = len(entities) - 1
