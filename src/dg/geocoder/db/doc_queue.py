@@ -28,15 +28,24 @@ def add_job_to_queue(file_name, file_type, country_iso, state='PENDING'):
 
 def delete_all_docs_from_queue():
     conn = open()
-    sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID in (SELECT ID FROM DOC_QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING')))"
-    sql_2 = "DELETE FROM GEOCODING WHERE DOCUMENT_ID IN (SELECT ID FROM DOC_QUEUE)"
-    sql_3 = "DELETE FROM ACTIVITY WHERE DOCUMENT_ID IN (SELECT ID FROM DOC_QUEUE)"
-    sql_4 = "DELETE FROM DOC_QUEUE"
+    sql_1 = "DELETE FROM EXTRACT WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'));"
+    sql_2 = "DELETE FROM location_activity_descriptions WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'))) ;"
+    sql_3 = "DELETE FROM location_descriptions WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'))) ;"
+    sql_4 = "DELETE FROM location_identifier WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'))) ;"
+    sql_5 = "DELETE FROM location_names WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'))) ;"
+    sql_6 = "DELETE FROM administrative WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'))) ;"
+    sql_7 = "DELETE FROM LOCATION WHERE QUEUE_ID IN (SELECT ID FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING'));"
+    sql_8 = "DELETE FROM QUEUE WHERE STATE IN ('PENDING','ERROR','PROCESSING');"
+
     cur = conn.cursor()
     cur.execute(sql_1)
     cur.execute(sql_2)
     cur.execute(sql_3)
     cur.execute(sql_4)
+    cur.execute(sql_5)
+    cur.execute(sql_6)
+    cur.execute(sql_7)
+    cur.execute(sql_8)
     rowcount = cur.rowcount
 
     conn.commit()
@@ -45,17 +54,29 @@ def delete_all_docs_from_queue():
     return rowcount > 0
 
 
-def delete_doc_from_queue(doc_id):
+def delete_doc_from_queue(queue_id):
     conn = open()
-    sql_1 = "DELETE FROM EXTRACT WHERE GEOCODING_ID IN (SELECT ID FROM GEOCODING WHERE DOCUMENT_ID=%s)"
-    sql_2 = "DELETE FROM GEOCODING WHERE DOCUMENT_ID=%s"
-    sql_3 = "DELETE FROM ACTIVITY WHERE DOCUMENT_ID=%s"
-    sql_4 = "DELETE FROM QUEUE WHERE ID = %s"
+
+    sql_1 = "DELETE FROM EXTRACT WHERE QUEUE_ID = %s"
+    sql_2 = "DELETE FROM location_activity_descriptions WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID = %s);"
+    sql_3 = "DELETE FROM location_descriptions WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID = %s) ;"
+    sql_4 = "DELETE FROM location_identifier WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID = %s) ;"
+    sql_5 = "DELETE FROM location_names WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID = %s) ;"
+    sql_6 = "DELETE FROM administrative WHERE location_id IN (SELECT ID FROM LOCATION WHERE QUEUE_ID = %s) ;"
+    sql_7 = "DELETE FROM LOCATION WHERE QUEUE_ID = %s;"
+    sql_8 = "DELETE FROM GEOCODING WHERE QUEUE_ID = %s;"
+    sql_9 = "DELETE FROM QUEUE WHERE ID = %s"
+
     cur = conn.cursor()
-    cur.execute(sql_1, (doc_id,))
-    cur.execute(sql_2, (doc_id,))
-    cur.execute(sql_3, (doc_id,))
-    cur.execute(sql_4, (doc_id,))
+    cur.execute(sql_1, (queue_id,))
+    cur.execute(sql_2, (queue_id,))
+    cur.execute(sql_3, (queue_id,))
+    cur.execute(sql_4, (queue_id,))
+    cur.execute(sql_5, (queue_id,))
+    cur.execute(sql_6, (queue_id,))
+    cur.execute(sql_7, (queue_id,))
+    cur.execute(sql_8, (queue_id,))
+    cur.execute(sql_9, (queue_id,))
     rowcount = cur.rowcount
 
     conn.commit()
@@ -137,6 +158,23 @@ def update_queue_status(doc_id, status, message=''):
         sql = sql + "WHERE ID = %s "
         cur = conn.cursor()
         data = (status, message, doc_id)
+        cur.execute(sql, data)
+        conn.commit()
+        cur.close()
+    except Exception as error:
+        logger.info(error)
+        raise
+    finally:
+        close(conn)
+
+
+def update_queue_out_file(queue_id, file):
+    conn = None
+    try:
+        conn = open()
+        sql = "UPDATE QUEUE SET OUT_FILE=%s WHERE ID = %s "
+        cur = conn.cursor()
+        data = (file, queue_id)
         cur.execute(sql, data)
         conn.commit()
         cur.close()

@@ -20,6 +20,7 @@ class JobProcessor(BaseProcessor):
     def __init__(self, job, **kwargs):
         BaseProcessor.__init__(self, job, **kwargs)
         self.results = []
+        self.processor = None
         self.locations = []
         self.job_queue_type = job.get('queue_type')
         self.job_id = job.get('id')
@@ -41,15 +42,15 @@ class JobProcessor(BaseProcessor):
 
             if self.job_queue_type == 'ACTIVITY_QUEUE':
                 activity = get_activity_by_id(self.job_activity_id)
-                processor = ActivityProcessor(ActivityReader(xml=activity.get('xml')))
-                processor.process()
-                self.results = self.results + processor.get_results()
-                self.locations = self.locations + processor.get_locations()
+                self.processor = ActivityProcessor(ActivityReader(xml=activity.get('xml')))
+                self.processor.process()
+                self.results = self.results + self.processor.get_results()
+                self.locations = self.locations + self.processor.get_locations()
             else:
-                processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name), )
-                processor.process()
-                self.results = self.results + processor.get_results()
-                self.locations = self.locations + processor.get_locations()
+                self.processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name), )
+                self.processor.process()
+                self.results = self.results + self.processor.get_results()
+                self.locations = self.locations + self.processor.get_locations()
                 return self
 
         except Exception as error:
@@ -61,6 +62,7 @@ class JobProcessor(BaseProcessor):
         try:
             self.persist_geocoding(self.get_results(), self.job_activity_id, self.job_id)
             update_queue_status(self.job_id, ST_PROCESSED)
+            return self
         except Exception as error:
             logger.error(error)
             update_queue_status(self.job_id, ST_ERROR, message=error.__str__())
@@ -72,7 +74,9 @@ class JobProcessor(BaseProcessor):
                 conn = open()
                 location_id, geocoding_id = save_geocoding(geocoding[0], job_id, activity_id, conn=conn)
                 for text in geocoding[1]:
-                    save_extract_text(text.get('text'), geocoding_id,location_id, ', '.join(text.get('entities')), conn=conn)
+                    save_extract_text(text.get('text'), geocoding_id, location_id, job_id,
+                                      ', '.join(text.get('entities')),
+                                      conn=conn)
 
                 conn.commit()
             except Exception as error:

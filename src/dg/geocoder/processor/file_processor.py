@@ -22,15 +22,16 @@ class FileProcessor(BaseProcessor):
             logger.info('Not valid file provided')
             return None
         else:
-            processor = None
-
             if is_xml(self.file):
-                processor = XMLProcessor(self.file, step_logger=self.step_logger)
+                self.processor = XMLProcessor(self.file, step_logger=self.step_logger)
 
             else:
-                processor = DocumentProcessor(self.file, step_logger=self.step_logger, cty_codes=self.cty_codes)
+                self.processor = DocumentProcessor(self.file, step_logger=self.step_logger, cty_codes=self.cty_codes)
 
-            processor.process()
-            self.results = self.results + processor.get_results()
-            self.locations = self.locations + processor.get_locations()
-            return processor
+            self.processor.process()
+            self.results = self.results + self.processor.get_results()
+            self.locations = self.locations + self.processor.get_locations()
+            return self.processor
+
+    def write(self, out_format, out_path, out_file):
+        return self.processor.write(out_format, out_path, out_file)

@@ -6,6 +6,7 @@ from dg.geocoder.processor.base_processor import FORMAT_TSV, FORMAT_JSON, FORMAT
 
 
 class TestGeocoder(unittest.TestCase):
+
     def test_file_to_tsv(self):
         out_file = FileProcessor("resources/dfid_4182791.odt").process().write_output(out_format=FORMAT_TSV)
         self.assertTrue(out_file, 'out.tsv')

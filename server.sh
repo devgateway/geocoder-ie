@@ -1,2 +1,2 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 python3 src/server.py "$@"

@@ -24,6 +24,7 @@ class BaseProcessor:
         self.locations = []
         self.cty_codes = kwargs.get("cty_codes", [])
         self.step_logger = kwargs.get("step_logger", None)
+        self.processor = self
 
     def process(self):
         pass
@@ -34,14 +35,21 @@ class BaseProcessor:
     def get_results(self):
         return self.results
 
-    def write_output(self, out_format=FORMAT_TSV, out_path='', out_file='out'):
+    def write_output(self, out_format=None, out_path='', out_file='out'):
+        if self.processor is not self:
+            return self.processor.write_output(out_format, out_path, out_file)
+        else:
+            return self.write(out_format, out_path, out_file)
+
+    def write(self, out_format=FORMAT_TSV, out_path='', out_file='out'):
         if out_format == FORMAT_TSV or out_format is None:
             return self.save_to_tsv(out_file, self.locations, out_path=out_path)
         if out_format == FORMAT_JSON:
             return self.save_to_json(out_file, self.locations, out_path=out_path)
         if out_format == FORMAT_XML:
             logger.warning(
-                "The format {} is not supported fot the provided input file, results will be save in JSON format".format(out_format.upper()))
+                "The format {} is not supported fot the provided input file, results will be save in JSON format".format(
+                    out_format.upper()))
             return self.save_to_json(out_file, self.locations, out_path=out_path)
 
     def save_output(self):

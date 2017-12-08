@@ -1,10 +1,10 @@
 import logging.config
-
+import os
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from dg.geocoder.config import get_doc_queue_path, get_log_config_path
 from dg.geocoder.constants import ST_PENDING
-from dg.geocoder.db.doc_queue import get_queue_list
+from dg.geocoder.db.doc_queue import get_queue_list, update_queue_out_file
 from dg.geocoder.processor.job_processor import JobProcessor
 
 logging.config.fileConfig(get_log_config_path())
@@ -18,7 +18,7 @@ logger = logging.getLogger()
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('interval', seconds=30, max_instances=4)
+@sched.scheduled_job('interval', seconds=10, max_instances=4)
 def timed_job():
     process_jobs()
 
@@ -28,11 +28,21 @@ def process_jobs():
     pending_jobs = get_queue_list(1, 10, [ST_PENDING]).get('rows')
     for job in pending_jobs:
         try:
-            out_path = get_doc_queue_path()
-            JobProcessor(job).process().save_output()
-        except:
-            logger.error("Job {} did't go well, results were not saved, I THINK ...".format(job.get('id')))
+            # TODO: use same db connection across the whole process,connection should be open here and passed to child elements
+            processor = JobProcessor(job)
+            processor.process()
+            processor.save_output()
 
+            if job.get('queue_type') == 'DOC_QUEUE':
+                out_file = processor.write_output(out_path=get_doc_queue_path(),
+                                                  out_file='{}_out'.format(os.path.splitext(job.get('file_name'))[0]))
+                update_queue_out_file(job.get('id'), out_file)
+
+
+        except Exception as e:
+            logger.error("Job {} did't go well, results were not saved, I THINK ...".format(job.get('id')))
+            logger.error(e)
 
 
 sched.start()
+# process_jobs()

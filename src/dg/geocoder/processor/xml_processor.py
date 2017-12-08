@@ -30,10 +30,10 @@ class XMLProcessor(BaseProcessor):
                 self.results = self.results + activity_processor.get_results()
         return self
 
-    def write_output(self, out_format=FORMAT_XML, out_path='', out_file='out'):
+    def write(self, out_format=FORMAT_XML, out_path='', out_file='out'):
         if out_format == FORMAT_XML or out_format is None:
             out_file_with_extension = "{}.xml".format(out_file)
             self.parser.save(os.path.realpath(os.path.join(out_path, out_file_with_extension)))
             return out_file_with_extension
         else:
-            return super().write_output(out_format=out_format, out_path=out_path, out_file=out_file)
+            return super().write(out_format=out_format, out_path=out_path, out_file=out_file)
