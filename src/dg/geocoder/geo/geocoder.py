@@ -20,13 +20,16 @@ def classify(texts, files, cls_name):
     tic = time.clock()
     sentences = []
     geo_sentences = []
+    doc_names = []
+
     for text in texts:
         reader = get_text_reader(text)
         if reader.is_english_lan():
             sentences += reader.split()
-
         else:
             logger.warning('Non english text, it will be ignored')
+
+    doc_names[len(doc_names):] = ["activity.xml"] * len(sentences)
 
     for file in files:
 
@@ -41,6 +44,7 @@ def classify(texts, files, cls_name):
                 logger.info('Non english document it will be ignored')
             else:
                 sentences += reader.split()
+                doc_names[len(doc_names):] = [file] * (len(sentences) - len(doc_names))
 
     toc = time.clock()
     logger.info(
@@ -51,7 +55,7 @@ def classify(texts, files, cls_name):
         predicted = classifier.predict(sentences)
         indexes = np.where(predicted == 'geography')[0]
         logger.info('{} geographical sentences found '.format(len(indexes)))
-        geo_sentences = [(sentences[i]) for i in indexes]
+        geo_sentences = [(sentences[i], doc_names[i]) for i in indexes]
 
     return geo_sentences
 
@@ -61,10 +65,11 @@ def join(item_list):
     locs = {}
     for item in item_list:
         for l in item['locations']:
-            if locs.get(l.lower()):
-                locs[l.lower()]['texts'].append({'text': item['text'], 'entities': item['entities']})
+            current = l.lower().strip()
+            if locs.get(current):
+                locs[current]['texts'].append({'text': item['text'], 'entities': item['entities']})
             else:
-                locs[l.lower()] = {'texts': [{'text': item['text'], 'entities': item['entities']}]}
+                locs[current] = {'texts': [{'text': item['text'], 'entities': item['entities']}]}
 
     return [(key, locs[key]) for key in locs]
 
@@ -107,13 +112,13 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
         tic = time.clock()
         extraction = []
 
-        for s in sentences:
+        for s, file in sentences:
             output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
             locations_found = [text for text, tag in output if
                                tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
 
             if len(locations_found) > 0:
-                extraction.append(({'text': s, 'entities': locations_found}))
+                extraction.append(({'text': {'text': s, 'file': file}, 'entities': locations_found}))
 
         tac = time.clock()
         logger.info('NER extraction took {time}ms'.format(time=tac - tic))
@@ -136,7 +141,7 @@ def gap_length(word1, word2, text):
 
 def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     for row in extracted:
-        text = ' '.join(row['text'].replace('\n\n', ', ').split())
+        text = ' '.join(row['text']['text'].replace('\n\n', ', ').split())
         entities = row['entities']
         x = 0
         last_idx = len(entities) - 1
@@ -149,7 +154,7 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
             while x is not last_idx:
                 current_loc = entities[x]
                 next_loc = entities[x + 1]
-                # get the gap bewteen the two entities
+                # get the gap between  two entities
                 gap, connection_text, text = gap_length(current_loc, next_loc, text)
                 # if gap is < to distance but there are special chars in between we take them as separate
                 # entities ie Congo,Burkina will be taken as ['Congo','Burkina'] and Congo,New Guinea,
@@ -165,6 +170,23 @@ def merge(extracted, distance=2, ignored_gap_chars=get_ignore_gap_chars()):
     return extracted
 
 
+def reduce(results):
+    unique_results = {}
+    for name, metadata in results:
+        geocoding = metadata.get('geocoding')
+        if geocoding is not None:
+            geonameId = geocoding.get('geonameId')
+            existing = unique_results.get(geonameId)
+            if existing:
+                existing[1]['texts'] = existing[1]['texts'] + metadata['texts']
+            else:
+                unique_results[geonameId] = (name, metadata)
+        else:
+            unique_results[name] = (name, metadata)
+
+    return list(unique_results.values())
+
+
 def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step_log=None):
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
@@ -172,6 +194,7 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
     # 3) resolve locations using Geo Names
     if step_log:
         step_log("Classifying documents")
+
     texts = classify(texts, documents, cls_name=cls_name)
 
     if step_log:
@@ -190,5 +213,6 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
         step_log("Geocoding entities")
 
     results = geonames(normalized, cty_codes=cty_codes)
+    reduced = reduce(results)
 
-    return results
+    return reduced

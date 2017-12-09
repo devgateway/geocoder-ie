@@ -1,4 +1,5 @@
 import logging
+from io import StringIO
 
 from lxml import etree as et
 
@@ -7,16 +8,14 @@ from dg.geocoder.iati.iati_codes import iati_regions, iati_countries
 logger = logging.getLogger()
 
 
-def read_activities():
-    logger.info('parse activity lists')
-
-
 class ActivityReader:
-    def __init__(self, path=None, root=None):
+    def __init__(self, path=None, root=None, xml=None):
         if path is not None:
             self.root = et.parse(path).getroot()
         elif root is not None:
             self.root = root
+        elif xml is not None:
+            self.root = et.parse(StringIO(xml)).getroot()
 
     def get_identifier(self):
         return self.root.find('iati-identifier').text
@@ -50,14 +49,11 @@ class ActivityReader:
             int(self.get_recipient_region_code())] if self.get_recipient_region_code() is not None else None
 
     def get_recipient_country_code(self):
-        recipient_country = self.root.find('recipient-country')
-        if recipient_country is not None:
-            return recipient_country.get('code')
-        return None
+        recipient_countries = self.root.findall('recipient-country')
+        return [(c.get('code')) for c in recipient_countries]
 
     def get_recipient_country_name(self):
-        return iati_countries[
-            self.get_recipient_country_code()] if self.get_recipient_country_code() is not None else None
+        return [(iati_countries[c]) for c in self.get_recipient_country_code()]
 
     def get_reporting_organisation_code(self):
         element = self.root.find('reporting-org')

@@ -1,8 +1,7 @@
 import unittest
 
-from dg.geocoder.db.geocode import save_activity
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
-from dg.geocoder.processor import process_xml, process_queue, persist_geocoding
+from dg.geocoder.processor.xml_processor import XMLProcessor
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 
@@ -55,7 +54,7 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Burkina Faso' in locs)
 
     def test_afdb_sub_national(self):
-        geo = geocode([], ['resources/afdb_subnational.pdf'], ['GN'])
+        geo = geocode([], ['resources/afdb_subnational.pdf', ], ['GN'])
         locs = [l for (l, data) in geo if data.get('geocoding')]
         self.assertTrue('Guinea' in locs)
         self.assertTrue('Conakry' in locs)
@@ -65,40 +64,23 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue('Republic of Guinea' in locs)
         self.assertTrue('Gaoual' in locs)
 
-    def test_geocode_text_3(self):
-        geo = geocode([], ['resources/sample_text_3.txt'], [])
+    def test_dfid_sub_national(self):
+        geo = geocode([], ['resources/dfid_4182791.odt', 'resources/dfid_4182791.odt'], ['BD'])
         locs = [l for (l, data) in geo if data.get('geocoding')]
-        self.assertTrue(locs is not None)
+        self.assertTrue('' in locs)
 
-    def test_afdb_activities_XML(self):
-        process_xml('resources/afdb_2_activities.xml')
+    def test_geocode_txt_4(self):
+        geo = geocode([], ['resources/sample_text_4.txt'], ['GN'])
+        self.assertTrue(geo is not None)
 
-    def test_afdb_activities_XML_1(self):
-        process_xml('resources/afdb_1_no_docs_activities.xml')
+    def test_geocode_xml_1(self):
+        processor = XMLProcessor('resources/test_1_activities.xml').process()
+        results = processor.get_results()
+        locations = processor.get_locations()
+        self.assertTrue(locations is not None)
 
-    def test_process_queue(self):
-        process_queue()
-
-    def test_save_activity(self):
-        save_activity('identifier', 'title', 'description', 'country', 26)
-
-    def test_dfid_simple_document(self):
-        results = geocode([], ['resources/dfid_4182791.odt'], cty_codes=[])
-
-        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        persist_geocoding(geocoding, None, None)
-        for l, data in geocoding:
-            print(l)
-
-    def test_afdb_subnational_simple_document(self):
-        results = geocode([], ['resources/afdb_subnational.pdf'], cty_codes=[])
-        geocoding = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
-        persist_geocoding(geocoding, None, None)
-        for l, data in geocoding:
-            print(l)
-
-    def test_ner(self):
-        text = """
+        def test_ner(self):
+            text = """
                 The project aims to improve the road connections om the North-West Fouta Djallon area.
                 In order to further support this political will towards poverty reduction, the
                 African Development Bank (ADB) granted the Guinean Government’s request for the
@@ -107,8 +89,7 @@ class TestGeocoder(unittest.TestCase):
                 Middle Guinea region. 
                 """
 
-        extract_ner([text])
+            extract_ner([text])
 
-
-if __name__ == '__main__':
-    unittest.main()
+    if __name__ == '__main__':
+        unittest.main()

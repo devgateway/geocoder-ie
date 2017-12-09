@@ -12,7 +12,7 @@ def read_activities():
     logger.info('parse activity lists')
 
 
-class ActivitiesReader:
+class ActivitiesParser:
     def __init__(self, path=None):
         if path is not None:
             if not is_valid_schema(path):

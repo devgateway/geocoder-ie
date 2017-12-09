@@ -13,11 +13,11 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS
 
 from dg.geocoder.config import get_doc_queue_path, get_app_port
+from dg.geocoder.constants import ST_PROCESSING, ST_PENDING, ST_PROCESSED, ST_ERROR
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
-from dg.geocoder.db.doc_queue import save_doc, get_docs, get_document_by_id, delete_doc_from_queue, \
+from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue_by_id, delete_doc_from_queue, \
     delete_all_docs_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
-from dg.geocoder.processor import process_by_id, ST_PROCESSED, ST_ERROR, ST_PROCESSING, ST_PENDING
 
 logger = logging.getLogger()
 
@@ -110,7 +110,7 @@ def docs_list():
         if state == ST_PROCESSED:
             states.append(ST_ERROR)
 
-    return Response(json.dumps(get_docs(page=page, doc_type=doc_type, states=states), default=datetime_handler),
+    return Response(json.dumps(get_queue_list(page=page, doc_type=doc_type, states=states), default=datetime_handler),
                     mimetype='application/json')
 
 
@@ -141,16 +141,16 @@ def upload_doc():
         file_type = f.content_type
         docs_path = os.path.join(get_doc_queue_path(), file_name)
         f.save(docs_path)
-        save_doc(file_name, file_type, country_code)
+        add_job_to_queue(file_name, file_type, country_code)
     return jsonify({"success": True}), 200
 
 
 @app.route('/docqueue/process/<document_id>', methods=['GET'])
 def process_document(document_id):
     logger.info('starting process thread')
-    a_thread = threading.Thread(name=document_id, target=process_by_id, args=(document_id,))
-    a_thread.start()
-    return jsonify({"success": True}), 200
+    # a_thread = threading.Thread(name=document_id, target=process_by_id, args=(document_id,))
+    # a_thread.start()
+    # return jsonify({"success": True}), 200
 
 
 @app.route('/geocoding', methods=['GET'])
@@ -167,21 +167,22 @@ def geocoding_list():
                                default=datetime_handler), mimetype='application/json')
 
 
-@app.route('/geocoding/download/<document_id>', methods=['GET'])
-def geocoding_download(document_id):
-    document = get_document_by_id(document_id)
-    doc_name = document.get('file_name')
-    doc_type = document.get('type')
-    output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
-    if doc_type == 'text/xml':
-        output_ext = '_out.xml'
-    return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)
+@app.route('/geocoding/download/<queue_id>', methods=['GET'])
+def geocoding_download(queue_id):
+    queue = get_queue_by_id(queue_id)
+    if queue.get('queue_type') != 'ACTIVITY_QUEUE':
+        doc_name = queue.get('file_name')
+        doc_type = queue.get('type')
+        output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
+        if doc_type == 'text/xml':
+            output_ext = '_out.xml'
+
+        return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)
 
 
 @app.route('/activity', methods=['GET'])
 def activity_list():
     document_id = None
-
     if 'document_id' in request.args:
         document_id = request.args['document_id']
 
@@ -206,4 +207,4 @@ def purge():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=get_app_port(), debug=True)
+    app.run(host='0.0.0.0', port=get_app_port(), debug=False, threaded=True)

@@ -1,10 +1,12 @@
 import argparse
+import logging
 import sys
 
 from dg.geocoder.iati.iati_codes import iati_countries
-from dg.geocoder.processor import process_file
-import logging
+from dg.geocoder.processor.file_processor import FileProcessor
+
 logger = logging.getLogger()
+
 
 def main(args):
     try:
@@ -38,7 +40,7 @@ def main(args):
         parser.add_argument("-n", "--name", type=str, required=False, dest='name',
                             help='set the new classifier name')
 
-        parser.add_argument("-o", "--output", type=str, required=False, default='json', dest='outputFormat',
+        parser.add_argument("-o", "--output", type=str, required=False,  dest='outputFormat',
                             help='Set output format, default json', choices=['xml', 'tsv', 'json'])
 
         args = parser.parse_args(args)
@@ -53,7 +55,7 @@ def main(args):
             else:
                 cty_codes = args.countries.split(',') if args.countries else None
 
-                out = process_file(file, cty_codes, out_format=format)
+                out = FileProcessor(file, cty_codes=cty_codes).process().write_output(format, '')
                 print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':

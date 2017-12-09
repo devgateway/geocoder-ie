@@ -45,10 +45,11 @@ function DocsTable(props){
       <table className="doc-list">
       <tbody>
         <tr>
+          <th>TYPE</th>
           <th>ID</th>
           <th>DATE</th>
           <th>PROCESSED</th>
-          <th>FILE NAME</th>
+          <th>DOC / ACTIVITY </th>
           <th>STATUS</th>
           <th>MESSAGE</th>
           <th>COUNTRY</th>
@@ -56,19 +57,19 @@ function DocsTable(props){
         </tr>
         {(rows)?rows.map(l =>
           <tr className={l.id} key={l.id}>
+            <td>{l.queue_type}</td>
             <td>{l.id}</td>
             <td>{new Date(l.create_date).toLocaleString() }</td>
              <td>{l.processed_date?new Date(l.processed_date).toLocaleString():null}</td>
-
-            <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l.file_name}`}>{l.file_name}</a></td>
+            <td><a target='new' href={`${window.API_ROOT}/docqueue/download/${l.file_name}`}>{l.file_name}</a> {l.identifier}</td>
             <td>{l.state}</td>
             <td>{l.message}</td>
             <td>{countryList.find(country => {return country.code === l.country_iso})? countryList.find(country => {return country.code === l.country_iso}).name : 'N/A'}</td>
             <td>
-              {actions.indexOf('DELETE')>-1?l.state=='PROCESSING'?null:<a key='delete' className="list-action" onClick={e=>props.onDeleteDoc(l.id)}> Delete </a>:null}
+              {(l.queue_type=='ACTIVITY_QUEUE')?null:actions.indexOf('DELETE')>-1?l.state=='PROCESSING'?null:<a key='delete' className="list-action" onClick={e=>props.onDeleteDoc(l.id)}> Delete </a>:null}
               {actions.indexOf('FORCE')>-1?l.state=='PROCESSING'?'':<a key='force' className="list-action" onClick={e=>props.onProcessDoc(l.id)}>Process </a>:null}
-              {actions.indexOf('DOWNLOAD')>-1?<a className="list-action" key='download' target='new' href={`${window.API_ROOT}/geocoding/download/${l.id}`}>Result</a>:null}
-              {actions.indexOf('DETAILS')>-1? <Link className="list-action" key='details' to={`/geocodeDetails?documentId=${l.id}&isXML=${l.type=='text/xml'}`}>Details</Link>:null}
+              {(l.queue_type=='ACTIVITY_QUEUE')?null:actions.indexOf('DOWNLOAD')>-1?<a className="list-action" key='download' target='new' href={`${window.API_ROOT}/geocoding/download/${l.id}`}>Result</a>:null}
+              {actions.indexOf('DETAILS')>-1? <Link className="list-action" key='details' to={`/geocodeDetails?queueId=${l.id}&isXML=${l.type=='text/xml'}`}>Details</Link>:null}
             </td>
           </tr>)
         : null}

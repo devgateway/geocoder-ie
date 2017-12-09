@@ -1,3 +1,2 @@
-python src/doc_queue_scheduler.py %*
-
+python src/scheduler.py %*
 
