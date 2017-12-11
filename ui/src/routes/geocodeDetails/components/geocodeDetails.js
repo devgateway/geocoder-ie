@@ -11,13 +11,14 @@ export default class GeocodeDetails extends Component {
   }
 
   componentWillMount() {
-    const documentId = this.props.location.query.documentId;
+    debugger;
+    const queueId = this.props.location.query.queueId;
     const isXML = this.props.location.query.isXML;
 
     if (isXML === 'true') {
-      this.props.onLoadActivityList(documentId);
+      this.props.onLoadActivityList(queueId);
     }
-    this.props.onLoadGeocodingList(documentId);
+    this.props.onLoadGeocodingList(queueId);
   }
 
   renderGeocodingList(list) {
@@ -40,7 +41,7 @@ export default class GeocodeDetails extends Component {
               <td>{geocode.lat}</td>
               <td>{geocode.lng}</td>
               <td>{geocode.country_name}</td>
-              <td><a className="list-action" onClick={this.showTexts.bind(this, geocode[0])}> Show texts </a></td>
+              <td><a className="list-action" onClick={this.showTexts.bind(this, geocode.id)}> Show texts </a></td>
             </tr>)
           }
         </tbody>
@@ -49,6 +50,7 @@ export default class GeocodeDetails extends Component {
   }
 
   showTexts(gecodeId) {
+    debugger;
     this.props.onLoadExtractList(gecodeId);
     this.setState({extractVisible: true});
   }

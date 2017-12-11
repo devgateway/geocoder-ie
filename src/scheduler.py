@@ -37,7 +37,7 @@ def process_jobs():
 
             if job.get('queue_type') == 'DOC_QUEUE':
                 out_file = processor.write_output(out_path=get_doc_queue_path(),
-                                                  out_file='{}_out'.format(os.path.splitext(job.get('file_name'))[0]))
+                                                  out_file='{}_{}_out'.format(job.get('id'),os.path.splitext(job.get('file_name'))[0]))
                 update_queue_out_file(job.get('id'), out_file)
 
 

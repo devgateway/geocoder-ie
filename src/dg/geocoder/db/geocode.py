@@ -240,7 +240,7 @@ def save_activity(identifier, title, description, country, doc_id):
         close(conn)
 
 
-def get_geocoding_list(activity_id=None, document_id=None, queue_id=None):
+def get_geocoding_list(activity_id=None, queue_id=None, document_id=None):
     conn = None
     try:
         conn = open()

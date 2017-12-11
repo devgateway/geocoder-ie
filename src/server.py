@@ -156,14 +156,14 @@ def process_document(document_id):
 @app.route('/geocoding', methods=['GET'])
 def geocoding_list():
     activity_id = None
-    document_id = None
+    queue_id = None
     if 'activity_id' in request.args:
         activity_id = request.args['activity_id']
 
-    if 'document_id' in request.args:
-        document_id = request.args['document_id']
+    if 'queue_id' in request.args:
+        queue_id = request.args['queue_id']
 
-    return Response(json.dumps(get_geocoding_list(activity_id=activity_id, document_id=document_id),
+    return Response(json.dumps(get_geocoding_list(activity_id=activity_id, queue_id=queue_id),
                                default=datetime_handler), mimetype='application/json')
 
 
@@ -171,13 +171,8 @@ def geocoding_list():
 def geocoding_download(queue_id):
     queue = get_queue_by_id(queue_id)
     if queue.get('queue_type') != 'ACTIVITY_QUEUE':
-        doc_name = queue.get('file_name')
-        doc_type = queue.get('type')
-        output_ext = '_out.{}.tsv'.format(doc_name.split('.')[1])
-        if doc_type == 'text/xml':
-            output_ext = '_out.xml'
-
-        return send_from_directory(get_doc_queue_path(), doc_name.split('.')[0] + output_ext, as_attachment=True)
+        doc_name = queue.get('out_file')
+        return send_from_directory(get_doc_queue_path(), doc_name, as_attachment=True)
 
 
 @app.route('/activity', methods=['GET'])
