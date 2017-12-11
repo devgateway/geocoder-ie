@@ -25,6 +25,8 @@ def timed_job():
 
 # get all pending jobs
 def process_jobs():
+    logger.info('process_jobs was called')
+
     pending_jobs = get_queue_list(1, 10, [ST_PENDING]).get('rows')
     for job in pending_jobs:
         try:
@@ -45,4 +47,4 @@ def process_jobs():
 
 
 sched.start()
-# process_jobs()
+#process_jobs()
