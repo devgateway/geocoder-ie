@@ -1,32 +1,31 @@
 import logging
 
+import psycopg2
+import psycopg2.extras
+
 from dg.geocoder.db.db import open, close
 
 logger = logging.getLogger()
-
-# Any change to Activity Entity from the API tool will affect this function
-def activity_to_dic(activity):
-    return {
-        "id":           activity[0],
-        "identifier":   activity[7],
-        "xml":          activity[9]
-    }
 
 
 def get_activity_by_id(activity_id):
     conn = None
     try:
         conn = open()
-        sql_select = """SELECT * FROM ACTIVITY where id = %s """
-        cur = conn.cursor()
-        data = (activity_id,)
-        cur.execute(sql_select, data)
+        sql_select = "SELECT * FROM ACTIVITY where id=%s"
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cur.execute(sql_select, (activity_id,))
 
-        activity = cur.fetchone()
+        one_activity = cur.fetchone()
+        activity = {
+            "id": one_activity.get("id"),
+            "identifier": one_activity.get("identifier"),
+            "xml": one_activity.get("xml")
+        }
+
         cur.close()
 
-        return activity_to_dic(activity)
-
+        return activity
     except Exception as error:
         logger.info(error)
     finally:
