@@ -4,11 +4,13 @@ from dg.geocoder.db.db import open, close
 
 logger = logging.getLogger()
 
-
+# Any change to Activity Entity from the API tool will affect this function
 def activity_to_dic(activity):
-    return {"id": activity[0],
-            "identifier": activity[1],
-            "xml": activity[2]}
+    return {
+        "id":           activity[0],
+        "identifier":   activity[7],
+        "xml":          activity[9]
+    }
 
 
 def get_activity_by_id(activity_id):
