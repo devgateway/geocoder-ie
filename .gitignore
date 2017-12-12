@@ -1,6 +1,6 @@
 /projects
 /.download
-
+/ner
 /.project
 ./.idea
 ./.metadata
