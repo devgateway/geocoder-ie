@@ -16,13 +16,7 @@ def get_activity_by_id(activity_id):
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(sql_select, (activity_id,))
 
-        one_activity = cur.fetchone()
-        activity = {
-            "id": one_activity.get("id"),
-            "identifier": one_activity.get("identifier"),
-            "xml": one_activity.get("xml")
-        }
-
+        activity = cur.fetchone()
         cur.close()
 
         return activity
