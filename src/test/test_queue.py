@@ -7,6 +7,6 @@ from dg.geocoder.processor.job_processor import JobProcessor
 
 class TestGeocoder(unittest.TestCase):
     def test_queue(self):
-        add_job_to_queue("example.xml", "application/xml", "", state='ST_TESTING')
+        add_job_to_queue("example_SL.pdf", "application/pdf", "", state='ST_TESTING')
         job = get_queue_list(1, 1, ["ST_TESTING"]).get('rows')[0]
         JobProcessor(job).process().save_output()
