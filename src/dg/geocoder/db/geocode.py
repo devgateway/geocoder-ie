@@ -9,7 +9,7 @@ from dg.geocoder.db.iati_mapper import get_location_class_from_fcl, EXACTNESS_EX
 
 logger = logging.getLogger()
 
-NEW_AUTO_CODE_STATUS = 0
+AUTO_CODED_STATUS = 0
 
 
 def get_iati_code(code, iati_type):
@@ -168,7 +168,7 @@ def save_geocoding(geocoding, job_id, activity_id, conn=None):
                                       LOCATION_VOCABULARY_GEO_NAMES.get('type')).get('id')
 
         # save location
-        location_id = save_location(NEW_AUTO_CODE_STATUS,
+        location_id = save_location(AUTO_CODED_STATUS,
                                     lng, lat,
                                     activity_id,
                                     job_id,
