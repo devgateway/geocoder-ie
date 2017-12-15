@@ -1,5 +1,5 @@
 import logging
-from io import StringIO
+from io import StringIO, BytesIO
 
 from lxml import etree as et
 
@@ -15,7 +15,7 @@ class ActivityReader:
         elif root is not None:
             self.root = root
         elif xml is not None:
-            self.root = et.parse(StringIO(xml)).getroot()
+            self.root = et.parse(BytesIO(xml.encode())).getroot()
 
     def get_identifier(self):
         return self.root.find('iati-identifier').text

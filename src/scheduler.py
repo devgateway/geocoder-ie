@@ -46,5 +46,5 @@ def process_jobs():
             logger.error(e)
 
 
-sched.start()
-#process_jobs()
+#sched.start()
+process_jobs()

@@ -47,7 +47,8 @@ class JobProcessor(BaseProcessor):
                 self.results = self.results + self.processor.get_results()
                 self.locations = self.locations + self.processor.get_locations()
             else:
-                self.processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name),cty_codes=[self.job_country_iso])
+                self.processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name),
+                                               cty_codes=[self.job_country_iso])
                 self.processor.process()
                 self.results = self.results + self.processor.get_results()
                 self.locations = self.locations + self.processor.get_locations()
