@@ -29,16 +29,16 @@ def get_iati_code(code, iati_type):
         close(conn)
 
 
-def save_narrative(text, lan, conn=None):
+def save_narrative(text, lang, conn=None):
     should_close = False
     try:
         if conn is None:
             conn = open()
             should_close = True
         cur = conn.cursor()
-        sql = "insert into narrative (id,description,lan) values (NEXTVAL('hibernate_sequence'),%s,%s) " \
+        sql = "insert into narrative (id,description,lang) values (NEXTVAL('hibernate_sequence'),%s,%s) " \
               " RETURNING id"
-        cur.execute(sql, (text, lan))
+        cur.execute(sql, (text, lang))
 
         if should_close:
             conn.commit()
