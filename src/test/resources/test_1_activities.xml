@@ -53,8 +53,7 @@
             </mailing-address>
         </contact-info>
         <activity-scope code="4"/>
-        <recipient-country code="UG"/>
-        <recipient-country code="BD"/>
+
         <sector vocabulary="DAC" code="31220">
             <narrative>Forestry / Plantations</narrative>
         </sector>

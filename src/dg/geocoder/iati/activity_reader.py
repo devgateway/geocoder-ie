@@ -87,6 +87,10 @@ class ActivityReader:
     def xml(self):
         return self.__str__()
 
+    def add_recipient_country(self, country_data):
+        if not country_data.get('countryCode') in self.get_recipient_country_code():
+            et.SubElement(self.root, "recipient-country", code=country_data.get('countryCode'))
+
     def add_location(self, loc_data):
         location = et.SubElement(self.root, "location")
         et.SubElement(location, "location-reach", code="1")
@@ -99,9 +103,17 @@ class ActivityReader:
 
         # logger.info(activity)
         # ET.SubElement(ET.SubElement(location, "activity-description"), "narrative").text = activity
+        if loc_data.get('adminCode1'):
+            et.SubElement(location, "administrative", vocabulary="G1", level="1", code=str(loc_data['adminCode1']))
 
-        et.SubElement(location, "administrative",
-                      vocabulary="G1", level=loc_data['fcode'], code=str(loc_data['geonameId']))
+        if loc_data.get('adminCode2'):
+            et.SubElement(location, "administrative", vocabulary="G1", level="2", code=str(loc_data['adminCode2']))
+
+        if loc_data.get('adminCode3'):
+            et.SubElement(location, "administrative", vocabulary="G1", level="3", code=str(loc_data['adminCode3']))
+
+        if loc_data.get('adminCode4'):
+            et.SubElement(location, "administrative", vocabulary="G1", level="4", code=str(loc_data['adminCode4']))
 
         et.SubElement(et.SubElement(location, "point"), "pos").text = "{} {}".format(
             str(loc_data['lat']), str(loc_data['lng']))

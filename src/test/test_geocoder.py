@@ -75,21 +75,19 @@ class TestGeocoder(unittest.TestCase):
 
     def test_geocode_xml_1(self):
         processor = XMLProcessor('resources/test_1_activities.xml').process()
-        results = processor.get_results()
-        locations = processor.get_locations()
-        self.assertTrue(locations is not None)
+        file = processor.write(out_file='test_out_country_check', out_path='results')
+        self.assertTrue(file is not None)
 
-        def test_ner(self):
-            text = """
-                The project aims to improve the road connections om the North-West Fouta Djallon area.
-                In order to further support this political will towards poverty reduction, the
-                African Development Bank (ADB) granted the Guinean Government’s request for the
-                financing of the preparation of the feasibility study on a rural development support project in
-                the North-West Fouta Djallon area, in particular Gaoual and Koundara prefectures in the
-                Middle Guinea region. 
-                """
-
-            extract_ner([text])
+    def test_ner(self):
+        text = """
+            The project aims to improve the road connections om the North-West Fouta Djallon area.
+            In order to further support this political will towards poverty reduction, the
+            African Development Bank (ADB) granted the Guinean Government’s request for the
+            financing of the preparation of the feasibility study on a rural development support project in
+            the North-West Fouta Djallon area, in particular Gaoual and Koundara prefectures in the
+            Middle Guinea region. 
+            """
+        extract_ner([text])
 
     if __name__ == '__main__':
         unittest.main()

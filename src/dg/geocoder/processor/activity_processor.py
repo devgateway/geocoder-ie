@@ -29,7 +29,16 @@ class ActivityProcessor(BaseProcessor):
         self.results = geocode(texts, documents, cty_codes=self.activity.get_recipient_country_code())
 
         # add location to activity
-        [self.activity.add_location(data['geocoding']) for (l, data) in self.results if data.get('geocoding')]
+        for (l, data) in self.results:
+            if data.get('geocoding') is not None:
+                geocoding = data['geocoding']
+                geocoding.get('fcode')
+                if geocoding.get('fcode') == 'PCLI':
+                    self.activity.add_recipient_country(geocoding)
+                else:
+                    self.activity.add_location(geocoding)
+
+        # [self.activity.add_location(data['geocoding']) for (l, data) in self.results if data.get('geocoding')]
 
         self.locations.append((self.activity.get_identifier(),
                                [data['geocoding'] for (l, data) in self.results if data.get('geocoding')]))
