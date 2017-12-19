@@ -4,6 +4,7 @@ import sys
 
 from dg.geocoder.iati.iati_codes import iati_countries
 from dg.geocoder.processor.file_processor import FileProcessor
+from dg.geocoder.processor.step_logger import console_step_logger
 
 logger = logging.getLogger()
 
@@ -55,7 +56,7 @@ def main(args):
             else:
                 cty_codes = args.countries.split(',') if args.countries else None
 
-                out = FileProcessor(file, cty_codes=cty_codes).process().write_output(format, '')
+                out = FileProcessor(file, cty_codes=cty_codes, step_logger=console_step_logger()).process().write_output(format, '')
                 print('Results were saved in {}'.format(out))
 
         elif args.command == 'download':

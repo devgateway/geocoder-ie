@@ -24,7 +24,7 @@ class XMLProcessor(BaseProcessor):
         else:
             self.parser = ActivitiesParser(self.file)
             for activity in self.parser.get_activities():
-                activity_processor = ActivityProcessor(activity)
+                activity_processor = ActivityProcessor(activity, step_logger=self.step_logger)
                 activity_processor.process()
                 self.locations = self.locations + activity_processor.get_locations()
                 self.results = self.results + activity_processor.get_results()

@@ -146,7 +146,7 @@ def get_queue_by_id(doc_id):
         close(conn)
 
 
-def update_queue_status(doc_id, status, message=''):
+def update_queue_status(queue_id, status, message=''):
     conn = None
     try:
         conn = open()
@@ -157,7 +157,7 @@ def update_queue_status(doc_id, status, message=''):
 
         sql = sql + "WHERE ID = %s "
         cur = conn.cursor()
-        data = (status, message, doc_id)
+        data = (status, message, queue_id)
         cur.execute(sql, data)
         conn.commit()
         cur.close()

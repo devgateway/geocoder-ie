@@ -11,6 +11,7 @@ from dg.geocoder.iati.activity_reader import ActivityReader
 from dg.geocoder.processor.activity_processor import ActivityProcessor
 from dg.geocoder.processor.base_processor import BaseProcessor
 from dg.geocoder.processor.file_processor import FileProcessor
+from dg.geocoder.processor.step_logger import db_step_logger
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
@@ -32,6 +33,7 @@ class JobProcessor(BaseProcessor):
         self.job_country_iso = job.get('country_iso')
         self.job_message = job.get('message')
         self.job_activity_id = job.get('activity_id')
+        self.step_logger = db_step_logger(job.get('id'))
 
         logger.info('processing job {}'.format(self.job_id))
 
@@ -42,13 +44,14 @@ class JobProcessor(BaseProcessor):
 
             if self.job_queue_type == 'ACTIVITY_QUEUE':
                 activity = get_activity_by_id(self.job_activity_id)
-                self.processor = ActivityProcessor(ActivityReader(xml=activity.get('xml')))
+                self.processor = ActivityProcessor(ActivityReader(xml=activity.get('xml')),
+                                                   step_logger=self.step_logger)
                 self.processor.process()
                 self.results = self.results + self.processor.get_results()
                 self.locations = self.locations + self.processor.get_locations()
             else:
                 self.processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name),
-                                               cty_codes=[self.job_country_iso])
+                                               cty_codes=[self.job_country_iso], step_logger=self.step_logger)
                 self.processor.process()
                 self.results = self.results + self.processor.get_results()
                 self.locations = self.locations + self.processor.get_locations()

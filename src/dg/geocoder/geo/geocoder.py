@@ -191,14 +191,14 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
     # 1) classify paragraph and filter out what doesn't refer to project geographical information
     # 2) extract entities and relationships
     # 3) merge names
-    # 3) resolve locations using Geo Names
+    # 4) resolve locations using Geo Names
     if step_log:
-        step_log("Classifying documents")
+        step_log("Step 1/4: Classifying documents")
 
     texts = classify(texts, documents, cls_name=cls_name)
 
     if step_log:
-        step_log("Extracting entities")
+        step_log("Step 2/3: Extracting entities")
 
     if get_standford_server_type() == 'CORE':
         entities = merge(extract(texts))
@@ -207,10 +207,13 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
     else:
         raise ValueError('Wrong standford server type')
 
+    if step_log:
+        step_log("Step 3/4: Normalizing entities")
+
     normalized = join(entities)
 
     if step_log:
-        step_log("Geocoding entities")
+        step_log("Step 4/4 Geocoding entities")
 
     results = geonames(normalized, cty_codes=cty_codes)
     reduced = reduce(results)
