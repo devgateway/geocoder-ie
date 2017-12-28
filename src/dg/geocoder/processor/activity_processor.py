@@ -32,11 +32,10 @@ class ActivityProcessor(BaseProcessor):
         for (l, data) in self.results:
             if data.get('geocoding') is not None:
                 geocoding = data['geocoding']
-                geocoding.get('fcode')
+                self.activity.add_location(geocoding)
+
                 if geocoding.get('fcode') == 'PCLI':
                     self.activity.add_recipient_country(geocoding)
-                else:
-                    self.activity.add_location(geocoding)
 
         # [self.activity.add_location(data['geocoding']) for (l, data) in self.results if data.get('geocoding')]
 

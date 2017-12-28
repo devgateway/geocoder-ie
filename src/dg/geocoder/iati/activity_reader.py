@@ -103,6 +103,9 @@ class ActivityReader:
 
         # logger.info(activity)
         # ET.SubElement(ET.SubElement(location, "activity-description"), "narrative").text = activity
+        if loc_data.get('adminCode0'):
+            et.SubElement(location, "administrative", vocabulary="G1", level="0", code=str(loc_data['adminCode0']))
+
         if loc_data.get('adminCode1'):
             et.SubElement(location, "administrative", vocabulary="G1", level="1", code=str(loc_data['adminCode1']))
 
