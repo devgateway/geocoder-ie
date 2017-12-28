@@ -63,7 +63,7 @@ def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, 
 
         sql = "INSERT INTO location(id,  location_status, point, activity_id,queue_id, exactness_id, " \
               "features_designation_id, gazetteer_agency_id, location_class_id, location_reach_id, " \
-              "precision_id, vocabulary_id) VALUES (NEXTVAL('hibernate_sequence'),%s,ST_MakePoint(%s, %s), %s, %s,%s, %s, %s, %s, %s, %s, %s) RETURNING id"
+              "precision_id) VALUES (NEXTVAL('hibernate_sequence'),%s,ST_MakePoint(%s, %s), %s, %s,%s, %s, %s, %s, %s, %s) RETURNING id"
 
         cur.execute(sql,
                     (location_status, lng, lat, activity_id, job_id, exactness_id, features_designation_id,
