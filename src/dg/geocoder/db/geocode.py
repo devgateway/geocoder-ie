@@ -5,7 +5,7 @@ import psycopg2.extras
 
 from dg.geocoder.db.db import open, close
 from dg.geocoder.db.iati_mapper import get_location_class_from_fcl, EXACTNESS_EXACT, LOCATION_REACH_ACTIVITY, \
-    GAZETTEER_AGENCY_GEO_NAMES, LOCATION_PRECISION_EXACT, LOCATION_VOCABULARY_GEO_NAMES
+    GAZETTEER_AGENCY_GEO_NAMES, LOCATION_PRECISION_EXACT
 
 logger = logging.getLogger()
 
@@ -72,7 +72,7 @@ def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, 
         if should_close:
             conn.commit()
 
-        return cur.fetchone()
+        return cur.fetchone()[0]
     except Exception as error:
         logger.info(error)
         raise
@@ -91,6 +91,53 @@ def save_loc_name(location_id, name_id, conn=None):
 
         sql = "INSERT INTO location_names(location_id, names_id) VALUES (%s, %s)"
         cur.execute(sql, (location_id, name_id))
+
+        if should_close:
+            conn.commit()
+
+    except Exception as error:
+        logger.info(error)
+        raise
+    finally:
+        if should_close:
+            close(conn)
+
+
+def save_loc_administrative(location_id, name, code, level, conn=None):
+    should_close = False
+    try:
+        if conn is None:
+            conn = open()
+            should_close = True
+        cur = conn.cursor()
+
+        sql = "INSERT INTO administrative(id, code, level,name,location_id, vocabulary_id) " \
+              "VALUES (NEXTVAL('hibernate_sequence'), %s,%s,%s,%s, " \
+              "(select id from iati_codes where code ='G1' and type='LOCATION_VOCABULARY'))"
+        cur.execute(sql, (code, level, name, location_id))
+
+        if should_close:
+            conn.commit()
+
+    except Exception as error:
+        logger.info(error)
+        raise
+    finally:
+        if should_close:
+            close(conn)
+
+
+def save_loc_identifier(location_id, code, conn=None):
+    should_close = False
+    try:
+        if conn is None:
+            conn = open()
+            should_close = True
+        cur = conn.cursor()
+
+        sql = "INSERT INTO location_identifier(id, code, location_id, vocabulary_id) " \
+              "VALUES (NEXTVAL('hibernate_sequence'), %s,%s, (select id from iati_codes where code ='G1' and type='LOCATION_VOCABULARY'))"
+        cur.execute(sql, (code, location_id))
 
         if should_close:
             conn.commit()
@@ -124,12 +171,19 @@ def save_geocoding(geocoding, job_id, activity_id, conn=None):
         fcodeName = geocoding.get('fcodeName')
         population = geocoding.get('population')
         continentCode = geocoding.get('continentCode')
+
+        adminCode0 = geocoding.get('adminCode0')
+        adminName0 = geocoding.get('adminName0')
+
         adminCode1 = geocoding.get('adminCode1')
         adminName1 = geocoding.get('adminName1')
+
         adminCode2 = geocoding.get('adminCode2')
         adminName2 = geocoding.get('adminName2')
+
         adminCode3 = geocoding.get('adminCode3')
         adminName3 = geocoding.get('adminName3')
+
         adminCode4 = geocoding.get('adminCode4')
         adminName4 = geocoding.get('adminName4')
 
@@ -175,7 +229,20 @@ def save_geocoding(geocoding, job_id, activity_id, conn=None):
                                     location_reach_id,
                                     precision_id, conn=conn)
 
+        save_loc_identifier(location_id, geonameId, conn=conn)
+
         save_loc_name(location_id, name_id, conn=conn)
+
+        if adminCode0:
+            save_loc_administrative(location_id, adminName0, adminCode0, 0, conn=conn)
+        if adminCode1:
+            save_loc_administrative(location_id, adminName1, adminCode1, 1, conn=conn)
+        if adminCode2:
+            save_loc_administrative(location_id, adminName2, adminCode2, 2, conn=conn)
+        if adminCode3:
+            save_loc_administrative(location_id, adminName3, adminCode3, 3, conn=conn)
+        if adminCode4:
+            save_loc_administrative(location_id, adminName4, adminCode4, 4, conn=conn)
 
         if should_close:
             conn.commit()
