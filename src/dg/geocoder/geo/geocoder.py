@@ -24,7 +24,8 @@ def classify(texts, files, cls_name):
 
     for text in texts:
         reader = get_text_reader(text)
-        if reader.is_english_lan():
+        eng = reader.is_english_lang()
+        if eng:
             sentences += reader.split()
         else:
             logger.warning('Non english text, it will be ignored')
@@ -32,7 +33,6 @@ def classify(texts, files, cls_name):
     doc_names[len(doc_names):] = ["activity.xml"] * len(sentences)
 
     for file in files:
-
         if file is not None:
             if not isfile(file):
                 raise SystemError("Can't find {}".format(file))
@@ -40,11 +40,13 @@ def classify(texts, files, cls_name):
             if reader is None:
                 logger.warning("Wasn't able to initialize a reader check file type and extension fro {}".format(file))
             # split document in sentences
-            elif not reader.is_english_lan():
+            elif not reader.is_english_lang():
                 logger.info('Non english document it will be ignored')
             else:
                 sentences += reader.split()
                 doc_names[len(doc_names):] = [file] * (len(sentences) - len(doc_names))
+
+            reader = None
 
     toc = time.clock()
     logger.info(

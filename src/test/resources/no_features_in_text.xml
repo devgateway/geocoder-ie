@@ -1,0 +1,88 @@
+<iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+
+    <iati-activity last-updated-datetime="2017-12-01T00:02:02" default-currency="USD" xml:lang="en" hierarchy="1">
+    <iati-identifier>XM-DAC-41114-PROJECT-00097226</iati-identifier>
+    <reporting-org ref="XM-DAC-41114" type="40">
+      <narrative>United Nations Development Programme</narrative>
+    </reporting-org>
+    <title>
+      <narrative>STRENGTHENING THE NATIONAL RESPONSE TO HIV IN ANGOLA</narrative>
+    </title>
+    <description type="1">
+      <narrative>Global Fund HIV grant (2016-2017) managed by UNDP Angola Country Office as Principal Recipient. The grant aims to contribute to achieving national targets in the response to HIV, as outlined in the National Strategic Plan (2015-2018).</narrative>
+    </description>
+    <participating-org role="4" type="40" ref="00069">
+      <narrative>United Nations Development Programme</narrative>
+    </participating-org>
+    <participating-org role="2" type="40" ref="XM-DAC-41114">
+      <narrative>UNITED NATIONS DEVELOPMENT PROGRAMME</narrative>
+    </participating-org>
+    <participating-org role="1" type="40" ref="00032">
+      <narrative>UNITED NATIONS DEVELOPMENT FUND FOR WOME</narrative>
+    </participating-org>
+    <participating-org role="1" type="40" ref="47045">
+      <narrative>GLOBAL FUND TO FIGHT AIDS, TUBERCULOSIS</narrative>
+    </participating-org>
+    <activity-status code="2" />
+    <activity-date type="1" iso-date="2016-07-01" />
+    <activity-date type="2" iso-date="2016-07-01" />
+    <activity-date type="3" iso-date="2018-06-30" />
+    <contact-info type="1">
+      <email>registry.ao@undp.org</email>
+      <website>http://www.ao.undp.org/</website>
+    </contact-info>
+    <recipient-country code="AO">
+      <narrative>Angola</narrative>
+    </recipient-country>
+    <sector vocabulary="1" code="23030" />
+    <collaboration-type code="4" />
+    <default-flow-type code="10" />
+    <default-finance-type code="110" />
+    <default-aid-type code="C01" />
+    <default-tied-status code="3" />
+    <document-link format="application/pdf" url="https://info.undp.org/docs/pdc/Documents/AGO/PRODOC%20GF%20MoH.pdf">
+      <title>
+        <narrative>PROJECT DOCUMENT HIV</narrative>
+      </title>
+      <category code="A01" />
+      <category code="A02" />
+      <category code="A03" />
+      <category code="A04" />
+      <category code="A05" />
+      <category code="A08" />
+      <language code="en" />
+    </document-link>
+    <document-link format="application/pdf" url="https://info.undp.org/docs/pdc/Documents/AGO/Joint%20programmatic%20and%20PSM%20spot%20checks%20-%20Cabinda.pdf">
+      <title>
+        <narrative>M&amp;E Visit Report</narrative>
+      </title>
+      <category code="A07" />
+      <language code="en" />
+    </document-link>
+    <document-link format="application/pdf" url="https://info.undp.org/docs/pdc/Documents/AGO/INLS%20SR%20AGREEMENT%201.pdf">
+      <title>
+        <narrative>SUB RECIPIENT AGREEMENT BETWEEN UNDP AND INLS</narrative>
+      </title>
+      <category code="A09" />
+      <language code="en" />
+    </document-link>
+    <document-link format="text/html" url="http://procurement-notices.undp.org/view_notice.cfm?notice_id=35379">
+      <title>
+        <narrative>STRENGTHENING THE NATIONAL RESPONSE TO HIV IN ANGOLA</narrative>
+      </title>
+      <category code="A10" />
+      <language code="en" />
+    </document-link>
+    <document-link format="text/html" url="http://open.undp.org/#project/00097226">
+      <title>
+        <narrative>Purchase Order Summary</narrative>
+      </title>
+      <category code="A11" />
+      <category code="A12" />
+      <language code="en" />
+    </document-link>
+    <related-activity type="2" ref="XM-DAC-41114-OUTPUT-00101046" />
+    <conditions attached="0" />
+  </iati-activity>
+
+</iati-activities>

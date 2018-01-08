@@ -22,7 +22,7 @@ def process_file(dir_path, file):
 
     try:
         reader = get_reader(os.path.join(dir_path, file))
-        if reader.is_english_lan():
+        if reader.is_english_lang():
             logger.info('processing %s' % file)
             save_sentences('%s/%s' % (web_path, file), reader.split())
         else:

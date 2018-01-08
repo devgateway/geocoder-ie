@@ -45,3 +45,8 @@ class TestGeocoder(unittest.TestCase):
         processor = FileProcessor('resources/test_1_activities.xml').process()
         processor.get_locations()
         processor.get_results()
+
+    def test_no_features_in_text(self):
+        processor = FileProcessor('resources/no_features_in_text.xml')
+        processor.process()
+        self.assertTrue('' in processor.get_results())
