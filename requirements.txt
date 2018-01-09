@@ -16,3 +16,4 @@ flask
 lxml
 flask_cors
 sner
+shelljob

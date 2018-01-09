@@ -15,7 +15,7 @@ logger = logging.getLogger()
 # doc = get_queue_by_id(doc_id)
 # process_queue(doc, out_path=get_doc_queue_path())
 
-sched = BlockingScheduler()
+sched = BlockingScheduler(logger=logger)
 
 
 @sched.scheduled_job('interval', seconds=10, max_instances=4)

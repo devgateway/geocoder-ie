@@ -16,8 +16,6 @@ class TestReaders(unittest.TestCase):
     def test_pdf(self):
         reader = PdfReader('resources/afdb_subnational.pdf')
 
-
-
         self.assertTrue(reader.is_english_lang())
 
 

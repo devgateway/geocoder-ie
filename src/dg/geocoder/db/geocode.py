@@ -23,7 +23,7 @@ def get_iati_code(code, iati_type):
             data = {}
         return data
     except Exception as error:
-        logger.info(error)
+        logger.error("Error while running get_iati_cdes {}".format(error))
         raise
     finally:
         close(conn)
@@ -45,7 +45,8 @@ def save_narrative(text, lang, conn=None):
 
         return cur.fetchone()[0]
     except Exception as error:
-        logger.info(error)
+        logger.error("Error while running save_narrative {}".format(error))
+        conn.cancel()
         raise
     finally:
         if should_close:
@@ -74,7 +75,8 @@ def save_location(location_status, lng, lat, activity_id, job_id, exactness_id, 
 
         return cur.fetchone()[0]
     except Exception as error:
-        logger.info(error)
+        logger.error("Error while running save_location {}".format(error))
+        conn.cancel()
         raise
     finally:
         if should_close:
@@ -96,7 +98,8 @@ def save_loc_name(location_id, name_id, conn=None):
             conn.commit()
 
     except Exception as error:
-        logger.info(error)
+        logger.error("Error while running save_loc_name {}".format(error))
+        conn.cancel()
         raise
     finally:
         if should_close:
@@ -120,7 +123,8 @@ def save_loc_administrative(location_id, name, code, level, conn=None):
             conn.commit()
 
     except Exception as error:
-        logger.info(error)
+        logger.error("Error occurred while saving admin names {}".format(error))
+        conn.cancel()
         raise
     finally:
         if should_close:
@@ -143,7 +147,8 @@ def save_loc_identifier(location_id, code, conn=None):
             conn.commit()
 
     except Exception as error:
-        logger.info(error)
+        logger.error("Error occurred while running save_loc_identifier {}".format(error))
+        conn.cancel()
         raise
     finally:
         if should_close:
@@ -249,7 +254,8 @@ def save_geocoding(geocoding, job_id, activity_id, conn=None):
 
         return (location_id, geocoding_id)
     except Exception as error:
-        logger.info(error)
+        logger.error("Error occurred while running save_geocoding {}".format(error))
+        conn.cancel()
         raise
     finally:
         if should_close:
@@ -276,7 +282,7 @@ def save_extract_text(text, geocoding_id, location_id, queue_id, entities='', co
         return result_id
     except Exception as error:
         conn.cancel()
-        logger.info(error)
+        logger.error("Error occurred while  running  save_extract_text {}".format(error))
         raise
     finally:
         if should_close:
@@ -297,7 +303,8 @@ def save_activity(identifier, title, description, country, doc_id):
         cur.close()
         return result_id
     except Exception as error:
-        logger.info(error)
+        conn.cancel()
+        logger.error("Error occurred while running save_activity {}".format(error))
         raise
     finally:
         close(conn)
@@ -329,7 +336,8 @@ def get_geocoding_list(activity_id=None, queue_id=None, document_id=None):
         cur.close()
         return results
     except Exception as error:
-        logger.info(error)
+        conn.cancel()
+        logger.error("Error occurred while running get_geocoding_list {}".format(error))
         raise
     finally:
         close(conn)
@@ -353,7 +361,8 @@ def get_extracted_list(geocoding_id=None):
         cur.close()
         return results
     except Exception as error:
-        logger.info(error)
+        conn.cancel()
+        logger.error("Error occurred while running get_extracted_list {}".format(error))
         raise
     finally:
         close(conn)
@@ -377,7 +386,7 @@ def get_activity_list(document_id=None):
         cur.close()
         return results
     except Exception as error:
-        logger.info(error)
+        logger.error("Error occurred while running get_activity_list {}".format(error))
         raise
     finally:
         close(conn)

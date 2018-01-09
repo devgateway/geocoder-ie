@@ -18,6 +18,7 @@ from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category,
 from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue_by_id, delete_doc_from_queue, \
     delete_all_docs_from_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
+from shelljob import proc
 
 logger = logging.getLogger()
 
@@ -199,6 +200,19 @@ def extracted_list():
 def purge():
     delete_all_docs_from_queue()
     return jsonify({"insane": True}), 200
+
+
+@app.route('/stream')
+def stream():
+    g = proc.Group()
+    g.run(["bash", "-c", "tail -f /opt/geocoder-ie/geocoder.log"])
+
+    def read_process():
+        while g.is_pending():
+            lines = g.readlines()
+            for proc, line in lines:
+                yield line
+    return Response(read_process(), mimetype='text/plain')
 
 
 if __name__ == '__main__':

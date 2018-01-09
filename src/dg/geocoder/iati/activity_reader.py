@@ -22,7 +22,7 @@ class ActivityReader:
 
     def get_texts(self):
         texts = []
-        [[texts.append(item.text) for item in el if item.text is not None] for el in self.root if
+        [[texts.append(item.text.strip()) for item in el if item.text is not None] for el in self.root if
          el.tag in {'title', 'description'}]
         return texts
 

@@ -1,0 +1,102 @@
+<iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+
+    <iati-activity last-updated-datetime="2017-12-01T00:02:02" default-currency="USD" xml:lang="en" hierarchy="2">
+        <iati-identifier>XM-DAC-41114-OUTPUT-00044219</iati-identifier>
+        <reporting-org ref="XM-DAC-41114" type="40">
+            <narrative>United Nations Development Programme</narrative>
+        </reporting-org>
+        <title>
+            <narrative>Support National Malaria Control</narrative>
+        </title>
+        <description type="1">
+            <narrative>Reduce the burden of malaria in the country through the strenghthening of local health services
+                malaria control delivery system, community action and inter/sectorial partnerships.
+            </narrative>
+        </description>
+        <participating-org role="1" type="40" ref="47045">
+            <narrative>GLOBAL FUND TO FIGHT AIDS, TUBERCULOSIS</narrative>
+        </participating-org>
+        <activity-status code="3"/>
+        <activity-date type="1" iso-date="2005-04-01"/>
+        <activity-date type="2" iso-date="2005-04-01"/>
+        <activity-date type="3" iso-date="2010-12-31"/>
+        <activity-date type="4" iso-date="2017-09-22"/>
+        <contact-info type="1">
+            <email>registry.ao@undp.org</email>
+            <website>http://www.ao.undp.org/</website>
+        </contact-info>
+        <activity-scope code="4"/>
+        <recipient-country code="AO">
+            <narrative>Angola</narrative>
+        </recipient-country>
+        <location ref="AO">
+            <location-reach code="1"/>
+            <location-id vocabulary="G1" code="3351879"/>
+            <name>
+                <narrative>Angola</narrative>
+            </name>
+            <description>
+                <narrative>independent political entity</narrative>
+            </description>
+            <activity-description>
+                <narrative>Nationwide</narrative>
+            </activity-description>
+            <administrative level="0" code="3351879" vocabulary="G1"/>
+            <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <pos>-12.500000 18.500000</pos>
+            </point>
+            <exactness code="1"/>
+            <location-class code="1"/>
+            <feature-designation code="PCLI"/>
+        </location>
+        <sector vocabulary="1" code="13040"/>
+        <sector vocabulary="99" code="3">
+            <narrative>Responsive Institutions</narrative>
+        </sector>
+        <country-budget-items vocabulary="1">
+            <budget-item code="5.1.1" percentage="100">
+                <description>
+                    <narrative>Health - policy, planning and administration</narrative>
+                </description>
+            </budget-item>
+        </country-budget-items>
+        <policy-marker vocabulary="1" code="1" significance="0"/>
+        <collaboration-type code="4"/>
+        <default-flow-type code="10"/>
+        <default-finance-type code="110"/>
+        <default-aid-type code="C01"/>
+        <default-tied-status code="3"/>
+        <budget type="2" status="2">
+            <period-start iso-date="2017-01-01"/>
+            <period-end iso-date="2017-12-31"/>
+            <value currency="USD" value-date="2017-11-30">0</value>
+        </budget>
+        <capital-spend percentage="0.00"/>
+        <transaction>
+            <transaction-type code="4"/>
+            <transaction-date iso-date="2017-11-30"/>
+            <value currency="USD" value-date="2017-11-30">-365</value>
+            <provider-org type="40" ref="XM-DAC-41114">
+                <narrative>United Nations Development Programme</narrative>
+            </provider-org>
+            <disbursement-channel code="2"/>
+        </transaction>
+        <transaction>
+            <transaction-type code="2"/>
+            <transaction-date iso-date="2017-11-30"/>
+            <value currency="USD" value-date="2017-11-30">0</value>
+            <provider-org type="40" ref="XM-DAC-41114">
+                <narrative>United Nations Development Programme</narrative>
+            </provider-org>
+            <disbursement-channel code="2"/>
+        </transaction>
+        <document-link format="text/html" url="http://open.undp.org/#project/00039445">
+            <title>
+                <narrative>Activity web page</narrative>
+            </title>
+            <category code="A12"/>
+        </document-link>
+        <related-activity type="1" ref="XM-DAC-41114-PROJECT-00039445"/>
+        <conditions attached="0"/>
+    </iati-activity>
+</iati-activities>

@@ -35,6 +35,11 @@ class TestGeocoder(unittest.TestCase):
         processor.process()
         self.assertTrue('' in processor.get_results())
 
+    def test_afdb_activities_XML_angola_1(self):
+        processor = FileProcessor('resources/test_1_activity_angola.xml')
+        processor.process()
+        self.assertTrue('' in processor.get_results())
+
     def test_dfid_simple_document(self):
         # processor = DocumentProcessor('resources/dfid_4182791.odt', cty_codes=[])
         processor = FileProcessor('resources/dfid_4182791.odt', step_logger=console_step_logger())
@@ -48,5 +53,10 @@ class TestGeocoder(unittest.TestCase):
 
     def test_no_features_in_text(self):
         processor = FileProcessor('resources/no_features_in_text.xml')
+        processor.process()
+        self.assertTrue('' in processor.get_results())
+
+    def test_value_to_long(self):
+        processor = FileProcessor('resources/value_to_long.xml')
         processor.process()
         self.assertTrue('' in processor.get_results())

@@ -23,8 +23,14 @@ class BaseReader:
     def is_english_lang(self):
         try:
             logger.info('Detecting language ({})'.format(self.get_file_name()))
-            return detect(self.get_sample()) == 'en'
+            sample = self.get_sample()
+            if sample.strip():
+                return detect(sample) == 'en'
+            else:
+                logger.info("Can't detect lang , string is empty")
+                return False
         except LangDetectException as err:
+            logger.error(err)
             logger.error("Wasn't able to detect language")
             return False
 
