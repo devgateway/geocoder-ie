@@ -3,7 +3,6 @@ import logging
 import nltk
 from langdetect.detector_factory import detect
 from langdetect.lang_detect_exception import LangDetectException
-from orca.debug import println
 
 logger = logging.getLogger()
 
