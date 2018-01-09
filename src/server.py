@@ -20,6 +20,9 @@ from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from shelljob import proc
 
+import eventlet
+eventlet.monkey_patch()
+
 logger = logging.getLogger()
 
 app = Flask(__name__, static_url_path="", static_folder="../static")
