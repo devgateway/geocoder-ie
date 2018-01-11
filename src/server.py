@@ -208,7 +208,7 @@ def purge():
 @app.route('/stream')
 def stream():
     g = proc.Group()
-    g.run(["bash", "-c", "tail -f /opt/geocoder-ie/geocoder.log"])
+    g.run(["bash", "-c", "tail -f /var/log/geocoder.log"])
 
     def read_process():
         while g.is_pending():
