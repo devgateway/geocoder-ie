@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
+
+<iati-activity last-updated-datetime="2017-12-22T14:08:23" xml:lang="en" default-currency="XDR" hierarchy="1">
+    <iati-identifier>46002-P-BJ-GB0-001</iati-identifier>
+    <reporting-org ref="46002" type="40">
+        <narrative>African Development Bank Group</narrative>
+    </reporting-org>
+    <title>
+        <narrative xml:lang="en">Communications development project</narrative>
+        <narrative xml:lang="fr">Projet de développement des télécommunications</narrative>
+    </title>
+    <description type="2">
+        <narrative xml:lang="fr">Le projet vise les objectifs suivants : - accroître l'efficacité et la rentabilité des
+            différents opérateurs économiques du pays par un meilleur acces aux moyens de communications; - alléger les
+            charges budgétaire des entreprises par l'économie de devises résultant de l'utilisation des
+            télécommunications à la place des autres moyens de communication ; - contribuer à l'amélioration de la
+            situation financière de l'OPT ;
+        </narrative>
+    </description>
+    <participating-org ref="46003" type="40" role="1">
+        <narrative>African Development Fund</narrative>
+    </participating-org>
+    <participating-org ref="NTF" type="40" role="1">
+        <narrative>Nigerian Trust Fund</narrative>
+    </participating-org>
+    <participating-org ref="" type="10" role="3">
+        <narrative>Government Of Benin</narrative>
+    </participating-org>
+    <participating-org ref="" type="10" role="4">
+        <narrative>GOUVERNEMENT DE LA REPUBLIQUE DU BENIN MINISTERE DES FINANCES</narrative>
+    </participating-org>
+    <activity-status code="3"/>
+    <activity-date type="1" iso-date="1990-05-30"/>
+    <activity-date type="2" iso-date="1992-10-13"/>
+    <activity-date type="3" iso-date="1998-06-30"/>
+    <activity-date type="4" iso-date="1998-06-30"/>
+    <contact-info>
+        <organisation>
+            <narrative>African Development Bank Group</narrative>
+        </organisation>
+        <department>
+            <narrative></narrative>
+        </department>
+        <person-name>
+            <narrative>NIKIEMA Denis</narrative>
+        </person-name>
+        <job-title>
+            <narrative></narrative>
+        </job-title>
+        <telephone></telephone>
+        <email></email>
+        <website>www.afdb.org</website>
+        <mailing-address>
+            <narrative>African Development Bank Group +
+                Headquarters +
+                Avenue Joseph Anoma +
+                01 BP 1387 +
+                Abidjan 01, Côte d'Ivoire
+            </narrative>
+        </mailing-address>
+    </contact-info>
+    <activity-scope code="4"/>
+    <recipient-country code="BJ"/>
+    <sector vocabulary="DAC" code="22020">
+        <narrative>Telecommunications</narrative>
+    </sector>
+    <collaboration-type code="2"/>
+    <transaction ref="2100150000108">
+        <transaction-type code="2"/>
+        <transaction-date iso-date="1990-11-30"/>
+        <value value-date="1990-11-30">6426186.82</value>
+        <provider-org>
+            <narrative>African Development Fund</narrative>
+        </provider-org>
+        <receiver-org>
+            <narrative>CAISSE AUTONOME D'AMORTISSEMENt</narrative>
+        </receiver-org>
+        <flow-type code="10"/>
+        <finance-type code="410"/>
+        <aid-type code="C01"/>
+        <tied-status code="5"/>
+    </transaction>
+    <transaction>
+        <transaction-type code="3"/>
+        <transaction-date iso-date="2009-12-31"/>
+        <value value-date="2009-12-31">6363055.00</value>
+        <description>
+            <narrative>Total Disbursement till end of 2009</narrative>
+        </description>
+        <provider-org ref="">
+            <narrative>African Development Fund</narrative>
+        </provider-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2009-12-31"/>
+        <value value-date="2009-12-31">256072.23</value>
+        <description>
+            <narrative>Total Interest Repayment till end of 2009</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>African Development Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2009-03-31"/>
+        <value value-date="2009-03-31">6363055.01</value>
+        <description>
+            <narrative>Total Loan Repayment till end of 2009</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>African Development Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction ref="2200160000007">
+        <transaction-type code="2"/>
+        <transaction-date iso-date="1990-05-30"/>
+        <value value-date="1990-05-30">6716556.57</value>
+        <provider-org>
+            <narrative>Nigerian Trust Fund</narrative>
+        </provider-org>
+        <receiver-org>
+            <narrative>CAISSE AUTONOME D'AMORTISSEMENT PROJET D'APPUI A LA GESTION DES FORETS COMMUNALES</narrative>
+        </receiver-org>
+        <flow-type code="10"/>
+        <finance-type code="410"/>
+        <aid-type code="C01"/>
+        <tied-status code="5"/>
+    </transaction>
+    <transaction>
+        <transaction-type code="3"/>
+        <transaction-date iso-date="2009-12-31"/>
+        <value value-date="2009-12-31">6266409.42</value>
+        <description>
+            <narrative>Total Disbursement till end of 2009</narrative>
+        </description>
+        <provider-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </provider-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2009-12-31"/>
+        <value value-date="2009-12-31">2641195.61</value>
+        <description>
+            <narrative>Total Interest Repayment till end of 2009</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2010-03-31"/>
+        <value value-date="2010-03-31">37472.66</value>
+        <description>
+            <narrative>Total Interest Repayment in First Quarter of 2010</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2010-09-30"/>
+        <value value-date="2010-09-30">33569.94</value>
+        <description>
+            <narrative>Total Interest Repayment in Third Quarter of 2010</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2011-03-31"/>
+        <value value-date="2011-03-31">30722.93</value>
+        <description>
+            <narrative>Total Interest Repayment in First Quarter of 2011</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2011-06-30"/>
+        <value value-date="2011-06-30">26927.68</value>
+        <description>
+            <narrative>Total Interest Repayment in Second Quarter of 2011</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2012-03-31"/>
+        <value value-date="2012-03-31">24098.52</value>
+        <description>
+            <narrative>Total Interest Repayment in First Quarter of 2012</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2012-09-30"/>
+        <value value-date="2012-09-30">20571.47</value>
+        <description>
+            <narrative>Total Interest Repayment in Third Quarter of 2012</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2013-03-31"/>
+        <value value-date="2013-03-31">17492.35</value>
+        <description>
+            <narrative>Total Interest Repayment in First Quarter of 2013</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2013-09-30"/>
+        <value value-date="2013-09-30">13983.21</value>
+        <description>
+            <narrative>Total Interest Repayment in Third Quarter of 2013</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2014-03-31"/>
+        <value value-date="2014-03-31">11020.66</value>
+        <description>
+            <narrative>Total Interest Repayment in First Quarter of 2014</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2014-09-30"/>
+        <value value-date="2014-09-30">7622.71</value>
+        <description>
+            <narrative>Total Interest Repayment in Third Quarter of 2014</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="5"/>
+        <transaction-date iso-date="2015-03-31"/>
+        <value value-date="2015-03-31">5808.06</value>
+        <description>
+            <narrative>Total Interest Repayment in First Quarter of 2015</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2009-03-31"/>
+        <value value-date="2009-03-31">4469315.07</value>
+        <description>
+            <narrative>Total Loan Repayment till end of 2009</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2010-03-31"/>
+        <value value-date="2010-03-31">163339.62</value>
+        <description>
+            <narrative>Total Loan Repayment in First Quarter of 2010</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2010-06-30"/>
+        <value value-date="2010-06-30">32.59</value>
+        <description>
+            <narrative>Total Loan Repayment in Second Quarter of 2010</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2010-09-30"/>
+        <value value-date="2010-09-30">163372.21</value>
+        <description>
+            <narrative>Total Loan Repayment in Third Quarter of 2010</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2011-03-31"/>
+        <value value-date="2011-03-31">163339.62</value>
+        <description>
+            <narrative>Total Loan Repayment in First Quarter of 2011</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2011-06-30"/>
+        <value value-date="2011-06-30">163404.80</value>
+        <description>
+            <narrative>Total Loan Repayment in Second Quarter of 2011</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2012-03-31"/>
+        <value value-date="2012-03-31">163372.21</value>
+        <description>
+            <narrative>Total Loan Repayment in First Quarter of 2012</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2012-09-30"/>
+        <value value-date="2012-09-30">163339.62</value>
+        <description>
+            <narrative>Total Loan Repayment in Third Quarter of 2012</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2012-12-31"/>
+        <value value-date="2012-12-31">32.59</value>
+        <description>
+            <narrative>Total Loan Repayment in Fourth Quarter of 2012</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2013-03-31"/>
+        <value value-date="2013-03-31">163339.62</value>
+        <description>
+            <narrative>Total Loan Repayment in First Quarter of 2013</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2013-06-30"/>
+        <value value-date="2013-06-30">32.59</value>
+        <description>
+            <narrative>Total Loan Repayment in Second Quarter of 2013</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2013-09-30"/>
+        <value value-date="2013-09-30">163372.21</value>
+        <description>
+            <narrative>Total Loan Repayment in Third Quarter of 2013</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2014-03-31"/>
+        <value value-date="2014-03-31">163488.82</value>
+        <description>
+            <narrative>Total Loan Repayment in First Quarter of 2014</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2014-06-30"/>
+        <value value-date="2014-06-30">32.62</value>
+        <description>
+            <narrative>Total Loan Repayment in Second Quarter of 2014</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2014-09-30"/>
+        <value value-date="2014-09-30">160973.41</value>
+        <description>
+            <narrative>Total Loan Repayment in Third Quarter of 2014</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2014-12-31"/>
+        <value value-date="2014-12-31">32.12</value>
+        <description>
+            <narrative>Total Loan Repayment in Fourth Quarter of 2014</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2015-03-31"/>
+        <value value-date="2015-03-31">170215.61</value>
+        <description>
+            <narrative>Total Loan Repayment in First Quarter of 2015</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="6"/>
+        <transaction-date iso-date="2015-06-30"/>
+        <value value-date="2015-06-30">33.96</value>
+        <description>
+            <narrative>Total Loan Repayment in Second Quarter of 2015</narrative>
+        </description>
+        <receiver-org ref="">
+            <narrative>Nigerian Trust Fund</narrative>
+        </receiver-org>
+    </transaction>
+    <transaction>
+        <transaction-type code="2"/>
+        <transaction-date iso-date="1990-05-30"/>
+        <value value-date="1990-05-30">1440000.00</value>
+        <provider-org>
+            <narrative>Government Of Benin</narrative>
+        </provider-org>
+    </transaction>
+    <document-link
+            url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/05182229-EN-BENIN-COMMUNICATIONS-DEVELOPMENT-PROJECT.PDF"
+            format="application/pdf">
+        <title>
+            <narrative>Evaluation</narrative>
+        </title>
+        <category code="A01"/>
+        <category code="A02"/>
+        <category code="A03"/>
+        <category code="A04"/>
+        <category code="A05"/>
+        <category code="A08"/>
+    </document-link>
+    <document-link
+            url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/05182229-FR-BENIN-PROJET-DE-DEVELOPPEMENT-DES-COMMUNICATIONS.PDF"
+            format="application/pdf">
+        <title>
+            <narrative>Evaluation</narrative>
+        </title>
+        <category code="A01"/>
+        <category code="A02"/>
+        <category code="A03"/>
+        <category code="A04"/>
+        <category code="A05"/>
+        <category code="A08"/>
+    </document-link>
+    <document-link
+            url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/05182229-FR-BENIN-PROJET-DE-DEVELOPPEMENT-DES-COMMUNICATIONS.PDF"
+            format="application/pdf">
+        <title>
+            <narrative>Evaluation Report</narrative>
+        </title>
+        <category code="A07"/>
+        <category code="A08"/>
+        <category code="A03"/>
+    </document-link>
+    <document-link
+            url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/05182229-EN-BENIN-COMMUNICATIONS-DEVELOPMENT-PROJECT.PDF"
+            format="application/pdf">
+        <title>
+            <narrative>Evaluation Report</narrative>
+        </title>
+        <category code="A07"/>
+        <category code="A08"/>
+        <category code="A03"/>
+    </document-link>
+    <document-link
+            url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/05182229-EN-BENIN-COMMUNICATIONS-DEVELOPMENT-PROJECT.PDF"
+            format="application/pdf">
+        <title>
+            <narrative>Evaluation Report</narrative>
+        </title>
+        <category code="A07"/>
+        <category code="A08"/>
+        <category code="A03"/>
+    </document-link>
+    <document-link
+            url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/05182229-FR-BENIN-PROJET-DE-DEVELOPPEMENT-DES-COMMUNICATIONS.PDF"
+            format="application/pdf">
+        <title>
+            <narrative>Evaluation Report</narrative>
+        </title>
+        <category code="A07"/>
+        <category code="A08"/>
+        <category code="A03"/>
+    </document-link>
+</iati-activity>
+</iati-activities>
