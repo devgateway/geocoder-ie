@@ -18,7 +18,7 @@ logger = logging.getLogger()
 sched = BlockingScheduler(logger=logger)
 
 
-@sched.scheduled_job('interval', seconds=10, max_instances=4)
+@sched.scheduled_job('interval', seconds=60, max_instances=10)
 def timed_job():
     process_jobs()
 
