@@ -1,51 +1,65 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
-    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T11:36:26">
-        <iati-identifier>46002-P-UG-AAD-001</iati-identifier>
+    <iati-activity xml:lang="en" default-currency="XDR" hierarchy="1" last-updated-datetime="2016-11-29T12:28:37">
+        <iati-identifier>46002-P-GH-AAD-002</iati-identifier>
         <reporting-org ref="46002" type="40">
             <narrative>African Development Bank Group</narrative>
         </reporting-org>
         <title>
-            <narrative xml:lang="en">Test Project with two do
-            </narrative>
+            <narrative xml:lang="en">
+                The project has high potential to enhance carbon stocks in the off reserve areas in the High Forest
+                Zones (Western and Brong Ahafo regions) by engaging communities in approaches that generate direct
+                financial and environmental benefits for them leading to reduced deforestation and forest degradation
+                (REDD+). It will specifically address the key drivers of deforestation which include conversion of
+                forest lands for agricultural production, illegal logging, and low productivity in already opened up for
+                crop production, high demand for fuel wood and charcoal, and wildfires among others. The increased
+                land-use and land-use change will further add significant heterogeneity and variation in national carbon
+                stocks. The Project will directly benefit an estimated 72,000 people, with women representing about half
+                of the targeted population. Furthermore, the project is expected to indirectly benefit 175,000 people
+                (5% of the population of the two regions). Direct beneficiaries will be supported with capacity
+                building, inputs (e.g. seeds), equipment, and financial incentives through benefit-sharing agreements,
+                to develop forestry, agroforestry and alternate livelihoods activities.
 
+
+                The project has high potential to enhance carbon stocks in the off reserve areas in Kumasi province.
+
+            </narrative>
+            <narrative xml:lang="en">Ghana - Projet d'association des communaut�s locales au programme REDD+ /
+                Renforcement des stocks de carbone
+            </narrative>
         </title>
-        <description type="2">
-            <narrative xml:lang="en">The project objective is to improve household incomes, food security, and climate
-                resilience through sustainable natural resources management and agricultural enterprise development
-            </narrative>
+        <description>
+            <narrative/>
         </description>
-
-        <participating-org role="1" ref="46002" type="40">
-            <narrative>African Development Bank</narrative>
+        <participating-org role="1" ref="46003" type="40">
+            <narrative>African Development Fund</narrative>
         </participating-org>
         <participating-org role="3" ref="" type="10">
-            <narrative>Government Of Uganda</narrative>
+            <narrative>Government Of Ghana</narrative>
         </participating-org>
         <participating-org role="4" ref="" type="10">
-            <narrative>Ministry of Water &amp; Environment</narrative>
+            <narrative>Ministry of Lands Forestry and Mines</narrative>
         </participating-org>
-
         <activity-status code="2"/>
-        <activity-date iso-date="2016-02-17" type="1"/>
-        <activity-date iso-date="2016-05-31" type="2"/>
-        <activity-date iso-date="2020-12-31" type="3"/>
-        <activity-date iso-date="2021-06-30" type="4"/>
+        <activity-date iso-date="2014-07-26" type="1"/>
+        <activity-date iso-date="2015-02-25" type="2"/>
+        <activity-date iso-date="2019-12-31" type="3"/>
+        <activity-date iso-date="2019-12-31" type="4"/>
         <contact-info>
             <organisation>
                 <narrative>African Development Bank Group</narrative>
             </organisation>
             <department>
-                <narrative>Agriculture and Agro Industry</narrative>
+                <narrative>Environment and Sustainable Development/ Environnement et D�veloppement Durable</narrative>
             </department>
             <person-name>
-                <narrative>LOULSEGED Mekonnen Kifle</narrative>
+                <narrative>MOHAMEDAHMED Siham Abdel Rahman</narrative>
             </person-name>
             <job-title>
-                <narrative>Senior Water Ressources Engineer</narrative>
+                <narrative>Principal Natural Resources Management Expert</narrative>
             </job-title>
-            <telephone>+225 2020 2293</telephone>
-            <email>m.loulseged@afdb.org</email>
+            <telephone>+225 2020 2259</telephone>
+            <email>s.mohamedahmed@afdb.org</email>
             <website>www.afdb.org</website>
             <mailing-address>
                 <narrative>African Development Bank Group Headquarters Avenue Joseph Anoma 01 BP 1387 Abidjan 01, C�te
@@ -54,151 +68,85 @@
             </mailing-address>
         </contact-info>
         <activity-scope code="4"/>
+        <recipient-country code="GH"/>
 
         <sector vocabulary="DAC" code="31220">
             <narrative>Forestry / Plantations</narrative>
         </sector>
         <collaboration-type code="2"/>
-        <transaction ref="2000130014931">
+        <transaction ref="2100155026819">
             <transaction-type code="2"/>
-            <transaction-date iso-date="2016-02-17"/>
-            <value value-date="2016-02-17">54831145.81</value>
+            <transaction-date iso-date="2014-07-26"/>
+            <value value-date="2014-07-26">3200000.00</value>
             <provider-org>
-                <narrative>African Development Bank</narrative>
+                <narrative>African Development Fund</narrative>
             </provider-org>
             <receiver-org>
-                <narrative>GOVERNMENT OF UGANDA</narrative>
+                <narrative>GOVERNMENT OF GHANA</narrative>
             </receiver-org>
-            <flow-type code="20"/>
-            <finance-type code="410"/>
+            <flow-type code="10"/>
+            <finance-type code="110"/>
             <aid-type code="C01"/>
             <tied-status code="5"/>
         </transaction>
         <transaction>
             <transaction-type code="3"/>
+            <transaction-date iso-date="2015-03-31"/>
+            <value value-date="2015-03-31">85205.37</value>
+            <description>
+                <narrative>Total Disbursement in First Quarter of 2015</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2015-12-31"/>
+            <value value-date="2015-12-31">44792.54</value>
+            <description>
+                <narrative>Total Disbursement in Fourth Quarter of 2015</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
+            <transaction-date iso-date="2016-03-31"/>
+            <value value-date="2016-03-31">463090.16</value>
+            <description>
+                <narrative>Total Disbursement in First Quarter of 2016</narrative>
+            </description>
+            <provider-org ref="">
+                <narrative>African Development Fund</narrative>
+            </provider-org>
+        </transaction>
+        <transaction>
+            <transaction-type code="3"/>
             <transaction-date iso-date="2016-06-30"/>
-            <value value-date="2016-06-30">814125.18</value>
+            <value value-date="2016-06-30">166137.39</value>
             <description>
                 <narrative>Total Disbursement in Second Quarter of 2016</narrative>
             </description>
             <provider-org ref="">
-                <narrative>African Development Bank</narrative>
+                <narrative>African Development Fund</narrative>
             </provider-org>
         </transaction>
         <transaction>
             <transaction-type code="2"/>
-            <transaction-date iso-date="2016-02-17"/>
-            <value value-date="2016-02-17">6527023.16</value>
+            <transaction-date iso-date="2014-07-26"/>
+            <value value-date="2014-07-26">499000.00</value>
             <provider-org>
-                <narrative>Government Of Uganda</narrative>
+                <narrative>Government Of Ghana</narrative>
             </provider-org>
         </transaction>
 
+        <conditions attached="true">
+            <condition type="">
+                <narrative xml:lang="en">please refer to the appraisal report below</narrative>
+            </condition>
+        </conditions>
+    <location><location-reach code="1"/><location-id code="7649000" vocabulary="G1"/><name><narrative>Kumasi</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="02" level="1" vocabulary="G1"/><administrative code="7649000" level="2" vocabulary="G1"/><point><pos>6.68333 -1.61667</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="2302547" vocabulary="G1"/><name><narrative>Brong-Ahafo</narrative></name><description><narrative>first-order administrative division</narrative></description><administrative code="03" level="1" vocabulary="G1"/><point><pos>7.75 -1.5</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM1"/></location></iati-activity>
 
-        <document-link url="file:///home/sdimunzio/projects/geocoder-ie/src/test/resources/test_1_B.odt"
-                       format="application/odt">
-            <title>
-                <narrative>Appraisal Report 2</narrative>
-            </title>
-            <category code="A01"/>
-            <category code="A02"/>
-            <category code="A03"/>
-            <category code="A04"/>
-            <category code="A05"/>
-            <category code="A08"/>
-            <language code="en"/>
-        </document-link>
-
-
-        <document-link url="file:///home/sdimunzio/projects/geocoder-ie/src/test/resources/test_1_A.odt"
-                       format="application/odt">
-            <title>
-                <narrative>Appraisal Report 2</narrative>
-            </title>
-            <category code="A01"/>
-            <category code="A02"/>
-            <category code="A03"/>
-            <category code="A04"/>
-            <category code="A05"/>
-            <category code="A08"/>
-            <language code="en"/>
-        </document-link>
-
-
-        <location>
-            <location-reach code="1"/>
-            <location-id code="9257621" vocabulary="G1"/>
-            <name>
-                <narrative>Dhaka South City Corporation</narrative>
-            </name>
-            <description>
-                <narrative>populated place</narrative>
-            </description>
-            <administrative code="81" level="1" vocabulary="G1"/>
-            <administrative code="3026" level="2" vocabulary="G1"/>
-            <administrative code="302640" level="3" vocabulary="G1"/>
-            <administrative code="30264056" level="4" vocabulary="G1"/>
-            <point>
-                <pos>23.72404 90.4081</pos>
-            </point>
-            <exactness code="1"/>
-            <location-class code="2"/>
-            <feature-designation code="PPL"/>
-        </location>
-        <location>
-            <location-reach code="1"/>
-            <location-id code="2221789" vocabulary="G1"/>
-            <name>
-                <narrative>South</narrative>
-            </name>
-            <description>
-                <narrative>first-order administrative division</narrative>
-            </description>
-            <administrative code="14" level="1" vocabulary="G1"/>
-            <point>
-                <pos>2.75 11.58333</pos>
-            </point>
-            <exactness code="1"/>
-            <location-class code="2"/>
-            <feature-designation code="ADM1"/>
-        </location>
-        <location>
-            <location-reach code="1"/>
-            <location-id code="1337179" vocabulary="G1"/>
-            <name>
-                <narrative>Dhaka Division</narrative>
-            </name>
-            <description>
-                <narrative>first-order administrative division</narrative>
-            </description>
-            <administrative code="81" level="1" vocabulary="G1"/>
-            <point>
-                <pos>23.83333 90.25</pos>
-            </point>
-            <exactness code="1"/>
-            <location-class code="2"/>
-            <feature-designation code="ADM1"/>
-        </location>
-        <recipient-country code="BD"/>
-        <location>
-            <location-reach code="1"/>
-            <location-id code="9252711" vocabulary="G1"/>
-            <name>
-                <narrative>Dhaka North City Corporation</narrative>
-            </name>
-            <description>
-                <narrative>populated place</narrative>
-            </description>
-            <administrative code="81" level="1" vocabulary="G1"/>
-            <administrative code="3026" level="2" vocabulary="G1"/>
-            <administrative code="302640" level="3" vocabulary="G1"/>
-            <administrative code="30264007" level="4" vocabulary="G1"/>
-            <point>
-                <pos>23.80088 90.35492</pos>
-            </point>
-            <exactness code="1"/>
-            <location-class code="2"/>
-            <feature-designation code="PPL"/>
-        </location>
-    </iati-activity>
 </iati-activities>

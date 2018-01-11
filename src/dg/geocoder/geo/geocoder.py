@@ -197,7 +197,9 @@ def geocode(texts, documents, cty_codes, cls_name=get_default_classifier(), step
     if step_log:
         step_log("Step 1/4: Classifying documents")
 
-    texts = classify(texts, documents, cls_name=cls_name)
+    # texts = classify(texts, set(documents), cls_name=cls_name)
+
+    texts = classify(texts, set(documents), cls_name=cls_name)
 
     if step_log:
         step_log("Step 2/3: Extracting entities")

@@ -74,9 +74,16 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue(geo is not None)
 
     def test_geocode_xml_1(self):
-        processor = XMLProcessor('resources/test_1_activities.xml').process()
+        processor = XMLProcessor('resources/afdb_1_no_docs_activities.xml').process()
         file = processor.write(out_file='test_out_country_check', out_path='results')
         self.assertTrue(file is not None)
+
+    def test_geocode_xml_1(self):
+        processor = XMLProcessor('resources/sample_BD.xml').process()
+        file = processor.write(out_file='test_out_country_check', out_path='results')
+        self.assertTrue(file is not None)
+
+
 
     def test_ner(self):
         text = """

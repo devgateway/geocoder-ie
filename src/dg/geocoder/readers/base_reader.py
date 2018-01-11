@@ -23,7 +23,7 @@ class BaseReader:
         try:
             logger.info('Detecting language ({})'.format(self.get_file_name()))
             sample = self.get_sample()
-            if sample.strip():
+            if sample and sample.strip():
                 return detect(sample) == 'en'
             else:
                 logger.info("Can't detect lang , string is empty")

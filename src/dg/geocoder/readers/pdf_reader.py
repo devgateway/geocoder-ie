@@ -117,8 +117,11 @@ class PdfReader(BaseReader):
     def get_sample(self):
         try:
             pages = self.get_page_numbers()
-            samples = 2 if len(pages) > 1 else 1
-            numbers = random.sample(pages, samples)
-            return self.read(pagenos=numbers, verbose=False)
+            if pages:
+                samples = 2 if len(pages) > 1 else 1
+                numbers = random.sample(pages, samples)
+                return self.read(pagenos=numbers, verbose=False)
+            else:
+                return None
         except ValueError as error:
             logger.error(error)
