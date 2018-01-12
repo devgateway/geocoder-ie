@@ -20,8 +20,9 @@ from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from shelljob import proc
 
-import eventlet
-eventlet.monkey_patch()
+# import eventlet
+
+# eventlet.monkey_patch()
 
 logger = logging.getLogger()
 
@@ -215,8 +216,9 @@ def stream():
             lines = g.readlines()
             for proc, line in lines:
                 yield line
+
     return Response(read_process(), mimetype='text/plain')
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=get_app_port(), debug=False, threaded=True)
+    app.run(host='0.0.0.0')
