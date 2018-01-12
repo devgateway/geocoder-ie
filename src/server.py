@@ -9,7 +9,7 @@ from urllib.parse import unquote
 from flask import Flask, jsonify
 from flask import Response
 from flask import request
-from flask.helpers import send_from_directory
+from flask.helpers import send_from_directory, stream_with_context
 from flask_cors import CORS
 
 from dg.geocoder.config import get_doc_queue_path, get_app_port
@@ -217,7 +217,7 @@ def stream():
             for proc, line in lines:
                 yield line
 
-    return Response(read_process(), mimetype='text/plain')
+    return Response(stream_with_context(read_process()))
 
 
 if __name__ == '__main__':
