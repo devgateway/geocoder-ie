@@ -18,7 +18,7 @@ logger = logging.getLogger()
 sched = BlockingScheduler(logger=logger)
 
 
-@sched.scheduled_job('interval', seconds=60, max_instances=10)
+@sched.scheduled_job('interval', seconds=20, max_instances=50)
 def timed_job():
     process_jobs()
 
@@ -26,8 +26,7 @@ def timed_job():
 # get all pending jobs
 def process_jobs():
     logger.info('process_jobs was called')
-
-    pending_jobs = get_queue_list(1, 10, [ST_PENDING]).get('rows')
+    pending_jobs = get_queue_list(1, 1, [ST_PENDING]).get('rows')
     for job in pending_jobs:
         try:
             # TODO: use same db connection across the whole process,connection should be open here and passed to child elements
