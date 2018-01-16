@@ -87,5 +87,9 @@ def get_log_config_path():
     return os.path.realpath(os.path.join(app_root_path, 'logging.ini'))
 
 
+def get_web_log_config_path():
+    return os.path.realpath(os.path.join(app_root_path, 'logging_web.ini'))
+
+
 def get_geonames_retry_policy():
     return True

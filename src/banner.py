@@ -2,7 +2,6 @@ import logging
 
 logger = logging.getLogger()
 
-
 def print_banner():
     logger.info(" _______  _______  _______  _______  _______  ______   _______  _______     __       _______")
     logger.info("(  ____ \(  ____ \(  ___  )(  ____ \(  ___  )(  __  \ (  ____ \(  ____ )   /  \     (  __   )")

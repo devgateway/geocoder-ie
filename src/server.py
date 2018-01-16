@@ -1,8 +1,10 @@
 import datetime
 import json
-import logging
+import logging.config
 import os
 import threading
+import eventlet
+
 from os.path import sep
 from urllib.parse import unquote
 
@@ -14,7 +16,7 @@ from flask.helpers import send_from_directory, stream_with_context
 from flask_cors import CORS
 
 from banner import print_banner
-from dg.geocoder.config import get_doc_queue_path, get_app_port
+from dg.geocoder.config import get_doc_queue_path, get_app_port, get_log_config_path, get_web_log_config_path
 from dg.geocoder.constants import ST_PROCESSING, ST_PENDING, ST_PROCESSED, ST_ERROR
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
 from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue_by_id, delete_doc_from_queue, \
@@ -22,14 +24,11 @@ from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from shelljob import proc
 
-import eventlet
 
 
-print_banner()
-
-eventlet.monkey_patch()
-
+logging.config.fileConfig(get_web_log_config_path())
 logger = logging.getLogger()
+
 
 app = Flask(__name__, static_url_path="", static_folder="../static")
 
@@ -213,7 +212,6 @@ def purge():
 
 @app.route('/stream')
 def stream():
-
     g = proc.Group()
     g.run(["bash", "-c", "tail -f /var/log/geocoder.log"])
 
@@ -233,4 +231,5 @@ def stream():
 
 
 if __name__ == '__main__':
+    print_banner()
     app.run(host='0.0.0.0')
