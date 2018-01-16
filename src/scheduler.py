@@ -2,6 +2,7 @@ import logging.config
 import os
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+from banner import print_banner
 from dg.geocoder.config import get_doc_queue_path, get_log_config_path
 from dg.geocoder.constants import ST_PENDING
 from dg.geocoder.db.doc_queue import get_queue_list, update_queue_out_file
@@ -16,6 +17,8 @@ logger = logging.getLogger()
 # process_queue(doc, out_path=get_doc_queue_path())
 
 sched = BlockingScheduler(logger=logger)
+
+print_banner()
 
 
 @sched.scheduled_job('interval', seconds=20, max_instances=50)
@@ -45,6 +48,8 @@ def process_jobs():
         except Exception as e:
             logger.error("Job {} did't go well, results were not saved, I THINK ...".format(job.get('id')))
             logger.error(e)
+
+
 
 
 sched.start()

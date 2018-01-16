@@ -13,6 +13,7 @@ from flask import request
 from flask.helpers import send_from_directory, stream_with_context
 from flask_cors import CORS
 
+from banner import print_banner
 from dg.geocoder.config import get_doc_queue_path, get_app_port
 from dg.geocoder.constants import ST_PROCESSING, ST_PENDING, ST_PROCESSED, ST_ERROR
 from dg.geocoder.db.corpora import get_sentences, delete_sentence, set_category, get_sentence_by_id, get_doc_list
@@ -22,6 +23,9 @@ from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_a
 from shelljob import proc
 
 import eventlet
+
+
+print_banner()
 
 eventlet.monkey_patch()
 
