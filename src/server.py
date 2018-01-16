@@ -29,6 +29,7 @@ from shelljob import proc
 logging.config.fileConfig(get_web_log_config_path())
 logger = logging.getLogger()
 
+print_banner()
 
 app = Flask(__name__, static_url_path="", static_folder="../static")
 
@@ -231,5 +232,4 @@ def stream():
 
 
 if __name__ == '__main__':
-    print_banner()
     app.run(host='0.0.0.0')
