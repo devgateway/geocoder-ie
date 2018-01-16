@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <iati-activities version="2.01" generated-datetime="2016-12-05T10:28:00">
     <iati-activity last-updated-datetime="2017-12-22T14:08:30" xml:lang="en" default-currency="XDR" hierarchy="1">
         <iati-identifier>46002-P-BJ-IE0-001</iati-identifier>
@@ -62,7 +62,7 @@
             <job-title>
                 <narrative>Resident Representative</narrative>
             </job-title>
-            <telephone/>
+            <telephone></telephone>
             <email>r.kane@afdb.org</email>
             <website>www.afdb.org</website>
             <mailing-address>
@@ -128,19 +128,25 @@
                 <narrative>African Development Fund</narrative>
             </receiver-org>
         </transaction>
-        <document-link url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/B%C3%A9nin%20-%20REPP%20des%20programmes%20d%27appui%20budg%C3%A9taire%20%C3%A0%20la%20r%C3%A9duction%20de%20la%20pauvret%C3%A9%20PARB%20et%20PASRP.pdf" format="application/pdf">
+        <document-link
+                url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/B%C3%A9nin%20-%20REPP%20des%20programmes%20d%27appui%20budg%C3%A9taire%20%C3%A0%20la%20r%C3%A9duction%20de%20la%20pauvret%C3%A9%20PARB%20et%20PASRP.pdf"
+                format="application/pdf">
             <title>
                 <narrative>Evaluation</narrative>
             </title>
             <category code="A07"/>
         </document-link>
-        <document-link url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/Benin%20-%20PPER%20-%20BRSP%20and%20PRSSP%20Budgetary%20Support%20Programmes.pdf" format="application/pdf">
+        <document-link
+                url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/Benin%20-%20PPER%20-%20BRSP%20and%20PRSSP%20Budgetary%20Support%20Programmes.pdf"
+                format="application/pdf">
             <title>
                 <narrative>Evaluation</narrative>
             </title>
             <category code="A07"/>
         </document-link>
-        <document-link url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/Benin%20-%20PPER%20-%20BRSP%20and%20PRSSP%20Budgetary%20Support%20Programmes.pdf" format="application/pdf">
+        <document-link
+                url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/Benin%20-%20PPER%20-%20BRSP%20and%20PRSSP%20Budgetary%20Support%20Programmes.pdf"
+                format="application/pdf">
             <title>
                 <narrative>Evaluation Report</narrative>
             </title>
@@ -148,7 +154,9 @@
             <category code="A08"/>
             <category code="A03"/>
         </document-link>
-        <document-link url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/B%C3%A9nin%20-%20REPP%20des%20programmes%20d%27appui%20budg%C3%A9taire%20%C3%A0%20la%20r%C3%A9duction%20de%20la%20pauvret%C3%A9%20PARB%20et%20PASRP.pdf" format="application/pdf">
+        <document-link
+                url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/B%C3%A9nin%20-%20REPP%20des%20programmes%20d%27appui%20budg%C3%A9taire%20%C3%A0%20la%20r%C3%A9duction%20de%20la%20pauvret%C3%A9%20PARB%20et%20PASRP.pdf"
+                format="application/pdf">
             <title>
                 <narrative>Evaluation Report</narrative>
             </title>
@@ -156,7 +164,9 @@
             <category code="A08"/>
             <category code="A03"/>
         </document-link>
-        <document-link url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/B%C3%A9nin%20-%20REPP%20des%20programmes%20d%27appui%20budg%C3%A9taire%20%C3%A0%20la%20r%C3%A9duction%20de%20la%20pauvret%C3%A9%20PARB%20et%20PASRP.pdf" format="application/pdf">
+        <document-link
+                url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/B%C3%A9nin%20-%20REPP%20des%20programmes%20d%27appui%20budg%C3%A9taire%20%C3%A0%20la%20r%C3%A9duction%20de%20la%20pauvret%C3%A9%20PARB%20et%20PASRP.pdf"
+                format="application/pdf">
             <title>
                 <narrative>Evaluation Report</narrative>
             </title>
@@ -164,7 +174,9 @@
             <category code="A08"/>
             <category code="A03"/>
         </document-link>
-        <document-link url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/Benin%20-%20PPER%20-%20BRSP%20and%20PRSSP%20Budgetary%20Support%20Programmes.pdf" format="application/pdf">
+        <document-link
+                url="https://www.afdb.org/fileadmin/uploads/afdb/Documents/Evaluation-Reports-_Shared-With-OPEV_/Benin%20-%20PPER%20-%20BRSP%20and%20PRSSP%20Budgetary%20Support%20Programmes.pdf"
+                format="application/pdf">
             <title>
                 <narrative>Evaluation Report</narrative>
             </title>
@@ -172,5 +184,5 @@
             <category code="A08"/>
             <category code="A03"/>
         </document-link>
-    <location><location-reach code="1"/><location-id code="7874113" vocabulary="G1"/><name><narrative>Cotonou</narrative></name><description><narrative>second-order administrative division</narrative></description><administrative code="14" level="1" vocabulary="G1"/><administrative code="7874113" level="2" vocabulary="G1"/><point><pos>6.36736 2.4225</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="ADM2"/></location><location><location-reach code="1"/><location-id code="2395170" vocabulary="G1"/><name><narrative>Benin</narrative></name><description><narrative>independent political entity</narrative></description><administrative code="00" level="1" vocabulary="G1"/><point><pos>9.5 2.25</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PCLI"/></location><location><location-reach code="1"/><location-id code="2395659" vocabulary="G1"/><name><narrative>Alafia</narrative></name><description><narrative>populated place</narrative></description><administrative code="11" level="1" vocabulary="G1"/><point><pos>8.20313 2.63024</pos></point><exactness code="1"/><location-class code="2"/><feature-designation code="PPL"/></location></iati-activity>
+    </iati-activity>
 </iati-activities>

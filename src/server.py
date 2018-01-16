@@ -6,6 +6,7 @@ import threading
 from os.path import sep
 from urllib.parse import unquote
 
+import time
 from flask import Flask, jsonify
 from flask import Response
 from flask import request
@@ -20,9 +21,9 @@ from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from shelljob import proc
 
-# import eventlet
+import eventlet
 
-# eventlet.monkey_patch()
+eventlet.monkey_patch()
 
 logger = logging.getLogger()
 
@@ -208,14 +209,21 @@ def purge():
 
 @app.route('/stream')
 def stream():
+
     g = proc.Group()
     g.run(["bash", "-c", "tail -f /var/log/geocoder.log"])
 
     def read_process():
+        trigger_time = time.time() + 5
         while g.is_pending():
             lines = g.readlines()
             for proc, line in lines:
                 yield line
+
+            now = time.time()
+            if now > trigger_time:
+                yield "*** Interval"
+                trigger_time = now + 5
 
     return Response(stream_with_context(read_process()))
 

@@ -1,6 +1,7 @@
 import unittest
 
 from dg.geocoder.geo.geocoder import geocode, merge, extract, join, geonames, extract_ner
+from dg.geocoder.processor.file_processor import FileProcessor
 from dg.geocoder.processor.xml_processor import XMLProcessor
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
@@ -79,11 +80,9 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue(file is not None)
 
     def test_geocode_xml_1(self):
-        processor = XMLProcessor('resources/sample_BD.xml').process()
+        processor = XMLProcessor('resources/country_filter_.xml').process()
         file = processor.write(out_file='test_out_country_check', out_path='results')
         self.assertTrue(file is not None)
-
-
 
     def test_ner(self):
         text = """
@@ -95,6 +94,11 @@ class TestGeocoder(unittest.TestCase):
             Middle Guinea region. 
             """
         extract_ner([text])
+
+    def test_geocoding_custom_pdf(self):
+        p = FileProcessor('resources/ref_to_niger.pdf')
+        p.process()
+        print(p.get_results())
 
     if __name__ == '__main__':
         unittest.main()
