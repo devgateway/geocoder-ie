@@ -24,8 +24,6 @@ from dg.geocoder.db.doc_queue import add_job_to_queue, get_queue_list, get_queue
 from dg.geocoder.db.geocode import get_geocoding_list, get_extracted_list, get_activity_list
 from shelljob import proc
 
-
-
 logging.config.fileConfig(get_web_log_config_path())
 logger = logging.getLogger()
 
@@ -232,4 +230,4 @@ def stream():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=9095)

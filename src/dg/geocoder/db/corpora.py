@@ -19,7 +19,7 @@ def save_sentences(file, sentences):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO CORPORA (ID,FILE, SENTENCE,CATEGORY) VALUES (NEXTVAL('GLOBAL_ID_SEQ'),%s,%s ,NULL )"""
+        sql = """INSERT INTO CORPORA (ID,FILE, SENTENCE,CATEGORY) VALUES (NEXTVAL('corpora_id_seq'),%s,%s ,NULL )"""
         cur = conn.cursor()
         for s in sentences:
             data = (file, s)

@@ -1,5 +1,4 @@
 import logging
-
 logger = logging.getLogger()
 
 def print_banner():
