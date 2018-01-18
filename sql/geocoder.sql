@@ -25,3 +25,6 @@ WITH (
 );
 ALTER TABLE public.corpora
   OWNER TO postgres;
+
+
+SELECT setval('corpora_id_seq', (SELECT MAX(id) +1 FROM corpora));
