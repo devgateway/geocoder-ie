@@ -4,12 +4,11 @@ import random
 from os import walk
 from random import shuffle
 
+from dg.geocoder.config import get_download_path
 from dg.geocoder.db.corpora import clean, save_sentences
 from dg.geocoder.readers.factory import get_reader
 
 logger = logging.getLogger()
-
-download_path = 'download'
 
 
 def is_valid_type(file):
@@ -17,8 +16,9 @@ def is_valid_type(file):
     return ex.lower() in ['pdf', 'odt']
 
 
-def process_file(dir_path, file):
-    web_path = '/'.join(dir_path.split(os.path.sep)[dir_path.split(os.path.sep).index('download'):])
+def process_file(dir_path, file, download_path=get_download_path()):
+    web_path = os.path.sep.join(
+        dir_path.split(os.path.sep)[dir_path.split(os.path.sep).index(download_path.split(os.path.sep)[-1]):])
 
     try:
         reader = get_reader(os.path.join(dir_path, file))
@@ -41,7 +41,7 @@ def generate_docs_list(folder, doc_list):
             generate_docs_list(folder, doc_list)
 
 
-def generate():
+def generate(download_path=get_download_path()):
     clean()
     docs_to_process = []
     generate_docs_list(os.path.abspath(download_path), docs_to_process)
