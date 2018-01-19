@@ -2,6 +2,7 @@ import argparse
 import logging
 import sys
 
+from dg.geocoder.classification.trainer import train_classifier
 from dg.geocoder.iati.iati_codes import iati_countries
 from dg.geocoder.processor.file_processor import FileProcessor
 from dg.geocoder.processor.step_logger import console_step_logger
@@ -81,8 +82,7 @@ def main(args):
                 print('Please provide a name for the new classifier using -n')
             else:
                 print('we will train and save a new classifier from database corpora')
-                from dg.geocoder.classification.trainer import train_classifier
-                cls = train_classifier(plot_results=True)
+                cls = train_classifier(plot_results=False)
                 cls.save(name)
 
         elif args.command == 'generate':
