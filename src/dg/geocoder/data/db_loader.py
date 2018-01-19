@@ -24,13 +24,16 @@ class DbDataLoader:
         return all_records
 
     def build_data_frame(self):
+        records = self.read_rows()
         rows = []
         index = []
-        for id, text, classification, file_name in self.read_rows():
-            index.append(id)
-            rows.append({'text': text, 'class': classification})
+        data_frame = None
+        if len(records) > 0:
+            for id, text, classification, file_name in records:
+                index.append(id)
+                rows.append({'text': text, 'class': classification})
 
-        data_frame = DataFrame(rows, index=index)
-        data_frame = data_frame.reindex(numpy.random.permutation(data_frame.index))
+            data_frame = DataFrame(rows, index=index)
+            data_frame = data_frame.reindex(numpy.random.permutation(data_frame.index))
 
         return data_frame
