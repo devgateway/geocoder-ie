@@ -5,7 +5,7 @@ import './styles/main.scss'
 
 //window.API_ROOT = 'http://localhost:8080'
 //window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:9095' : 'http://autogeocoder.dgstg.org';
-window.API_ROOT = document.location.href.indexOf('localhost') > -1 ? 'http://localhost:9095' : (document.location.href.indexOf('developmentgateway.org')>-1?'http://autogeocoder-afdb.developmentgateway.org':'http://autogeocoder.dgstg.org');
+window.API_ROOT = document.location.href.indexOf('localhost') > -1 || document.location.href.indexOf('127.0.0.1') > -1 ? 'http://localhost:5000' : (document.location.href.indexOf('developmentgateway.org')>-1?'http://autogeocoder-afdb.developmentgateway.org':'http://autogeocoder.dgstg.org');
 // Store Initialization
 // ------------------------------------
 const {store, history} = createStore(window.__INITIAL_STATE__)

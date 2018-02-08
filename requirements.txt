@@ -17,3 +17,5 @@ lxml
 flask_cors
 sner
 shelljob
+uwsgi
+eventlet
