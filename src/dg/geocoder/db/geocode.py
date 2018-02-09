@@ -155,9 +155,11 @@ def save_loc_identifier(location_id, code, conn=None):
             close(conn)
 
 
-def save_geocoding(geocoding, job_id, activity_id, conn=None):
+def save_geocoding(geocoding, job_id, activity_id, style='PLAIN', conn=None):
     should_close = False
 
+    location_id = None
+    geocoding_id = None
     try:
         if conn is None:
             conn = open()
@@ -210,49 +212,52 @@ def save_geocoding(geocoding, job_id, activity_id, conn=None):
 
         geocoding_id = cur.fetchone()[0]
 
-        name_id = save_narrative(toponymName, 'en', conn=conn)  # sending connection to keep same transaction
-        location_class = get_location_class_from_fcl(fcl)
-        location_class_id = get_iati_code(location_class.get('code'), location_class.get('type')).get('id')
-        exactness_id = get_iati_code(EXACTNESS_EXACT.get('code'), EXACTNESS_EXACT.get('type')).get('id')
-        features_designation_id = get_iati_code(fcode, 'FEATURE_DESIGNATION').get('id')
-        location_reach_id = get_iati_code(LOCATION_REACH_ACTIVITY.get('code'), LOCATION_REACH_ACTIVITY.get('type')).get(
-            'id')
-        gazetteer_agency_id = get_iati_code(GAZETTEER_AGENCY_GEO_NAMES.get('code'),
-                                            GAZETTEER_AGENCY_GEO_NAMES.get('type')).get('id')
-        precision_id = get_iati_code(LOCATION_PRECISION_EXACT.get('code'), LOCATION_PRECISION_EXACT.get('type')).get(
-            'id')
+        # Use full style to persist results in a IATI compatible model
+        if style == 'IATI':
+            name_id = save_narrative(toponymName, 'en', conn=conn)  # sending connection to keep same transaction
+            location_class = get_location_class_from_fcl(fcl)
+            location_class_id = get_iati_code(location_class.get('code'), location_class.get('type')).get('id')
+            exactness_id = get_iati_code(EXACTNESS_EXACT.get('code'), EXACTNESS_EXACT.get('type')).get('id')
+            features_designation_id = get_iati_code(fcode, 'FEATURE_DESIGNATION').get('id')
+            location_reach_id = get_iati_code(LOCATION_REACH_ACTIVITY.get('code'),
+                                              LOCATION_REACH_ACTIVITY.get('type')).get(
+                'id')
+            gazetteer_agency_id = get_iati_code(GAZETTEER_AGENCY_GEO_NAMES.get('code'),
+                                                GAZETTEER_AGENCY_GEO_NAMES.get('type')).get('id')
+            precision_id = get_iati_code(LOCATION_PRECISION_EXACT.get('code'), LOCATION_PRECISION_EXACT.get('type')) \
+                .get('id')
 
-        # save location
-        location_id = save_location(AUTO_CODED_STATUS,
-                                    lng, lat,
-                                    activity_id,
-                                    job_id,
-                                    exactness_id,
-                                    features_designation_id,
-                                    gazetteer_agency_id,
-                                    location_class_id,
-                                    location_reach_id,
-                                    precision_id, conn=conn)
+            # save location
+            location_id = save_location(AUTO_CODED_STATUS,
+                                        lng, lat,
+                                        activity_id,
+                                        job_id,
+                                        exactness_id,
+                                        features_designation_id,
+                                        gazetteer_agency_id,
+                                        location_class_id,
+                                        location_reach_id,
+                                        precision_id, conn=conn)
 
-        save_loc_identifier(location_id, geonameId, conn=conn)
+            save_loc_identifier(location_id, geonameId, conn=conn)
 
-        save_loc_name(location_id, name_id, conn=conn)
+            save_loc_name(location_id, name_id, conn=conn)
 
-        if adminCode0:
-            save_loc_administrative(location_id, adminName0, adminCode0, 0, conn=conn)
-        if adminCode1:
-            save_loc_administrative(location_id, adminName1, adminCode1, 1, conn=conn)
-        if adminCode2:
-            save_loc_administrative(location_id, adminName2, adminCode2, 2, conn=conn)
-        if adminCode3:
-            save_loc_administrative(location_id, adminName3, adminCode3, 3, conn=conn)
-        if adminCode4:
-            save_loc_administrative(location_id, adminName4, adminCode4, 4, conn=conn)
+            if adminCode0:
+                save_loc_administrative(location_id, adminName0, adminCode0, 0, conn=conn)
+            if adminCode1:
+                save_loc_administrative(location_id, adminName1, adminCode1, 1, conn=conn)
+            if adminCode2:
+                save_loc_administrative(location_id, adminName2, adminCode2, 2, conn=conn)
+            if adminCode3:
+                save_loc_administrative(location_id, adminName3, adminCode3, 3, conn=conn)
+            if adminCode4:
+                save_loc_administrative(location_id, adminName4, adminCode4, 4, conn=conn)
 
         if should_close:
             conn.commit()
 
-        return (location_id, geocoding_id)
+        return location_id, geocoding_id
     except Exception as error:
         logger.error("Error occurred while running save_geocoding {}".format(error))
         conn.cancel()
