@@ -96,7 +96,7 @@ def query(location, cty_codes, query_method, fuzzy):
 
         json_decode = json.JSONDecoder()  # used to parse json response
         response = urlopen(query_string)
-        logger.info("Querying geoname {}".format(query_string))
+        # logger.info("Querying geoname {}".format(query_string))
         response_string = response.read().decode('utf-8')
         parsed_response = json_decode.decode(response_string)
         if parsed_response.get('geonames') and len(parsed_response.get('geonames')) > 0:
