@@ -39,8 +39,8 @@ def get_ignore_entities():
     return parser.get('ie', 'ignore_entities').lower().split(' ')
 
 
-#def get_ignore_gap_chars():
-#    return parser.get('ie', 'ignore_gap_chars').lower().split(' ')
+def get_ignore_gap_chars():
+    return parser.get('ie', 'ignore_gap_chars').lower().split(' ')
 
 
 def get_classifiers_path():
