@@ -190,6 +190,7 @@ geocoder.sh -f mydocument.pdf
 
 ## AutoGeocoder process workflow
 
+
 ![Alt text](workflow-image.png?raw=true "Workflow")
 
 ## Geocoder Suite Technical Guide
