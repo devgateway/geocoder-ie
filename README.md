@@ -103,96 +103,10 @@ Results were saved in out.tsv
 Output format (-o)
 
 xml: is only supported when processing a iati xml file, and the output is a copy of the original xml file  with new locations embedded.
-tsv: is only supported when processing documents, and the output will be the list of the geocoded locations.
-json: is supported in both cases, and the output is like the following example.
-
-```
-
-
-[
-    {
-        "project_id": "46002-P-GH-AAD-002",
-        "locations": [
-            {
-                "name": "Brong-Ahafo",
-                "id": 2302547,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-1.5",
-                        "7.75"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "ADM1",
-                    "name": "first-order administrative division"
-                },
-                "country": {
-                    "code": "GH",
-                    "name": "Ghana"
-                },
-                "admin1": {
-                    "code": "03",
-                    "name": "Brong-Ahafo"
-                },
-                "admin2": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            },
-            {
-                "name": "Kumasi",
-                "id": 7649000,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-1.61667",
-                        "6.68333"
-                    ]
-                },
-                "featureDesignation": {
-                    "code": "ADM2",
-                    "name": "second-order administrative division"
-                },
-                "country": {
-                    "code": "GH",
-                    "name": "Ghana"
-                },
-                "admin1": {
-                    "code": "02",
-                    "name": "Ashanti"
-                },
-                "admin2": {
-                    "code": "7649000",
-                    "name": "Kumasi"
-                },
-                "admin3": {
-                    "code": "",
-                    "name": ""
-                },
-                "admin4": {
-                    "code": "",
-                    "name": ""
-                }
-            }
-        ]
-    }
-]
-
-```
-
+tsv and json can be used for any input file.
 
 ## Web interface
-The auto geocoder tool provides a simple user interface to upload , geocode documents, review and see the geocoding results and its related texts.
-The web interface also gives support to classifier training module
+AutoGeocoder tool provides a simple user interface to upload, geocode documents, review and see the geocoding results and its related texts.
 
 ### Setup
 1. Install PostgresSQL
@@ -205,26 +119,45 @@ createdb -Upostgres autogeocoder
 psql -Upostgres -dautogeocoder -f sql/geocoder.sql
 
 ```
-4. Update geocoder.ini set web port and database configuration
+4. Database configuration (geocoder.ini)
 ```
 [postgres]
-user_name=postgres
-password=postgres
-port=5432
-host=localhost
-db_name=geocoder
-
-[web]
-port=9095
+ user_name=postgres
+ password=postgres
+ port=5432
+ host=localhost
+ db_name=geocoder
 ```
-5. Run python server.py and open http://localhost:9095
+
+
+5. Web configuration (uwsgi.ini)
+```
+[uwsgi]
+project = autogeocoder
+module = wsgi
+wsgi-file=/src/wsgi.py
+master = true
+processes = 5
+socket = 0.0.0.0:9095
+protocol = http
+callable = app
+chdir=/home/sdimunzio/projects/geocoder-ie/src/
+virtualenv=/home/sdimunzio/envs/geocoder/
+die-on-term = true
+```
+
+6. Run python server.py and open http://localhost:9095
 
 ## Training your own text classifier
 The text classifier attempts to reduce the number of false positives by eliminating those paragraph that shouldn’t be passed to the  named entity extraction phase, you can train your own classifier and make it learn about your documents.
 
-## Classifier Training
 
-(Database configuration required please see web interface steps)
+## Classifier Training
+The default classifier has been trained with a small dataset, 
+so it is recommended that users train their own text classifiers to achieve enhanced precision.
+
+Before following  bellow steps you should ensure AutoGeocoder's database is already configured.
+
 
 1. Download iati data from IATI registry
 ```
@@ -255,14 +188,9 @@ geocoder.sh -f mydocument.pdf
 ```
 
 
-## Geocoding PDF, ODT and TXT Documents
-  TBD
+## AutoGeocoder process workflow
 
-## Geocoding IATI activities
-If a iati xml file is provided as input, the system will geocoded each activity by following the next steps:
+![Alt text](workflow-image.png?raw=true "Workflow")
 
-- Extract activity description
-- Download all documents tagged with code 02 or 07
-- Extract all sentences from documents
-- Geocode all sentences
-- Generate a new XML file containing activities and locations information.
+## Geocoder Suite Technical Guide
+For detailed installation instructions please look at the technical guide https://drive.google.com/file/d/1QhGoI_syJq3FqO0lm3Zc7j5ziuWro5TK/view
