@@ -228,6 +228,3 @@ def stream():
 
     return Response(stream_with_context(read_process()))
 
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9095)

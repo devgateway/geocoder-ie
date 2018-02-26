@@ -18,7 +18,7 @@ class XMLProcessor(BaseProcessor):
         self.file = file
 
     def process(self):
-        if not is_valid_schema(self.file, version='202'):
+        if not  is_valid_schema(self.file, version='202'):
             logger.error('Invalid xml file supplied please check IATI version should be 202')
             raise Exception("Invalid xml file")
         else:

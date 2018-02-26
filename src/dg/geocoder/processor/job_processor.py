@@ -64,21 +64,28 @@ class JobProcessor(BaseProcessor):
 
     def save_output(self):
         try:
-            self.persist_geocoding(self.get_results(), self.job_activity_id, self.job_id)
+            if self.job_queue_type == 'DOC_QUEUE':
+                self.persist_geocoding(style='PLAIN')
+
+            if self.job_queue_type == 'ACTIVITY_QUEUE':
+                self.persist_geocoding(style='IATI')
+
             update_queue_status(self.job_id, ST_PROCESSED)
             return self
         except Exception as error:
             logger.error(error)
             update_queue_status(self.job_id, ST_ERROR, message=error.__str__())
 
-    def persist_geocoding(self, results, activity_id, job_id):
-        geocoding_list = [(data['geocoding'], data['texts']) for (l, data) in results if data.get('geocoding')]
+    def persist_geocoding(self, style='PLAIN'):
+        geocoding_list = [(data['geocoding'], data['texts']) for (l, data) in self.get_results() if
+                          data.get('geocoding')]
         for geocoding in geocoding_list:
             try:
                 conn = open()
-                location_id, geocoding_id = save_geocoding(geocoding[0], job_id, activity_id, conn=conn)
+                location_id, geocoding_id = save_geocoding(geocoding[0], self.job_id, self.job_activity_id, style=style,
+                                                           conn=conn)
                 for text in geocoding[1]:
-                    save_extract_text(text.get('text'), geocoding_id, location_id, job_id,
+                    save_extract_text(text.get('text'), geocoding_id, location_id, self.job_id,
                                       ', '.join(text.get('entities')),
                                       conn=conn)
 
