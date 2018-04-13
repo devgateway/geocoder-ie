@@ -1,5 +1,5 @@
 
-AutoGecoder
+AutoGeocoder
 =====
  AutoGeocoder tool reads through text provided in various document formats (PDF, DOC, TXT) to identify activity locations, and then produces a final list of georeferenced location names. The tool has been fully developed in Python 3, and combines well-known tools and libraries such as NLTK and scikit-learn.
 
