@@ -135,7 +135,19 @@ psql -Upostgres -dautogeocoder -f sql/geocoder.sql
 ```
 
 
-5. Web configuration (uwsgi.ini)
+5. Uwsgi configuration 
+
+ The uWSGI project aims at developing a full stack for building hosting services.
+ please look at 
+ <a href="https://uwsgi-docs.readthedocs.io/en/latest/ " target="_blank">https://uwsgi-docs.readthedocs.io/en/latest/ </a>
+ 
+ To install uwsgi please run. 
+
+```
+    pip install uwsgi
+```
+ 
+uwsgi.ini
 ```
 [uwsgi]
 project = autogeocoder
@@ -151,7 +163,11 @@ virtualenv=/home/sdimunzio/envs/geocoder/
 die-on-term = true
 ```
 
-6. Run python server.py and open http://localhost:9095
+6. Run 
+  ```
+  uwsgi uwsgi.ini
+   
+  ```
 
 ## Training your own text classifier
 The text classifier attempts to reduce the number of false positives by eliminating those paragraph that shouldn’t be passed to the  named entity extraction phase, you can train your own classifier and make it learn about your documents.
