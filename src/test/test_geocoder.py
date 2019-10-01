@@ -28,15 +28,16 @@ class TestGeocoder(unittest.TestCase):
         self.assertTrue(Fouta_Djallon.get('geocoding').get('fcode') == 'RGN')
 
     def test_geocode_txt_2(self):
-        text = get_reader('resources/sample_text_2.txt').split()[0]
-        ner_decorated = extract(get_text_reader(text).split())
+        reader = get_reader('resources/sample_text_2.txt')
+        text = reader.split()[0]
+        ner_decorated = extract_ner(get_text_reader(text).split())
         merge_decorated = merge(ner_decorated)
         normalized = join(merge_decorated)
         found = [l for l, data in normalized]
-        self.assertTrue('Benin' in found)
-        self.assertTrue('Ghana' in found)
-        self.assertTrue('Mozambique' in found)
-        self.assertTrue('Burkina Faso' in found)
+        self.assertTrue('Benin'.lower() in found)
+        self.assertTrue('Ghana'.lower() in found)
+        self.assertTrue('Mozambique'.lower() in found)
+        self.assertTrue('Burkina Faso'.lower() in found)
 
         geonames_decorated = geonames(normalized, cty_codes=['BF'])
         locs = [l for (l, data) in geonames_decorated if data.get('geocoding')]

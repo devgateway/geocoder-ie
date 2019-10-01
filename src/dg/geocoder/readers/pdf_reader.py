@@ -12,7 +12,7 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser, PDFSyntaxError
 
-from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
+from dg.geocoder.readers.base_reader import BaseReader
 
 logger = logging.getLogger()
 
@@ -102,7 +102,7 @@ class PdfReader(BaseReader):
         logger.info('Splitting document in sentences')
         if len(self.paragraphs) == 0:
             raw_text = self.read(pagenos)
-            tokenizer = get_sentence_tokenizer()
+            tokenizer = self.get_sentence_tokenizer()
             tokens = tokenizer.tokenize(raw_text)
             for t in tokens:
                 self.paragraphs.append(t)

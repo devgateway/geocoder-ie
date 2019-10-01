@@ -1,4 +1,4 @@
-from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
+from dg.geocoder.readers.base_reader import BaseReader
 
 
 class TextReader(BaseReader):
@@ -10,7 +10,7 @@ class TextReader(BaseReader):
 
     def split(self):
         if len(self.paragraphs) == 0:
-            self.paragraphs = [e for e in get_sentence_tokenizer().tokenize(self.text)]
+            self.paragraphs = [(e, self.file) for e in self.get_sentence_tokenizer().tokenize(self.text)]
         return self.paragraphs
 
     def get_sample(self):

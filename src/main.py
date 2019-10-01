@@ -55,7 +55,7 @@ def main(args):
             if file is None:
                 print('Please provide an input file using -f')
             else:
-                cty_codes = args.countries.split(',') if args.countries else None
+                cty_codes = args.countries.split if args.countries else None
 
                 out = FileProcessor(file, cty_codes=cty_codes, step_logger=console_step_logger()).process().write_output(format, '')
                 print('Results were saved in {}'.format(out))

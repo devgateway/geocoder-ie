@@ -29,6 +29,7 @@ CREATE TABLE public.corpora
   sentence text,
   category character varying(100),
   file character varying(500),
+  ref_id bigint,
   CONSTRAINT corpora_pk PRIMARY KEY (id)
 )
 WITH (

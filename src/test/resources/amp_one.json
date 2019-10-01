@@ -1,0 +1,126 @@
+{
+  "budget_code_project_id": null,
+  "internal_id": 10288,
+  "amp_id": "871733810206",
+  "project_title": "Tours radio et centrale d'appel pour les communications de la PNH",
+  "description": null,
+  "project_comments": null,
+  "objective": "<p>\r\n\tCe projet pr&eacute;voit d&#39;installer une centrale d&#39;appel &agrave; Port-au-Prince permettant aux citoyens de contacter la Police nationale d&#39;Ha&iuml;ti, ainsi que des tours radio qui seront install&eacute;es dans six commissariats de la PNH dans toute la capitale, afin de faciliter les communications d&#39;un poste de police &agrave; l&#39;autre. Ce projet inclut &eacute;galement l&#39;installation de r&eacute;p&eacute;teurs et d&#39;antennes qui constitueront une importante am&eacute;lioration de la couverture radio de la PNH dans la ville.</p>",
+  "results": "<p>\r\n\tLa centrale d&#39;appel a &eacute;t&eacute; mise en place et le mat&eacute;riel install&eacute;.</p>",
+  "document_space": null,
+  "iati_identifier": null,
+  "is_draft": false,
+  "last_imported_at": null,
+  "last_imported_by": null,
+  "primary_sectors": [
+    {
+      "id": 53097,
+      "sector": 275,
+      "sector_percentage": 100.0
+    }
+  ],
+  "secondary_sectors": [],
+  "locations": [
+    {
+      "id": 34560,
+      "location": 35,
+      "location_percentage": 100.0
+    }
+  ],
+  "donor_organization": [
+    {
+      "id": 93797,
+      "organization": 1694
+    }
+  ],
+  "responsible_organization": [
+    {
+      "id": 93796,
+      "organization": 208,
+      "percentage": 100.0,
+      "budgets": [
+        {
+          "id": 1671,
+          "budget_code": "PNH"
+        }
+      ],
+      "additional_info": null
+    }
+  ],
+  "executing_agency": [],
+  "implementing_agency": [],
+  "beneficiary_agency": [],
+  "contracting_agency": [],
+  "activity_internal_ids": [],
+  "fundings": [
+    {
+      "funding_id": 54541,
+      "donor_organization_id": 1694,
+      "financing_id": null,
+      "actual_start_date": null,
+      "actual_completion_date": null,
+      "reporting_date": null,
+      "donor_objective": null,
+      "commitments": [],
+      "disbursements": [],
+      "expenditures": [],
+      "type_of_assistance": 80,
+      "financing_instrument": 183,
+      "group_versioned_funding": 1380296228486,
+      "source_role": 1
+    }
+  ],
+  "issues": [],
+  "program_description": null,
+  "team": 154,
+  "ppc_amount": {
+    "amount": 2500000.0,
+    "currency": 21,
+    "funding_date": "2010-10-01"
+  },
+  "donor_contact_information": [],
+  "project_coordinator_contact_information": [],
+  "sector_ministry_contact_information": [],
+  "implementing/executing_agency_contact_information": [],
+  "components": [],
+  "structures": [
+    {
+      "id": 5963,
+      "title": "Tours radio et centrale d'appel pour les communications de la PNH",
+      "description": "Farmer Field Schools",
+      "latitude": "19.82657",
+      "longitude": "-72.571228",
+      "shape": "Point",
+      "type": 36,
+      "coordinates": [],
+      "structure_color": null
+    }
+  ],
+  "proposed_start_date": "2010-10-01",
+  "actual_start_date": "2010-10-01",
+  "proposed_approval_date": null,
+  "actual_approval_date": null,
+  "actual_completion_date": null,
+  "proposed_completion_date": "2012-12-01",
+  "created_by": 1682,
+  "creation_date": "2013-09-18T14:41:23.302+0000",
+  "update_date": "2013-09-27T14:37:19.454+0000",
+  "iati_last_update_date": null,
+  "approved_by": 1685,
+  "approval_date": "2013-09-27T14:37:19.454+0000",
+  "approval_status": 1,
+  "archived": null,
+  "activity_documents": [],
+  "activity_status": 264,
+  "activity_budget": null,
+  "implementation_level": 69,
+  "implementation_location": 123,
+  "fy": [],
+  "cris_number": null,
+  "national_plan_objective": [],
+  "primary_programs": [],
+  "activity_group": {
+    "version": 0
+  },
+  "modified_by": 1685
+}

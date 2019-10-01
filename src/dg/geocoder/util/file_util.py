@@ -7,6 +7,7 @@ ODT = 'odt'
 HTML = 'html'
 XML = 'xml'
 TXT = 'txt'
+JSON = 'json'
 
 valid_formats = [PDF, HTML, XML, TXT, ODT]
 
@@ -33,6 +34,11 @@ def is_xml(name):
 
 def is_txt(name):
     return get_file_type(name) == TXT
+
+
+def get_file_name(file):
+    if file:
+        return file.split('/')[-1]
 
 
 # todo use libmagic

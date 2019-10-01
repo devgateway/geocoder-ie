@@ -12,13 +12,13 @@ logger = logging.getLogger()
 
 
 def is_valid_type(file):
-    ex = file.split('.')[-1]
+    ex = file.split[-1]
     return ex.lower() in ['pdf', 'odt']
 
 
 def process_file(dir_path, file, download_path=get_download_path()):
     web_path = os.path.sep.join(
-        dir_path.split(os.path.sep)[dir_path.split(os.path.sep).index(download_path.split(os.path.sep)[-1]):])
+        dir_path.split[dir_path.split.index(download_path.split[-1]):])
 
     try:
         reader = get_reader(os.path.join(dir_path, file))

@@ -83,7 +83,7 @@ export default class Sentences extends Component {
                   <a className="list-action" onClick={e=>onDelete(l[0])}>Delete</a>
                 </td>
 
-                <td><a target='new' href={`${window.API_ROOT}/download/${l[0]}`}>{l[3].split('/').pop()}</a></td>
+                <td nowrap={true}><a target='new' href={`${window.API_ROOT}/download/${l[0]}`}> {l[4]} - {l[3].split('/').pop()}</a></td>
               </tr>)
             : null}
           </tbody>

@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import zipfile
 
-from dg.geocoder.readers.base_reader import BaseReader, get_sentence_tokenizer
+from dg.geocoder.readers.base_reader import BaseReader
 
 
 class OdtReader(BaseReader):
@@ -17,7 +17,7 @@ class OdtReader(BaseReader):
 
     def split(self):
         if len(self.paragraphs) == 0:
-            self.paragraphs = [e for e in get_sentence_tokenizer().tokenize(self.text)]
+            self.paragraphs = [e for e in self.get_sentence_tokenizer().tokenize(self.text)]
         return self.paragraphs
 
     def get_sample(self):

@@ -1,6 +1,6 @@
 import unittest
 
-from dg.geocoder.geo.geocoder import merge, join
+from dg.geocoder.geo.geocoder import merge, join, extract_ner
 from dg.geocoder.readers.factory import get_reader
 
 
@@ -18,7 +18,7 @@ class TestMerge(unittest.TestCase):
         self.assertTrue('Democratic Republic of Congo' in results[0]['locations'])
 
     def test_merge_1(self):
-        text = get_reader('resources/sample_text_1.txt').split()[0]
+        text = get_reader('resources/sample_text_1.txt').split[0]
         entities = ['Burkina', 'Faso', 'Bissiga', 'Central', 'Plateau', 'Region']
         extraction = [{'text': text, 'entities': entities, 'relations': []}]
 
@@ -26,9 +26,9 @@ class TestMerge(unittest.TestCase):
         self.assertTrue('Central Plateau Region' in results[0]['locations'])
 
     def test_merge_2(self):
-        text = get_reader('resources/sample_text_2.txt').split()[0]
-        entities = ['Benin', 'Benin', 'Burkina', 'Faso', 'Ghana', 'Mozambique']
-        ner_decorated = [{'text': text, 'entities': entities, 'relations': []}]
+        text = get_reader('resources/sample_text_1.txt').split()
+
+        ner_decorated = extract_ner(text)
 
         merge_decorated = merge(ner_decorated)
         normalized = join(merge_decorated)
@@ -37,17 +37,6 @@ class TestMerge(unittest.TestCase):
         self.assertTrue('Ghana' in found)
         self.assertTrue('Mozambique' in found)
         self.assertTrue('Burkina Faso' in found)
-
-    def test_merge_new_lines(self):
-        text = """Dadieso Forest
-Reserves
-
-Kakum National Park area, Central Region"""
-
-        entities = ['Dadieso', 'Forest', 'Reserves', 'Kakum', 'National', 'Park']
-        ner_decorated = [{'text': text, 'entities': entities, 'relations': []}]
-        merge_decorated = merge(ner_decorated, ignored_gap_chars=[','])
-        logger.info(merge_decorated)
 
 
 if __name__ == '__main__':

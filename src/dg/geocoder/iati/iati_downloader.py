@@ -17,11 +17,11 @@ logger = logging.getLogger()
 
 def download(dest_path, url):
     try:
-        file_name = url.split('/')[-1]
+        file_name = url.split[-1]
         path = os.path.realpath(os.path.join(dest_path, unquote_plus(file_name)))
         if not os.path.exists(path):
             f = urlopen(url)
-            headers = f.headers['content-type'].split('/')
+            headers = f.headers['content-type'].split
             md = 'w'
             if 'html' in headers:
                 file_name = '{}.html'.format(uuid.uuid1())

@@ -15,14 +15,14 @@ def clean():
     close(conn)
 
 
-def save_sentences(file, sentences):
+def save_sentences(file, sentences, ref_id):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO CORPORA (ID,FILE, SENTENCE,CATEGORY) VALUES (NEXTVAL('corpora_id_seq'),%s,%s ,NULL )"""
+        sql = """INSERT INTO CORPORA (ID,FILE, SENTENCE,CATEGORY, REF_ID) VALUES (NEXTVAL('corpora_id_seq'),%s,%s ,NULL, %s )"""
         cur = conn.cursor()
         for s in sentences:
-            data = (file, s)
+            data = (file, s, ref_id)
             cur.execute(sql, data)
 
         conn.commit()

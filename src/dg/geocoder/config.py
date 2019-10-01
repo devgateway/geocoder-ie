@@ -23,6 +23,10 @@ def get_standford_server_type():
     return parser.get('standford', 'server_type')
 
 
+def get_npl_port():
+    return int(parser.get('standford', 'npl_port'))
+
+
 def get_ner_port():
     return int(parser.get('standford', 'port'))
 
@@ -36,11 +40,11 @@ def get_geonames_user_name():
 
 
 def get_ignore_entities():
-    return parser.get('ie', 'ignore_entities').lower().split(' ')
+    return parser.get('ie', 'ignore_entities').lower().split()
 
 
 def get_ignore_gap_chars():
-    return parser.get('ie', 'ignore_gap_chars').lower().split(' ')
+    return parser.get('ie', 'ignore_gap_chars').lower().split()
 
 
 def get_classifiers_path():

@@ -23,7 +23,7 @@ def process(file):
     try:
         reader = get_reader(file)
         if reader.is_english_lang():
-            logger.info('processing %s' % file.split('/')[-1])
+            logger.info('processing %s' % file.split[-1])
             sentences = reader.split()
             save_sentences(file, sentences)
         else:

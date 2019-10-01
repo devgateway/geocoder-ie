@@ -19,6 +19,7 @@ def get_reader(path_to_file):
     elif is_txt(path_to_file):
         logger.debug('Creating txt reader')
         return TxtReader(path_to_file)
+
     else:
         return None
 
