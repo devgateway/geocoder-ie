@@ -42,7 +42,7 @@ pandas==0.20.3
 pdfminer.six==20170720
 pexpect==4.2.1
 Pillow==4.0.0
-psutil==5.0.1
+psutil==5.6.6
 psycopg2==2.7.3
 ptyprocess==0.5.1
 pyasn1==0.1.9
