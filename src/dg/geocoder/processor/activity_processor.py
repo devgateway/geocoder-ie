@@ -5,7 +5,6 @@ from dg.geocoder.geo.geocoder import geocode
 from dg.geocoder.iati.iati_downloader import download_activity_data
 from dg.geocoder.processor.base_processor import BaseProcessor
 
-logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
 
 

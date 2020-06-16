@@ -13,7 +13,6 @@ from dg.geocoder.processor.base_processor import BaseProcessor
 from dg.geocoder.processor.file_processor import FileProcessor
 from dg.geocoder.processor.step_logger import db_step_logger
 
-logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
 
 

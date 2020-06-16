@@ -31,7 +31,7 @@ def extract_spacy(sentences):
     return extraction
 
 
-class SpacyServer(rpyc.Service):
+class EchoService(rpyc.Service):
     def on_connect(self, conn):
         pass
 
@@ -43,5 +43,6 @@ class SpacyServer(rpyc.Service):
 
 
 if __name__ == "__main__":
-    s = ThreadedServer(SpacyServer, auto_register=True)
-    s.start()
+    logging.basicConfig(level=logging.DEBUG)
+    server = ThreadedServer(EchoService, port=18861)
+    server.start()

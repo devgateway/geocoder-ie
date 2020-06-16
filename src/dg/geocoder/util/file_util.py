@@ -9,7 +9,7 @@ XML = 'xml'
 TXT = 'txt'
 JSON = 'json'
 
-valid_formats = [PDF, HTML, XML, TXT, ODT]
+valid_formats = [PDF, HTML, XML, TXT, ODT, JSON]
 
 
 def is_valid(name):

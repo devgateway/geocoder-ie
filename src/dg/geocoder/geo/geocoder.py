@@ -13,9 +13,14 @@ from dg.geocoder.geo.geonames import resolve
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 import spacy
 
-npl = None
-
 logger = logging.getLogger()
+
+
+npl = None
+print("Loading fr_core_news_md , this can take a while")
+nlp = spacy.load('fr_core_news_md', disable=['tokenizer','tagger', 'parser', 'textcat'])
+print("fr_core_news_md loaded")
+
 
 
 def classify(texts, files, cls_name):

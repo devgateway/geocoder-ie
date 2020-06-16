@@ -10,7 +10,7 @@ import {Link} from 'react-router';
 
 
 const dropzoneConfig = {
-  iconFiletypes: ['.odt', '.xml', '.pdf'],
+  iconFiletypes: ['.json'],
   showFiletypeIcon: true,
   postUrl: 'no-url'
 };
@@ -18,7 +18,7 @@ const dropzoneConfig = {
 const djsConfig = {
   autoProcessQueue: false,
   addRemoveLinks: true,
-  acceptedFiles: '.xml, .pdf, .odt'
+  acceptedFiles: '.json'
 }
 
 
@@ -93,7 +93,7 @@ export default class DocsList extends Component {
       }
     });
     if (!duplicated) {
-      if (file.type !== 'text/xml' && file.type !== 'application/pdf' && file.type !== 'application/vnd.oasis.opendocument.text') {
+      if (file.type !== 'text/xml' && file.type !== 'application/json' && file.type !== 'application/vnd.oasis.opendocument.text') {
         this.props.onAddMessage(`File ${file.name} is not supported`, 'error');
         dzComp.dropzone.removeFile(file);
       } else {

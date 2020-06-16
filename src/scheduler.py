@@ -15,15 +15,7 @@ logger = logging.getLogger()
 #    logger.info('Getting doc record')
 # doc = get_queue_by_id(doc_id)
 # process_queue(doc, out_path=get_doc_queue_path())
-
-sched = BlockingScheduler(logger=logger)
-
-print_banner()
-
-
-@sched.scheduled_job('interval', seconds=20, max_instances=50)
-def timed_job():
-    process_jobs()
+from datetime import datetime
 
 
 # get all pending jobs
@@ -50,7 +42,13 @@ def process_jobs():
             logger.error(e)
 
 
+if __name__ == '__main__':
+    print_banner()
+    scheduler = BlockingScheduler()
+    scheduler.add_job(process_jobs, 'interval', seconds=30)
+    print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
-
-sched.start()
-#process_jobs()
+    try:
+        scheduler.start()
+    except (KeyboardInterrupt, SystemExit):
+        pass
