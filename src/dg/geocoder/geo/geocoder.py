@@ -17,9 +17,6 @@ logger = logging.getLogger()
 
 
 npl = None
-print("Loading fr_core_news_md , this can take a while")
-nlp = spacy.load('fr_core_news_md', disable=['tokenizer','tagger', 'parser', 'textcat'])
-print("fr_core_news_md loaded")
 
 
 
@@ -97,9 +94,7 @@ def geonames(entity_list, cty_codes=None):
 
 
 def extract_spacy(sentences):
-    if npl is None:
-        nlp = spacy.load('fr_core_news_md', disable=['tagger', 'parser', 'textcat'])
-
+    nlp = spacy.load('fr_core_news_md', disable=['tagger', 'parser', 'textcat'])
     tic = time.clock()
     pos = 0
     extraction = []
@@ -146,7 +141,7 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
         for f, s in sentences:
             output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
             locations_found = [text for text, tag in output if
-                               tag in ['LOCATION', 'PERSON'] and text.lower() not in ignore_entities]
+                               tag in ['I-LOC', 'PERSON'] and text.lower() not in ignore_entities]
 
             if len(locations_found) > 0:
                 extraction.append(({'text': {'text': s, 'file': f}, 'entities': locations_found}))

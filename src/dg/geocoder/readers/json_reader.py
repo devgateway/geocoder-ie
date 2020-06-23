@@ -26,7 +26,7 @@ class JsonReader(BaseReader):
                     a_text = remove_tags(a_text)
                     paragraphs = [e for e in self.get_sentence_tokenizer().tokenize(a_text)]
                     for p_text in paragraphs:
-                        self.paragraphs.append([p_text, p])
+                        self.paragraphs.append([p, p_text])
 
         return self.paragraphs
 
