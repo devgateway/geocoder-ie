@@ -1,6 +1,7 @@
-from dg.geocoder.readers.base_reader import BaseReader
 import re
+
 from bs4 import BeautifulSoup
+from dg.geocoder.readers.base_reader import BaseReader
 
 TAG_RE = re.compile(r'<[^>]+>')
 
@@ -20,13 +21,12 @@ class JsonReader(BaseReader):
 
     def split(self):
         for p in self.jo:
-            if p in ['project_title', 'description', 'objective', 'results']:
-                a_text = self.jo[p]
-                if a_text is not None and isinstance(a_text, str):
-                    a_text = remove_tags(a_text)
-                    paragraphs = [e for e in self.get_sentence_tokenizer().tokenize(a_text)]
-                    for p_text in paragraphs:
-                        self.paragraphs.append([p, p_text])
+            a_text = self.jo[p]
+            if a_text is not None and isinstance(a_text, str):
+                a_text = remove_tags(a_text)
+                paragraphs = [e for e in self.get_sentence_tokenizer().tokenize(a_text)]
+                for p_text in paragraphs:
+                    self.paragraphs.append([p, p_text])
 
         return self.paragraphs
 
