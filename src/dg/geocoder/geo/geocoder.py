@@ -4,6 +4,7 @@ from os.path import isfile
 
 import numpy as np
 import pycorenlp.corenlp
+import spacy
 from sner.client import Ner
 
 from dg.geocoder.classification.classifier import load_classifier
@@ -11,7 +12,6 @@ from dg.geocoder.config import get_ner_host, get_ner_port, get_ignore_entities, 
     get_default_classifier, get_standford_server_type, get_npl_port
 from dg.geocoder.geo.geonames import resolve
 from dg.geocoder.readers.factory import get_reader, get_text_reader
-import spacy
 
 logger = logging.getLogger()
 
@@ -139,7 +139,7 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
         for f, s in sentences:
             output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
             locations_found = [text for text, tag in output if
-                               tag in ['I-LOC', 'I-PER', 'I-ORG'] and text.lower() not in ignore_entities]
+                               tag in ['I-LOC'] and text.lower() not in ignore_entities]
 
             if len(locations_found) > 0:
                 extraction.append(({'text': {'text': s, 'file': f}, 'entities': locations_found}))

@@ -1,10 +1,11 @@
 import logging
 
+from dg.geocoder.readers.json_reader import JsonReader
 from dg.geocoder.readers.odt_reader import OdtReader
 from dg.geocoder.readers.pdf_reader import PdfReader
 from dg.geocoder.readers.str_reader import TextReader
 from dg.geocoder.readers.txt_reader import TxtReader
-from dg.geocoder.util.file_util import is_pdf, is_odt, is_txt
+from dg.geocoder.util.file_util import is_pdf, is_odt, is_txt, is_json
 
 logger = logging.getLogger()
 
@@ -19,6 +20,9 @@ def get_reader(path_to_file):
     elif is_txt(path_to_file):
         logger.debug('Creating txt reader')
         return TxtReader(path_to_file)
+    elif is_json(path_to_file):
+        logger.debug('Creating json reader')
+        return JsonReader(path_to_file)
 
     else:
         return None

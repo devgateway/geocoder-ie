@@ -2,7 +2,6 @@ import logging
 
 import psycopg2
 import psycopg2.extras
-
 from dg.geocoder.db.db import open, close
 from dg.geocoder.db.iati_mapper import get_location_class_from_fcl, EXACTNESS_EXACT, LOCATION_REACH_ACTIVITY, \
     GAZETTEER_AGENCY_GEO_NAMES, LOCATION_PRECISION_EXACT
@@ -294,14 +293,14 @@ def save_extract_text(text, geocoding_id, location_id, queue_id, entities='', co
             close(conn)
 
 
-def save_activity(identifier, title, description, country, doc_id):
+def save_activity(identifier):
     conn = None
     try:
         conn = open()
-        sql = """INSERT INTO ACTIVITY (ID, IDENTIFIER, TITLE, DESCRIPTION, COUNTRY_ISO, DOCUMENT_ID) 
-              VALUES (NEXTVAL('hibernate_sequence'), %s, %s, %s, %s, %s) RETURNING id"""
+        sql = """INSERT INTO ACTIVITY (ID, IDENTIFIER) 
+              VALUES (NEXTVAL('hibernate_sequence'), %s) RETURNING id"""
         cur = conn.cursor()
-        data = (identifier, title, description, country, doc_id,)
+        data = (identifier,)
         cur.execute(sql, data)
         result_id = cur.fetchone()[0]
         conn.commit()
@@ -343,6 +342,26 @@ def get_geocoding_list(activity_id=None, queue_id=None, document_id=None):
     except Exception as error:
         conn.cancel()
         logger.error("Error occurred while running get_geocoding_list {}".format(error))
+        raise
+    finally:
+        close(conn)
+
+
+def get_geocode_by_id(geocode_id):
+    conn = None
+    try:
+        conn = open()
+        sql_select = """SELECT * FROM GEOCODING where id = %s """
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        data = (geocode_id,)
+        cur.execute(sql_select, data)
+        row = cur.fetchone()
+        cur.close()
+
+        return row
+
+    except Exception as error:
+        logger.info(error)
         raise
     finally:
         close(conn)

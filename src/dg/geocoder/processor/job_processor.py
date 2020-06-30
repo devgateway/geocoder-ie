@@ -1,7 +1,7 @@
 import logging
 import os
 
-from dg.geocoder.config import get_log_config_path, get_doc_queue_path
+from dg.geocoder.config import get_doc_queue_path
 from dg.geocoder.constants import ST_PROCESSING, ST_ERROR, ST_PROCESSED
 from dg.geocoder.db.activity import get_activity_by_id
 from dg.geocoder.db.db import close, open
@@ -9,6 +9,7 @@ from dg.geocoder.db.doc_queue import update_queue_status
 from dg.geocoder.db.geocode import save_geocoding, save_extract_text
 from dg.geocoder.iati.activity_reader import ActivityReader
 from dg.geocoder.processor.activity_processor import ActivityProcessor
+from dg.geocoder.processor.amp_activity_json_processor import AmpActivityJsonProcessor
 from dg.geocoder.processor.base_processor import BaseProcessor
 from dg.geocoder.processor.file_processor import FileProcessor
 from dg.geocoder.processor.step_logger import db_step_logger
@@ -34,8 +35,6 @@ class JobProcessor(BaseProcessor):
         self.job_activity_id = job.get('activity_id')
         self.step_logger = db_step_logger(job.get('id'))
 
-        logger.info('processing job {}'.format(self.job_id))
-
     def process(self):
         try:
             logger.info('processing job {}'.format(self.job_id))
@@ -45,16 +44,17 @@ class JobProcessor(BaseProcessor):
                 activity = get_activity_by_id(self.job_activity_id)
                 self.processor = ActivityProcessor(ActivityReader(xml=activity.get('xml')),
                                                    step_logger=self.step_logger)
-                self.processor.process()
-                self.results = self.results + self.processor.get_results()
-                self.locations = self.locations + self.processor.get_locations()
+            elif self.job_queue_type == 'AMP_ACTIVITY_QUEUE':
+                self.processor = AmpActivityJsonProcessor(os.path.join(get_doc_queue_path(), self.job_file_name),
+                                                          cty_codes=[self.job_country_iso],
+                                                          step_logger=self.step_logger)
             else:
                 self.processor = FileProcessor(os.path.join(get_doc_queue_path(), self.job_file_name),
                                                cty_codes=[self.job_country_iso], step_logger=self.step_logger)
-                self.processor.process()
-                self.results = self.results + self.processor.get_results()
-                self.locations = self.locations + self.processor.get_locations()
-                return self
+            self.processor.process()
+            self.results = self.results + self.processor.get_results()
+            self.locations = self.locations + self.processor.get_locations()
+            return self
 
         except Exception as error:
             logger.info("Oops!  something didn't go well", error)
