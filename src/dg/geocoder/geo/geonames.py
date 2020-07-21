@@ -39,7 +39,7 @@ def parse(data):
 def get_by_priority(results):
     if len(results) > 0:
         priorities = ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5', 'RGN', 'RGNE', 'RGNH', 'PPL', 'PPLA', 'PPLA2',
-                      'PPLA3', 'PPLA4', 'PPLL']
+                      'PPLA3', 'PPLA4', 'PPLL', 'PPLC']
         locations = []
         for l in results:  # iterate locations
             f_code = l.get('fcode')
@@ -53,6 +53,27 @@ def get_by_priority(results):
         # return element that got in first order
         if len(locations) > 0:
             return locations[0][1]
+    else:
+        return None
+
+
+def sort_by_priority(results):
+    if len(results) > 0:
+        priorities = ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5', 'RGN', 'RGNE', 'RGNH', 'PPL', 'PPLA', 'PPLA2',
+                      'PPLA3', 'PPLA4', 'PPLL', 'PPLC']
+        locations = []
+        for l in results:  # iterate locations
+            f_code = l.get('fcode')
+            # if f_code is equ to current priority return
+            for idx, p in enumerate(priorities):
+                if f_code == p:
+                    locations.append((idx, l))
+                    pass
+
+            locations.sort(key=lambda x: x[0])
+        # return element that got in first order
+        if len(locations) > 0:
+            return [e[1] for e in locations]
     else:
         return None
 
@@ -83,6 +104,28 @@ def resolve(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, ret
     return selected_loc
 
 
+def resolve_all(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, retry=get_geonames_retry_policy()):
+    if len(loc) > 3:
+        locations = query(loc, cty_codes, query_method, fuzzy)
+        locations = [loc for loc in locations if loc['fcode'] in ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5']]
+        sort_by_priority(locations)
+
+        if len(locations) > 0:
+            for selected_loc in locations:
+                logger.info('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'],
+                                                                        selected_loc['lat'], selected_loc['lng']))
+            return locations
+        else:
+            logger.info("Wasn't able to geocode  {}".format(loc))
+            if retry:
+                logger.info("Let's try using others parameters".format(loc))
+                return resolve_all(loc, cty_codes, rels, query_method='name', fuzzy=1, retry=False)
+    else:
+        logger.info('{} Too short location name'.format(loc))
+
+    return None
+
+
 def query(location, cty_codes, query_method, fuzzy):
     results = []
     try:
@@ -91,9 +134,10 @@ def query(location, cty_codes, query_method, fuzzy):
         query_string = base_url + 'username={user}&{query_method}={name}&' \
                                   'style=FULL&orderby={order}&startRow=0&maxRows=5&fuzzy={fuzzy}' \
             .format(user=username, query_method=query_method, name=quote(location), order='relevance', fuzzy=fuzzy)
+
         if cty_codes and len(cty_codes) > 0:
             query_string = query_string + '&' + '&'.join([('country={}'.format(c)) for c in cty_codes])
-
+        print(query_string)
         json_decode = json.JSONDecoder()  # used to parse json response
         response = urlopen(query_string)
         # logger.info("Querying geoname {}".format(query_string))

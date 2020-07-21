@@ -21,12 +21,11 @@ class JsonProcessor(BaseProcessor):
         j_object = json.load(self.document)
         i = 0
         for activity in j_object:
-            logger.info("Geocoding Activity " + activity["amp_id"])
             reader = JsonReader(activity)
             text = reader.split()
             ner_decorated = extract_spacy(text)
             merge_decorated = merge(ner_decorated)
             normalized = join(merge_decorated)
-            geocoding = geonames(normalized, ['DO', 'HT'])
+            geocoding = geonames(normalized, ['HT'])
             self.locations = geocoding
         return self

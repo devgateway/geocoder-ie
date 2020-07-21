@@ -10,7 +10,7 @@ from sner.client import Ner
 from dg.geocoder.classification.classifier import load_classifier
 from dg.geocoder.config import get_ner_host, get_ner_port, get_ignore_entities, get_ignore_gap_chars, \
     get_default_classifier, get_standford_server_type, get_npl_port
-from dg.geocoder.geo.geonames import resolve
+from dg.geocoder.geo.geonames import resolve, resolve_all
 from dg.geocoder.readers.factory import get_reader, get_text_reader
 
 logger = logging.getLogger()
@@ -90,6 +90,17 @@ def geonames(entity_list, cty_codes=None):
 
     return entity_list
 
+# query geonames an get all geographical information
+def geonames_all(entity_list, cty_codes=None):
+    if cty_codes is None:
+        cty_codes = []
+    for name, metadata in entity_list:
+        coding = resolve_all(name, cty_codes)
+        if coding is not None:
+            metadata['geocoding'] = coding
+
+    return entity_list
+
 
 def extract_spacy(sentences):
     nlp = spacy.load('fr_core_news_md', disable=['tagger', 'parser', 'textcat'])
@@ -138,6 +149,7 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
 
         for f, s in sentences:
             output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
+            print(output)
             locations_found = [text for text, tag in output if
                                tag in ['I-LOC'] and text.lower() not in ignore_entities]
 

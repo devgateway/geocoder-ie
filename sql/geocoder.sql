@@ -201,3 +201,29 @@ CREATE INDEX idxija4h3o7cah01wc4cqbd31i9o
   ON public."extract"
   USING btree
   (geocoding_id);
+
+CREATE TABLE public.amp_location
+(
+  id bigint NOT NULL,
+  name character varying(255),
+  amp_location_id bigint NOT NULL,
+  admin_level_code character varying(255),
+  description character varying(255),
+  geo_code character varying(255),
+  gs_lat double precision,
+  gs_long double precision,
+  CONSTRAINT amp_location_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+
+CREATE SEQUENCE amp_location_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE public.amp_location
+  OWNER TO postgres;
