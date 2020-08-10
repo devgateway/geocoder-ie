@@ -91,7 +91,7 @@ def resolve(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, ret
 
         if selected_loc:
             logger.info(
-                '{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+                '{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
                                                                      selected_loc['lng']))
         else:
             logger.info("Wasn't able to geocode  {}".format(loc))
@@ -112,7 +112,7 @@ def resolve_all(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9,
 
         if len(locations) > 0:
             for selected_loc in locations:
-                logger.info('{} was geocode as {} with coordinates {},{}'.format(loc, selected_loc['fcode'],
+                logger.info('{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'],
                                                                         selected_loc['lat'], selected_loc['lng']))
             return locations
         else:

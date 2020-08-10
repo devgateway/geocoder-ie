@@ -63,7 +63,7 @@ class JobProcessor(BaseProcessor):
 
     def save_output(self):
         try:
-            if self.job_queue_type == 'DOC_QUEUE':
+            if self.job_queue_type == 'DOC_QUEUE' or self.job_queue_type == 'AMP_ACTIVITY_QUEUE':
                 self.persist_geocoding(style='PLAIN')
 
             if self.job_queue_type == 'ACTIVITY_QUEUE':
