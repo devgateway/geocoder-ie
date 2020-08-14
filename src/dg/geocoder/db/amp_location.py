@@ -23,6 +23,12 @@ def save_amp_locations(locations):
     conn = None
     try:
         conn = open()
+
+        sql = 'DELETE FROM AMP_LOCATION'
+        cur = conn.cursor()
+        cur.execute(sql)
+        cur.close()
+
         sql = """INSERT INTO AMP_LOCATION (ID, AMP_LOCATION_ID, NAME, ADMIN_LEVEL_CODE, DESCRIPTION, 
             GEO_CODE, GS_LAT, GS_LONG) 
             VALUES (NEXTVAL('amp_location_id_seq'), %s, %s, %s, %s, %s, %s, %s)"""

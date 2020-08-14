@@ -74,7 +74,7 @@ def geocode():
     th = threading.Thread(target=process_all_pending_jobs)
     th.start()
 
-    return Response(json.dumps(amp_queue_relations)), 201
+    return Response(json.dumps(amp_queue_relations), mimetype='application/json'), 201
 
 
 @app.route('/geocode', methods=['GET'])
