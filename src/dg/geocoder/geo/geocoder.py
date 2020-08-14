@@ -20,7 +20,7 @@ npl = None
 
 def classify(texts, files, cls_name):
     # extract sentences from files
-    tic = time.clock()
+    tic = time.perf_counter()
     sentences = []
     geo_sentences = []
     doc_names = []
@@ -51,9 +51,9 @@ def classify(texts, files, cls_name):
 
             reader = None
 
-    toc = time.clock()
+    toc = time.perf_counter()
     logger.info(
-        'There are {count} sentences to process, split took {time}ms '.format(count=len(sentences), time=toc - tic))
+        'There are {count} sentences to process, split took {time}s '.format(count=len(sentences), time=toc - tic))
 
     if len(sentences) > 0:
         classifier = load_classifier(cls_name)
@@ -104,7 +104,7 @@ def geonames_all(entity_list, cty_codes=None):
 
 def extract_spacy(sentences):
     nlp = spacy.load('fr_core_news_md', disable=['tagger', 'parser', 'textcat'])
-    tic = time.clock()
+    tic = time.perf_counter()
     pos = 0
     extraction = []
     for doc in nlp.pipe([a for a, b in sentences], disable=["tagger"]):
@@ -116,14 +116,14 @@ def extract_spacy(sentences):
             extraction.append({'text': {'text': doc.text, 'field': sentences[pos][1]}, 'entities': locations})
         pos = pos + 1
 
-    tac = time.clock()
-    logger.info('NER extraction took {time}ms'.format(time=tac - tic))
+    tac = time.perf_counter()
+    logger.info('NER extraction took {time}s'.format(time=tac - tic))
     return extraction
 
 
 # Perform natural language processing to text, get annotated entities and entities relations
 def extract(sentences, ignore_entities=get_ignore_entities()):
-    tic = time.clock()
+    tic = time.perf_counter()
     nlp = pycorenlp.corenlp.StanfordCoreNLP("http://{0}:{1}/".format(get_ner_host(), get_npl_port()))
     extraction = []
 
@@ -135,8 +135,8 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
         if len(locations_found) > 0:
             extraction.append(({'text': {'text': s, 'file': f}, 'entities': locations_found}))
 
-    tac = time.clock()
-    logger.info('NER extraction took {time}ms'.format(time=tac - tic))
+    tac = time.perf_counter()
+    logger.info('NER extraction took {time}s'.format(time=tac - tic))
     return extraction
 
 
@@ -144,7 +144,7 @@ def extract(sentences, ignore_entities=get_ignore_entities()):
 def extract_ner(sentences, ignore_entities=get_ignore_entities()):
     try:
         tagger = Ner(host=get_ner_host(), port=get_ner_port())
-        tic = time.clock()
+        tic = time.perf_counter()
         extraction = []
 
         for f, s in sentences:
@@ -156,8 +156,8 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
             if len(locations_found) > 0:
                 extraction.append(({'text': {'text': s, 'file': f}, 'entities': locations_found}))
 
-        tac = time.clock()
-        logger.info('NER extraction took {time}ms'.format(time=tac - tic))
+        tac = time.perf_counter()
+        logger.info('NER extraction took {time}s'.format(time=tac - tic))
         return extraction
     except Exception as detail:
         logger.error('Error during ner extraction {}'.format(detail))
