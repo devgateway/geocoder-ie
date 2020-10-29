@@ -3,7 +3,6 @@ import logging.config
 import sys
 
 from dg.geocoder.config import get_log_config_path, get_default_country
-from dg.geocoder.db.amp_location import get_amp_locations
 from dg.geocoder.geo.geocoder import geonames, extract_ner, merge, join
 from dg.geocoder.readers.json_reader import JsonReader
 
@@ -15,7 +14,6 @@ def main(args):
     logger.info("Starting")
     json_file = open('test/resources/amp_many.json', 'r', encoding="UTF-8")
     j_object = json.load(json_file)
-    print(get_amp_locations())
     i = 0
     for activity in j_object:
         try:
