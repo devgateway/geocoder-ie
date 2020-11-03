@@ -97,3 +97,6 @@ def get_web_log_config_path():
 
 def get_geonames_retry_policy():
     return True
+
+def get_default_country():
+    return parser.get('ie', 'default_country').split(',')

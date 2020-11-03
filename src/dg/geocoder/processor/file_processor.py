@@ -1,11 +1,11 @@
 import logging
 
-from dg.geocoder.processor.document_processor import DocumentProcessor
-from dg.geocoder.processor.xml_processor import XMLProcessor
-
 from dg.geocoder.config import get_log_config_path
 from dg.geocoder.processor.base_processor import BaseProcessor
-from dg.geocoder.util.file_util import is_valid, is_xml
+from dg.geocoder.processor.document_processor import DocumentProcessor
+from dg.geocoder.processor.json_processor import JsonProcessor
+from dg.geocoder.processor.xml_processor import XMLProcessor
+from dg.geocoder.util.file_util import is_valid, is_xml, is_json
 
 logging.config.fileConfig(get_log_config_path())
 logger = logging.getLogger()
@@ -24,7 +24,8 @@ class FileProcessor(BaseProcessor):
         else:
             if is_xml(self.file):
                 self.processor = XMLProcessor(self.file, step_logger=self.step_logger)
-
+            elif is_json(self.file):
+                self.processor = JsonProcessor(self.file, step_logger=self.step_logger)
             else:
                 self.processor = DocumentProcessor(self.file, step_logger=self.step_logger, cty_codes=self.cty_codes)
 

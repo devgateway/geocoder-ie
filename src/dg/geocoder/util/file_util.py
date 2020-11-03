@@ -36,6 +36,10 @@ def is_txt(name):
     return get_file_type(name) == TXT
 
 
+def is_json(name):
+    return get_file_type(name) == JSON
+
+
 def get_file_name(file):
     if file:
         return file.split('/')[-1]

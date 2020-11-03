@@ -1,8 +1,7 @@
 import logging
 
 import psycopg2
-
-from dg.geocoder.constants import ST_PROCESSED
+from dg.geocoder.constants import ST_PROCESSED, ST_PENDING
 from dg.geocoder.db.db import open, close
 
 logger = logging.getLogger()
@@ -19,6 +18,26 @@ def add_job_to_queue(file_name, file_type, country_iso, state='PENDING'):
         cur.execute(sql, data)
         conn.commit()
         cur.close()
+    except Exception as error:
+        logger.info(error)
+        raise
+    finally:
+        close(conn)
+
+
+def add_activity_job_to_queue(file_name, file_type, country_iso, activity_id, state='PENDING'):
+    conn = None
+    try:
+        conn = open()
+        sql = """INSERT INTO QUEUE (QUEUE_TYPE,ID, FILE_NAME, FILE_TYPE, STATE, CREATE_DATE, COUNTRY_ISO, ACTIVITY_ID) VALUES 
+        ('AMP_ACTIVITY_QUEUE',NEXTVAL('hibernate_sequence'),%s,%s, %s, NOW(), %s, %s) RETURNING id"""
+        cur = conn.cursor()
+        data = (file_name, file_type, state, country_iso, activity_id)
+        cur.execute(sql, data)
+        conn.commit()
+        result_id = cur.fetchone()[0]
+        cur.close()
+        return result_id
     except Exception as error:
         logger.info(error)
         raise
@@ -127,6 +146,41 @@ def get_queue_list(page=1, limit=10, states=None, doc_type=None):
         close(conn)
 
 
+def get_pending_queue_list():
+    conn = None
+    try:
+        conn = open()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+        sql_count = "SELECT COUNT(*) FROM QUEUE WHERE 1=1 "
+        sql_select = """SELECT q.*, a.identifier FROM QUEUE  q left join activity a on q.activity_id=a.id WHERE 1=1 """
+        data = ()
+
+        sql_count = sql_count + " AND STATE in %s "
+        sql_select = sql_select + """AND STATE in %s """
+        data = data + (tuple([ST_PENDING]),)
+
+        cur.execute(sql_count, data)
+        count = cur.fetchone().get("count")
+
+        sql_select = sql_select + " ORDER BY CREATE_DATE DESC"
+
+        cur.execute(sql_select, data)
+
+        results = cur.fetchall()
+
+        cur.close()
+
+        return {'count': count, 'rows': results}
+
+    except Exception as error:
+        logger.info(error)
+        raise
+
+    finally:
+        close(conn)
+
+
 def get_queue_by_id(doc_id):
     conn = None
     try:
@@ -139,6 +193,38 @@ def get_queue_by_id(doc_id):
         cur.close()
 
         return row
+
+    except Exception as error:
+        logger.info(error)
+        raise
+    finally:
+        close(conn)
+
+
+def get_queue_by_id_with_extract_info(queue_id):
+    conn = None
+    try:
+        conn = open()
+        sql_select = """SELECT  q.id, 
+                                q.state,
+                                q.message,
+                                a.identifier AS amp_id, 
+                                e.file_name as field_name, 
+                                e.entities, 
+                                e.text, 
+                                e.geocoding_id
+                        FROM QUEUE q
+                        LEFT JOIN EXTRACT e ON q.id = e.queue_id
+                        JOIN ACTIVITY a ON q.activity_id = a.id 
+                        WHERE q.id = %s """
+
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        data = (queue_id,)
+        cur.execute(sql_select, data)
+        rows = cur.fetchall()
+        cur.close()
+
+        return rows
 
     except Exception as error:
         logger.info(error)

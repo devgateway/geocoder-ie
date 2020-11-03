@@ -5,7 +5,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from banner import print_banner
 from dg.geocoder.config import get_doc_queue_path, get_log_config_path
 from dg.geocoder.constants import ST_PENDING
-from dg.geocoder.db.doc_queue import get_queue_list, update_queue_out_file
+from dg.geocoder.db.doc_queue import get_queue_list, update_queue_out_file, get_pending_queue_list
 from dg.geocoder.processor.job_processor import JobProcessor
 
 logging.config.fileConfig(get_log_config_path())
@@ -39,6 +39,21 @@ def process_jobs():
 
         except Exception as e:
             logger.error("Job {} did't go well, results were not saved, I THINK ...".format(job.get('id')))
+            logger.error(e)
+
+
+# process all pending jobs
+def process_all_pending_jobs():
+    logger.info('process_all_pending_jobs was called')
+    pending_jobs = get_pending_queue_list().get('rows')
+    for job in pending_jobs:
+        try:
+            processor = JobProcessor(job)
+            processor.process()
+            processor.save_output()
+
+        except Exception as e:
+            logger.error("Job {} did't go well, results were not saved".format(job.get('id')))
             logger.error(e)
 
 

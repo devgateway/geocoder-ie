@@ -1,3 +1,6 @@
+fuzzywuzzy
+python-Levenshtein
+spacy
 APScheduler==3.5.1
 certifi==2018.1.18
 chardet==3.0.4
@@ -14,10 +17,10 @@ Jinja2==2.10
 langdetect==1.0.7
 lxml==4.1.1
 MarkupSafe==1.0
-matplotlib==2.0.2
+matplotlib==3.2.1
 nltk==3.4.5
 numpy
-pandas==0.20.3
+pandas==0.25.3
 pdfminer.six==20170720
 psycopg2
 pycorenlp
@@ -27,7 +30,7 @@ python-dateutil==2.6.1
 pytz==2018.3
 requests==2.18.4
 scikit-learn
-scipy==0.19.1
+scipy==1.5.0
 shelljob==0.5.6
 six==1.10.0
 sklearn
