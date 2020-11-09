@@ -82,46 +82,40 @@ def resolve(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, ret
     if rels is None:
         rels = []
     selected_loc = None
-    if len(loc) > 3:
-        locations = query(loc, cty_codes, query_method, fuzzy)
-        selected_loc = get_by_priority(locations)
+    locations = query(loc, cty_codes, query_method, fuzzy)
+    selected_loc = get_by_priority(locations)
 
-        if selected_loc is None and len(locations) > 0:
-            selected_loc = locations[0]
+    if selected_loc is None and len(locations) > 0:
+        selected_loc = locations[0]
 
-        if selected_loc:
-            logger.info(
-                '{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
-                                                                     selected_loc['lng']))
-        else:
-            logger.info("Wasn't able to geocode  {}".format(loc))
-            if retry:
-                logger.info("Let's try using others parameters".format(loc))
-                selected_loc = resolve(loc, cty_codes, rels, query_method='name', fuzzy=1, retry=False)
+    if selected_loc:
+        logger.info(
+            '{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+                                                                 selected_loc['lng']))
     else:
-        logger.info('{} Too short location name'.format(loc))
+        logger.info("Wasn't able to geocode  {}".format(loc))
+        if retry:
+            logger.info("Let's try using others parameters".format(loc))
+            selected_loc = resolve(loc, cty_codes, rels, query_method='name', fuzzy=1, retry=False)
 
     return selected_loc
 
 
 def resolve_all(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, retry=get_geonames_retry_policy()):
-    if len(loc) > 3:
-        locations = query(loc, cty_codes, query_method, fuzzy)
-        locations = [loc for loc in locations if loc['fcode'] in ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5']]
-        sort_by_priority(locations)
+    locations = query(loc, cty_codes, query_method, fuzzy)
+    locations = [loc for loc in locations if loc['fcode'] in ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5']]
+    sort_by_priority(locations)
 
-        if len(locations) > 0:
-            for selected_loc in locations:
-                logger.info('{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'],
-                                                                        selected_loc['lat'], selected_loc['lng']))
-            return locations
-        else:
-            logger.info("Wasn't able to geocode  {}".format(loc))
-            if retry:
-                logger.info("Let's try using others parameters".format(loc))
-                return resolve_all(loc, cty_codes, rels, query_method='name', fuzzy=1, retry=False)
+    if len(locations) > 0:
+        for selected_loc in locations:
+            logger.info('{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'],
+                                                                    selected_loc['lat'], selected_loc['lng']))
+        return locations
     else:
-        logger.info('{} Too short location name'.format(loc))
+        logger.info("Wasn't able to geocode  {}".format(loc))
+        if retry:
+            logger.info("Let's try using others parameters".format(loc))
+            return resolve_all(loc, cty_codes, rels, query_method='name', fuzzy=1, retry=False)
 
     return None
 

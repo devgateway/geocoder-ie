@@ -151,7 +151,7 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
             output = tagger.get_entities(s.replace('\n', ' ').replace('\r', ''))
             print(output)
             locations_found = [text for text, tag in output if
-                               tag in ['I-LOC'] and text.lower() not in ignore_entities]
+                               tag in ['I-LOC', 'I-PER', 'I-MISC'] and text.lower() not in ignore_entities]
 
             if len(locations_found) > 0:
                 extraction.append(({'text': {'text': s, 'file': f}, 'entities': locations_found}))
