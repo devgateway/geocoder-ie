@@ -62,6 +62,11 @@ def get_user_name():
 def get_password():
     return parser.get('postgres', 'password')
 
+def get_host():
+    return parser.get('postgres', 'host')
+
+def get_port():
+    return parser.get('postgres', 'port')
 
 def get_download_path():
     return os.path.realpath(os.path.join(app_root_path, parser.get('fs', 'download_path')))

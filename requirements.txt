@@ -1,7 +1,6 @@
-fuzzywuzzy
-python-Levenshtein
 spacy
 APScheduler==3.5.1
+beautifulsoup4==4.5.3
 certifi==2018.1.18
 chardet==3.0.4
 click==6.7
@@ -16,7 +15,7 @@ itsdangerous==0.24
 Jinja2==2.10
 langdetect==1.0.7
 lxml==4.1.1
-MarkupSafe==1.0
+MarkupSafe
 matplotlib==3.2.1
 nltk==3.4.5
 numpy
