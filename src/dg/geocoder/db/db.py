@@ -10,7 +10,7 @@ logger = logging.getLogger()
 def open():
     try:
         conn = psycopg2.connect(
-            'dbname={db_name} user={user_name} password={password}'.format(db_name=get_db_name(),
+            'dbname={db_name} user={user_name} password={password} host={host} port={port}'.format(db_name=get_db_name(),
                                                                            user_name=get_user_name(),
                                                                            password=get_password(),
                                                                            host=get_host(),
