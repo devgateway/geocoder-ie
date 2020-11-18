@@ -1,0 +1,40 @@
+version: '2'
+services:
+  api:
+    build: .
+    depends_on:
+      - ner
+      - db
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./geocoder-ie:/opt/code:rw
+    command: ./amp-geocoder.sh
+    links:
+    - "db"
+    - "ner"
+
+  ner:
+    image: openjdk:8
+    ports:
+      - "9094:9094"
+    volumes:
+      - ./ner:/opt/ner
+    working_dir: /opt/ner
+    entrypoint: ./ner.sh
+
+  db:
+    image: postgres:9.5
+    environment:
+      - POSTGRES_DB=geocoder
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data:rw
+      - $PG_LOG_DIR:/var/log/postgresql:rw
+      - ./geocoder-ie/sql:/docker-entrypoint-initdb.d
+volumes:
+  pg_data:
+    driver: local
+networks:
+    default:
