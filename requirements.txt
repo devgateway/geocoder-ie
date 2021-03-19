@@ -10,7 +10,7 @@ Flask-Cors==3.0.3
 greenlet==0.4.13
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 langdetect==1.0.7
 lxml==4.1.1
 MarkupSafe==1.0
