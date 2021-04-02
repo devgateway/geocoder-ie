@@ -7,6 +7,8 @@ from requests.utils import quote
 
 from dg.geocoder.config import get_geonames_base_url, get_geonames_user_name, get_geonames_retry_policy
 
+from fuzzywuzzy import process
+
 logger = logging.getLogger()
 
 
@@ -36,7 +38,7 @@ def parse(data):
     }
 
 
-def get_by_priority(results):
+def get_by_priority(loc, results):
     if len(results) > 0:
         priorities = ['PCLI', 'ADM1', 'ADM2', 'ADM3', 'ADM4', 'ADM5', 'RGN', 'RGNE', 'RGNH', 'PPL', 'PPLA', 'PPLA2',
                       'PPLA3', 'PPLA4', 'PPLL', 'PPLC']
@@ -49,12 +51,23 @@ def get_by_priority(results):
                     locations.append((idx, l))
                     pass
 
-            locations.sort(key=lambda x: x[0])
-        # return element that got in first order
-        if len(locations) > 0:
+        if len(locations) > 1:
+            locations.sort(reverse=True, key=lambda x: x[0])
+            # get the names of locations of the same level that are in priority
+            names = map(lambda x: x[1].get('toponymName'), (filter(lambda zz: zz[0] == locations[0][0], locations)))
+
+            # get ratios by fuzzy search
+            ratios = process.extract(loc, names)
+
+            # sort the ratios
+            ratios.sort(reverse=True, key=lambda x: x[1])
+
+            for ll in locations:
+                if ll[0] == locations[0][0] and ll[1].get('toponymName') == ratios[0][0]:
+                    return ll[1]
+        else:
             return locations[0][1]
-    else:
-        return None
+    return None
 
 
 def sort_by_priority(results):
@@ -81,16 +94,17 @@ def sort_by_priority(results):
 def resolve(loc, cty_codes, rels=None, query_method='name_equals', fuzzy=.9, retry=get_geonames_retry_policy()):
     if rels is None:
         rels = []
-    selected_loc = None
     locations = query(loc, cty_codes, query_method, fuzzy)
-    selected_loc = get_by_priority(locations)
+    selected_loc = get_by_priority(loc, locations)
 
     if selected_loc is None and len(locations) > 0:
         selected_loc = locations[0]
 
     if selected_loc:
         logger.info(
-            '{} was geocoded as {} with coordinates {},{}'.format(loc, selected_loc['fcode'], selected_loc['lat'],
+            '{} was geocoded as {} {} with coordinates {},{}'.format(loc, selected_loc['toponymName'],
+                                                                     selected_loc['fcode'],
+                                                                     selected_loc['lat'],
                                                                  selected_loc['lng']))
     else:
         logger.info("Wasn't able to geocode  {}".format(loc))
