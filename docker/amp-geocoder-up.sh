@@ -9,6 +9,7 @@ mkdir -p $PG_LOG_DIR
 chmod 777 $PG_LOG_DIR
 
 export PROJ=geocoder
+export TMPDIR=$(pwd)
 
 # start amp
 docker-compose -p $PROJ up -d --force-recreate
