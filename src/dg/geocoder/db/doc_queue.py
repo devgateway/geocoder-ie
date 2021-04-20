@@ -209,7 +209,8 @@ def get_queue_by_id_with_extract_info(queue_id):
                                 q.state,
                                 q.message,
                                 a.identifier AS amp_id, 
-                                e.file_name as field_name, 
+                                e.file_name as field_name,
+                                e.entity, 
                                 e.entities, 
                                 e.text, 
                                 e.geocoding_id

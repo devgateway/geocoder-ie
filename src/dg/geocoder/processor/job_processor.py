@@ -76,7 +76,7 @@ class JobProcessor(BaseProcessor):
             update_queue_status(self.job_id, ST_ERROR, message=error.__str__())
 
     def persist_geocoding(self, style='PLAIN'):
-        geocoding_list = [(data['geocoding'], data['texts']) for (l, data) in self.get_results() if
+        geocoding_list = [(data['geocoding'], data['texts'], l) for (l, data) in self.get_results() if
                           data.get('geocoding')]
         for geocoding in geocoding_list:
             try:
@@ -85,7 +85,7 @@ class JobProcessor(BaseProcessor):
                                                            conn=conn)
                 for text in geocoding[1]:
                     save_extract_text(text.get('text'), geocoding_id, location_id, self.job_id,
-                                      ', '.join(text.get('entities')),
+                                      ', '.join(text.get('entities')), geocoding[2],
                                       conn=conn)
 
                 conn.commit()
@@ -96,3 +96,11 @@ class JobProcessor(BaseProcessor):
             finally:
                 close(conn)
         return None
+
+    def clean(self):
+        file_path = os.path.join(get_doc_queue_path(), self.job_file_name)
+
+        try:
+            os.remove(file_path)
+        except Exception as error:
+            logger.exception(error)

@@ -51,6 +51,7 @@ def process_all_pending_jobs():
             processor = JobProcessor(job)
             processor.process()
             processor.save_output()
+            processor.clean()
 
         except Exception as e:
             logger.error("Job {} did't go well, results were not saved".format(job.get('id')))

@@ -266,7 +266,7 @@ def save_geocoding(geocoding, job_id, activity_id, style='PLAIN', conn=None):
             close(conn)
 
 
-def save_extract_text(text, geocoding_id, location_id, queue_id, entities='', conn=None):
+def save_extract_text(text, geocoding_id, location_id, queue_id, entities='', entity='', conn=None):
     should_close = False
     try:
         if conn is None:
@@ -274,10 +274,10 @@ def save_extract_text(text, geocoding_id, location_id, queue_id, entities='', co
             should_close = True
 
         sql = """INSERT INTO extract 
-              (id, text, entities, geocoding_id,location_id,queue_id,file_name) 
-              VALUES (NEXTVAL('hibernate_sequence'), %s, %s,%s, %s,%s,%s) RETURNING id"""
+              (id, text, entities, entity, geocoding_id,location_id,queue_id,file_name) 
+              VALUES (NEXTVAL('hibernate_sequence'), %s, %s, %s,%s, %s,%s,%s) RETURNING id"""
         cur = conn.cursor()
-        data = (text.get('text'), entities, geocoding_id, location_id, queue_id, text.get('file'))
+        data = (text.get('text'), entities, entity, geocoding_id, location_id, queue_id, text.get('file'))
         cur.execute(sql, data)
         result_id = cur.fetchone()[0]
         if should_close:

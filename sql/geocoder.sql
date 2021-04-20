@@ -170,6 +170,7 @@ CREATE TABLE public."extract"
 (
   id bigint NOT NULL,
   entities character varying(500),
+  entity character varying(500),
   file_name character varying(500),
   text text,
   geocoding_id bigint,

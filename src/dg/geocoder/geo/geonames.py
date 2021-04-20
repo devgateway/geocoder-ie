@@ -51,6 +51,9 @@ def get_by_priority(loc, results):
                     locations.append((idx, l))
                     pass
 
+        if len(locations) == 0:
+            return None
+
         if len(locations) > 1:
             locations.sort(reverse=True, key=lambda x: x[0])
             # get the names of locations of the same level that are in priority

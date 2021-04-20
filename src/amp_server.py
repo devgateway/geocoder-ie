@@ -106,7 +106,7 @@ def get_queue_by_id():
 
     for e in data:
         results['extract_data'].append(
-            dict(field_name=e['field_name'], entities=e['entities'], text=e['text'], location=get_geocode_by_id(e['geocoding_id'])))
+            dict(field_name=e['field_name'], entity=e['entity'], entities=e['entities'], text=e['text'], location=get_geocode_by_id(e['geocoding_id'])))
 
     return Response(json.dumps(results, default=datetime_handler), mimetype='application/json')
 

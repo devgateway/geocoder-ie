@@ -165,8 +165,8 @@ def extract_ner(sentences, ignore_entities=get_ignore_entities()):
 
 
 def gap_length(word1, word2, text):
-    start_1 = text.index(word1)
-    start_2 = text.index(word2, start_1 + len(word1))
+    start_1 = text.find(word1)
+    start_2 = text.find(word2, start_1 + len(word1))
     end_1 = start_1 + len(word1)
     # end_2 = start_2 + len(word2)
     gap = start_2 - end_1
